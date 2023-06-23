@@ -1,0 +1,39 @@
+.header {
+  composes: pt-4 pb-4 from global;
+  display: flex;
+  justify-content: space-around;
+  background-color: #1C1C21;
+}
+
+.nav {
+  width: 100%;
+  max-width: 1280px;
+  display: flex;
+  align-items: center;
+}
+
+.text {
+  composes: text text_type_main-default pl-2 from global;
+}
+
+.link {
+  display: flex;
+  align-items: center;
+  composes: pl-5 pr-5 pt-4 pb-4 from global;
+}
+
+.link_inactive {
+  composes: link;
+  composes: text_color_inactive from global;
+}
+
+.lk {
+  composes: link_inactive;
+  margin-left: 288px;
+}
+
+.menuButtons {
+  display: flex;
+  column-gap: 8px;
+  margin-right: 112px;
+}
