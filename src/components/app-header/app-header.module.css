@@ -3,6 +3,7 @@
   display: flex;
   justify-content: space-around;
   background-color: #1C1C21;
+  width: 100%;
 }
 
 .nav {

@@ -1,0 +1,15 @@
+.list {
+  list-style-type: none;
+  margin: 0;
+  composes: pt-6 pr-4 pl-4 from global;
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+  column-gap: 24px;
+}
+
+.listItem {
+  position: relative;
+  display: flex;
+  flex-direction: column;
+  row-gap: 8px;
+}
