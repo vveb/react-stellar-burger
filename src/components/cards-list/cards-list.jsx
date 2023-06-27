@@ -1,6 +1,6 @@
 import styles from './cards-list.module.css';
 import IngredientCard from '../ingredient-card/ingredient-card';
-import { arrayOfIngredientsPropType, functionPropType, objectPropType, stringPropType } from '../../utils/prop-types';
+import { arrayOfIngredientsPropType, functionPropType, ingredientsListPropType, stringPropType } from '../../utils/prop-types';
 
 const CardsList = ({ type, data, setIngredientsList, ingredientsList }) => {
   let ingredientTypeName;
@@ -42,7 +42,7 @@ CardsList.propTypes = {
   type: stringPropType.isRequired,
   data: arrayOfIngredientsPropType.isRequired,
   setIngredientsList: functionPropType.isRequired,
-  ingredientsList: objectPropType.isRequired,
+  ingredientsList: ingredientsListPropType.isRequired,
 }
 
 export default CardsList;

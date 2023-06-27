@@ -1,7 +1,7 @@
 import { CurrencyIcon } from '@ya.praktikum/react-developer-burger-ui-components';
 import styles from './ingredient-card.module.css';
 import { Counter } from '@ya.praktikum/react-developer-burger-ui-components';
-import { ingredientPropType, functionPropType, objectPropType } from '../../utils/prop-types';
+import { ingredientPropType, functionPropType, ingredientsListPropType } from '../../utils/prop-types';
 
 const IngredientCard = ({ itemData, setIngredientsList, ingredientsList }) => {
   let count = 0;
@@ -51,7 +51,7 @@ const IngredientCard = ({ itemData, setIngredientsList, ingredientsList }) => {
 IngredientCard.propTypes = {
   itemData: ingredientPropType.isRequired,
   setIngredientsList: functionPropType.isRequired,
-  ingredientsList: objectPropType.isRequired,
+  ingredientsList: ingredientsListPropType.isRequired,
 }
 
 export default IngredientCard;
