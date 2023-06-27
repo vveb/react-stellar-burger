@@ -3,8 +3,11 @@ import { ConstructorElement, CurrencyIcon, DragIcon, Button } from '@ya.praktiku
 
 const BurgerConstructor = ({ data, ingredientsList }) => {
 
+  let totalPrice = 0;
+
   function addBun(type) {
     const bun = data.find(item => item._id === ingredientsList.bun)
+    totalPrice += bun.price
     return (
       <ConstructorElement
         type={type}
@@ -20,6 +23,7 @@ const BurgerConstructor = ({ data, ingredientsList }) => {
   function addOthers() {
     return ingredientsList.others.map((itemId, index) => {
       const ingredient = data.find((item) => item._id === itemId)
+      totalPrice += ingredient.price
       return (
         <li className={styles.listItem} key={index}>
           <DragIcon />
@@ -34,7 +38,6 @@ const BurgerConstructor = ({ data, ingredientsList }) => {
     })
   }
   
-
   return (
     <div className={styles.table}>
       {addBun('top')}
@@ -44,7 +47,7 @@ const BurgerConstructor = ({ data, ingredientsList }) => {
       {addBun('bottom')}
       <div className={styles.total}>
         <div className={styles.totalPrice}>
-          <p className={styles.price}>610</p>
+          <p className={styles.price}>{totalPrice}</p>
           <CurrencyIcon type='primary' />
         </div>
         <Button htmlType="button" type="primary" size="large">Оформить заказ</Button>
