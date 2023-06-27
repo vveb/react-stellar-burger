@@ -1,7 +1,7 @@
 import styles from './cards-list.module.css';
 import IngredientCard from '../ingredient-card/ingredient-card';
 
-const CardsList = ({ type, data }) => {
+const CardsList = ({ type, data, setIngredientsList, ingredientsList }) => {
   let ingredientTypeName;
   switch (type) {
     case 'bun':
@@ -20,7 +20,7 @@ const CardsList = ({ type, data }) => {
       if (item.type === type) {
         return (
           <li className={styles.listItem} key={item._id}>
-            <IngredientCard itemData = {item} />
+          <IngredientCard itemData = {item} setIngredientsList={setIngredientsList} ingredientsList={ingredientsList} />
           </li>
         )
       }

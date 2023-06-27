@@ -3,12 +3,12 @@ import styles from './burger-ingredients.module.css'
 import { Tab } from '@ya.praktikum/react-developer-burger-ui-components';
 import {useState} from 'react';
 
-const BurgerIngredients = ({ data }) => {
+const BurgerIngredients = ({ data, setIngredientsList, ingredientsList }) => {
   const [current, setCurrent] = useState('buns')
   const productTypes = Array.from(new Set(data.map((item) => item.type)))
 
   function generateIngredientsList() {
-    return productTypes.map((type, index) => (<CardsList type={type} data={data} key={index} />))
+    return productTypes.map((type, index) => (<CardsList type={type} data={data} key={index} setIngredientsList={setIngredientsList} ingredientsList={ingredientsList} />))
   }
 
   return (

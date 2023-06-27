@@ -7,7 +7,7 @@ import {useState} from 'react';
 
 function App() {
   
-  const [ingredientsList, setIngredientsList] = useState([])
+  const [ingredientsList, setIngredientsList] = useState({bun: '60666c42cc7b410027a1a9b2', others: []})
 
   return (
     <div className={styles.app}>
@@ -15,10 +15,10 @@ function App() {
       <main className={styles.main}>
         <section className={styles.ingredients}>
           <h2 className={styles.title}>Соберите бургер</h2>
-          <BurgerIngredients data = {data} setIngredientsList={setIngredientsList} />
+          <BurgerIngredients data = {data} setIngredientsList={setIngredientsList} ingredientsList={ingredientsList} />
         </section>
         <section className={styles.burgerConstructor}>
-          <BurgerConstructor data = {data} ingredientslist = {ingredientsList}/>
+          <BurgerConstructor data = {data} ingredientsList = {ingredientsList}/>
         </section>
       </main>
     </div>

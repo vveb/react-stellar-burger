@@ -3,7 +3,7 @@ import styles from './ingredient-card.module.css';
 import { Counter } from '@ya.praktikum/react-developer-burger-ui-components';
 import {useState} from 'react';
 
-const IngredientCard = ({ itemData }) => {
+const IngredientCard = ({ itemData, setIngredientsList, ingredientsList }) => {
 
   const handleClick = () => {
     switch (itemData.type) {
@@ -13,11 +13,24 @@ const IngredientCard = ({ itemData }) => {
         } else {
           setCountValue(0)
         }
+        setIngredientsList(
+          {
+            bun: itemData._id,
+            others: [...ingredientsList.others],
+          }
+        )
         break
       default:
         setCountValue(count + 1)
+        setIngredientsList(
+          {
+            bun: ingredientsList.bun,
+            others: [...ingredientsList.others, itemData._id]
+          }
+        )
         break
     }
+    
   }
 
   const [count, setCountValue] = useState(0);
