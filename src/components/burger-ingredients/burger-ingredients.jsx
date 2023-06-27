@@ -1,10 +1,15 @@
 import CardsList from '../cards-list/cards-list';
 import styles from './burger-ingredients.module.css'
 import { Tab } from '@ya.praktikum/react-developer-burger-ui-components';
-import React from "react";
+import {useState} from 'react';
 
 const BurgerIngredients = ({ data }) => {
-  const [current, setCurrent] = React.useState('buns')
+  const [current, setCurrent] = useState('buns')
+  const productTypes = Array.from(new Set(data.map((item) => item.type)))
+
+  function generateIngredientsList() {
+    return productTypes.map((type, index) => (<CardsList type={type} data={data} key={index} />))
+  }
 
   return (
     <>
@@ -20,12 +25,7 @@ const BurgerIngredients = ({ data }) => {
         </Tab>
       </div>
       <div className={styles.table}>
-        <h3 className={styles.title}>Булки</h3>
-        <CardsList type={'bun'} data={data} />
-        <h3 className={styles.title}>Соусы</h3>
-        <CardsList type={'sauce'} data={data} />
-        <h3 className={styles.title}>Начинки</h3>
-        <CardsList type={'main'} data={data} />
+        {generateIngredientsList()}
       </div>
     </>
   )

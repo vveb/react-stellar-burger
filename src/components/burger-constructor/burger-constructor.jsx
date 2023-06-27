@@ -2,6 +2,7 @@ import styles from './burger-constructor.module.css';
 import { ConstructorElement, CurrencyIcon, DragIcon, Button } from '@ya.praktikum/react-developer-burger-ui-components';
 
 const BurgerConstructor = ({ data }) => {
+
   return (
     <div className={styles.table}>
       <ConstructorElement
