@@ -9,7 +9,6 @@
 
 .main {
   display: flex;
-  flex-direction: column;
   width: 100%;
   max-width: 1240px;
 }
@@ -27,4 +26,8 @@
   max-width: 600px;
   max-height: 912px;
   composes: pr-10 from global;
+}
+
+.burgerConstructor {
+  composes: pt-25 from global;
 }

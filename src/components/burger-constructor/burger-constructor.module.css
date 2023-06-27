@@ -1,0 +1,58 @@
+.table {
+  display: flex;
+  flex-direction: column;
+  composes: pl-4 from global;
+}
+
+.bordIngredient {
+  composes: ml-8 from global;
+  background-color: #1C1C21;
+}
+
+.list {
+  list-style-type: none;
+  padding-left: 0;
+  display: flex;
+  flex-direction: column;
+  row-gap: 16px;
+  overflow-y: scroll;
+  max-height: 464px;
+  composes: custom-scroll from global;
+}
+
+.list::-webkit-scrollbar {
+  width: 8px;
+}
+
+.list::-webkit-scrollbar-thumb {
+  border: 0;
+  border-radius: 0;
+}
+
+.listItem {
+  display: flex;
+  align-items: center;
+  column-gap: 8px;
+  composes: mr-2 from global;
+}
+
+.backgroundColorTrue {
+  background-color: #1C1C21;
+}
+
+.total {
+  display: flex;
+  justify-content: end;
+  composes: mr-4 pt-10 from global;
+  column-gap: 40px;
+}
+
+.totalPrice {
+  display: flex;
+  align-items: center;
+  column-gap: 8px;
+}
+
+.price {
+  composes: text text_type_digits-medium from global;
+}
