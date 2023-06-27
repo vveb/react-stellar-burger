@@ -1,43 +1,42 @@
 import { CurrencyIcon } from '@ya.praktikum/react-developer-burger-ui-components';
 import styles from './ingredient-card.module.css';
 import { Counter } from '@ya.praktikum/react-developer-burger-ui-components';
-import {useState} from 'react';
 import { ingredientPropType, functionPropType, objectPropType } from '../../utils/prop-types';
 
 const IngredientCard = ({ itemData, setIngredientsList, ingredientsList }) => {
+  let count = 0;
 
   const handleClick = () => {
-    switch (itemData.type) {
-      case 'bun':
-        if (count < 1) {
-          setCountValue(count + 1)
-        } else {
-          setCountValue(0)
+    if (itemData.type == 'bun') {
+      setIngredientsList(
+        {
+          bun: itemData._id,
+          others: [...ingredientsList.others],
         }
-        setIngredientsList(
-          {
-            bun: itemData._id,
-            others: [...ingredientsList.others],
-          }
-        )
-        break
-      default:
-        setCountValue(count + 1)
-        setIngredientsList(
-          {
-            bun: ingredientsList.bun,
-            others: [...ingredientsList.others, itemData._id]
-          }
-        )
-        break
+      )
+    } else {
+      setIngredientsList(
+        {
+          bun: ingredientsList.bun,
+          others: [...ingredientsList.others, itemData._id]
+        }
+      )
     }
-    
   }
 
-  const [count, setCountValue] = useState(0);
+  function updateCounter(array) {
+    count += array.reduce((acc, el) => {
+      if (el === itemData._id) {
+        return acc + 1
+      } return acc
+    }, 0)
+  }
+  
 
   return (
     <>
+      {updateCounter(ingredientsList.others)}
+      {updateCounter([ingredientsList.bun])}
       {count !== 0 && <Counter count={count} />}
       <img src = {itemData.image} className={styles.image} onClick={handleClick} />
       <div className={styles.priceBox}>
