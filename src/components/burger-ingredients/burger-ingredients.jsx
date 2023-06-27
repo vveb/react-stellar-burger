@@ -2,6 +2,7 @@ import CardsList from '../cards-list/cards-list';
 import styles from './burger-ingredients.module.css'
 import { Tab } from '@ya.praktikum/react-developer-burger-ui-components';
 import {useState} from 'react';
+import {ingredientPropType, objectPropType, functionPropType, arrayOfIngredientsPropType} from '../../utils/prop-types'
 
 const BurgerIngredients = ({ data, setIngredientsList, ingredientsList }) => {
   const [current, setCurrent] = useState('buns')
@@ -29,6 +30,12 @@ const BurgerIngredients = ({ data, setIngredientsList, ingredientsList }) => {
       </div>
     </>
   )
+}
+
+BurgerIngredients.propTypes = {
+  data: arrayOfIngredientsPropType.isRequired,
+  setIngredientsList: functionPropType.isRequired,
+  ingredientsList: objectPropType.isRequired,
 }
 
 export default BurgerIngredients;
