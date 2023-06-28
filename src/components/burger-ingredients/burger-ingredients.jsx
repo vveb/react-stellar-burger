@@ -1,15 +1,17 @@
 import CardsList from '../cards-list/cards-list';
 import styles from './burger-ingredients.module.css'
 import { Tab } from '@ya.praktikum/react-developer-burger-ui-components';
-import {useState} from 'react';
-import {ingredientsListPropType, functionPropType, arrayOfIngredientsPropType} from '../../utils/prop-types'
+import React, {useState} from 'react';
+import {functionPropType, arrayOfIngredientsPropType} from '../../utils/prop-types'
+import { productTypes } from '../../utils/constants';
 
-const BurgerIngredients = ({ data, setIngredientsList, ingredientsList }) => {
+const BurgerIngredients = ({ data, addIngredientToList }) => {
   const [current, setCurrent] = useState('buns')
-  const productTypes = Array.from(new Set(data.map((item) => item.type)))
 
   function generateIngredientsList() {
-    return productTypes.map((type, index) => (<CardsList type={type} data={data} key={index} setIngredientsList={setIngredientsList} ingredientsList={ingredientsList} />))
+    return productTypes.map((type) => (
+      <CardsList type={type} data={data} key={type} addIngredientToList={addIngredientToList} />
+    ))
   }
 
   return (
@@ -25,17 +27,16 @@ const BurgerIngredients = ({ data, setIngredientsList, ingredientsList }) => {
           Начинки
         </Tab>
       </div>
-      <div className={styles.table}>
+      <ul className={styles.table}>
         {generateIngredientsList()}
-      </div>
+      </ul>
     </>
   )
 }
 
 BurgerIngredients.propTypes = {
   data: arrayOfIngredientsPropType.isRequired,
-  setIngredientsList: functionPropType.isRequired,
-  ingredientsList: ingredientsListPropType.isRequired,
+  addIngredientToList: functionPropType.isRequired,
 }
 
-export default BurgerIngredients;
+export default React.memo(BurgerIngredients);

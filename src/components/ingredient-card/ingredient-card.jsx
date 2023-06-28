@@ -2,41 +2,26 @@ import { CurrencyIcon } from '@ya.praktikum/react-developer-burger-ui-components
 import styles from './ingredient-card.module.css';
 import { Counter } from '@ya.praktikum/react-developer-burger-ui-components';
 import { ingredientPropType, functionPropType, ingredientsListPropType } from '../../utils/prop-types';
+import React from 'react';
+import { IngredientsListContext } from '../../contexts/ingredients-list-context';
 
-const IngredientCard = ({ itemData, setIngredientsList, ingredientsList }) => {
-  let count = 0;
+const IngredientCard = ({ itemData, addIngredientToList}) => {
+  const {bun, others} = React.useContext(IngredientsListContext);
 
   const handleClick = () => {
-    if (itemData.type == 'bun') {
-      setIngredientsList(
-        {
-          bun: itemData._id,
-          others: [...ingredientsList.others],
-        }
-      )
-    } else {
-      setIngredientsList(
-        {
-          bun: ingredientsList.bun,
-          others: [...ingredientsList.others, itemData._id]
-        }
-      )
+    addIngredientToList(itemData);
+  }
+
+  const count = React.useMemo(() => {
+    if (itemData.type === 'bun') {
+      if (!bun) {return 0}
+      return itemData._id === bun._id ? 1 : 0;
     }
-  }
-
-  function updateCounter(array) {
-    count += array.reduce((acc, el) => {
-      if (el === itemData._id) {
-        return acc + 1
-      } return acc
-    }, 0)
-  }
+    return others.filter((item) => itemData._id === item._id).length;
+  }, [bun, others])
   
-
   return (
-    <>
-      {updateCounter(ingredientsList.others)}
-      {updateCounter([ingredientsList.bun])}
+    <li className={styles.listItem}>
       {count !== 0 && <Counter count={count} />}
       <img src = {itemData.image} className={styles.image} onClick={handleClick} />
       <div className={styles.priceBox}>
@@ -44,14 +29,15 @@ const IngredientCard = ({ itemData, setIngredientsList, ingredientsList }) => {
         <CurrencyIcon />
       </div>
       <p className={styles.name}>{itemData.name}</p>
-    </>
+    </li>
   )
 }
 
 IngredientCard.propTypes = {
   itemData: ingredientPropType.isRequired,
-  setIngredientsList: functionPropType.isRequired,
-  ingredientsList: ingredientsListPropType.isRequired,
+  addIngredientToList: functionPropType.isRequired,
 }
 
-export default IngredientCard;
+/* Благодаря этому (мемоизации) мы избегаем перерендера карточки при перерендере родителя
+без изменения пропсов конкретной карточки */
+export default React.memo(IngredientCard);

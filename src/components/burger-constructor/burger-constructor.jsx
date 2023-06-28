@@ -1,14 +1,22 @@
 import styles from './burger-constructor.module.css';
 import { ConstructorElement, CurrencyIcon, DragIcon, Button } from '@ya.praktikum/react-developer-burger-ui-components';
-import { arrayOfIngredientsPropType, ingredientsListPropType } from '../../utils/prop-types';
+import { functionPropType } from '../../utils/prop-types';
+import React from "react";
+import { IngredientsListContext } from '../../contexts/ingredients-list-context'
 
-const BurgerConstructor = ({ data, ingredientsList }) => {
+const BurgerConstructor = ({ deleteIngredientFromList }) => {
+  const ingredientsList = React.useContext(IngredientsListContext);
 
-  let totalPrice = 0;
+  const totalPrice = React.useMemo(() => {
+    const bunPrice = ingredientsList.bun ? ingredientsList.bun.price * 2 : 0;
+    return ingredientsList.others.reduce((acc, item) => {
+      return acc + item.price
+    }, bunPrice);
+  }, [ingredientsList.bun, ingredientsList.others])
 
-  function addBun(type) {
-    const bun = data.find(item => item._id === ingredientsList.bun)
-    totalPrice += bun.price
+  const addBun = (type) => {
+    const { bun } = ingredientsList;
+    if (!bun) {return null}
     return (
       <ConstructorElement
         type={type}
@@ -22,21 +30,22 @@ const BurgerConstructor = ({ data, ingredientsList }) => {
   }
 
   function addOthers() {
-    return ingredientsList.others.map((itemId, index) => {
-      const ingredient = data.find((item) => item._id === itemId)
-      totalPrice += ingredient.price
-      return (
-        <li className={styles.listItem} key={index}>
+    return ingredientsList.others.map((item) => 
+      (
+        <li className={styles.listItem} key={item.uniqueId}>
           <DragIcon />
           <ConstructorElement
-            text={ingredient.name}
-            price={ingredient.price}
-            thumbnail={ingredient.image}
+            text={item.name}
+            price={item.price}
+            thumbnail={item.image}
             extraClass={styles.backgroundColorTrue}
+            handleClose={() => {
+              deleteIngredientFromList(item)
+            }}
           />
         </li>
       )
-    })
+    )
   }
   
   return (
@@ -58,8 +67,7 @@ const BurgerConstructor = ({ data, ingredientsList }) => {
 }
 
 BurgerConstructor.propTypes = {
-  data: arrayOfIngredientsPropType.isRequired,
-  ingredientsList: ingredientsListPropType.isRequired,
+  deleteIngredientFromList: functionPropType.isRequired
 }
 
-export default BurgerConstructor;
+export default React.memo(BurgerConstructor);

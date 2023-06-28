@@ -1,6 +1,9 @@
 .table {
   overflow-y: scroll;
   composes: custom-scroll from global;
+  list-style: none outside;
+  padding: 0;
+  margin: 0;
 }
 
 .table::-webkit-scrollbar {

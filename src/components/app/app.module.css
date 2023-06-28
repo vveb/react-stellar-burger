@@ -30,4 +30,5 @@
 
 .burgerConstructor {
   composes: pt-25 from global;
+  width: 100%;
 }
