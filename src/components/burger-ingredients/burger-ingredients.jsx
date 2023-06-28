@@ -1,12 +1,12 @@
+import React from 'react';
+import styles from './burger-ingredients.module.css';
 import CardsList from '../cards-list/cards-list';
-import styles from './burger-ingredients.module.css'
 import { Tab } from '@ya.praktikum/react-developer-burger-ui-components';
-import React, {useState} from 'react';
-import {functionPropType, arrayOfIngredientsPropType} from '../../utils/prop-types'
+import {functionPropType, arrayOfIngredientsPropType} from '../../utils/prop-types';
 import { productTypes } from '../../utils/constants';
 
 const BurgerIngredients = ({ data, addIngredientToList }) => {
-  const [current, setCurrent] = useState('buns')
+  const [current, setCurrent] = React.useState('buns')
 
   const setTab = (tab) => {
     setCurrent(tab);

@@ -1,0 +1,9 @@
+.totalPrice {
+  display: flex;
+  align-items: center;
+  column-gap: 8px;
+}
+
+.price {
+  composes: text text_type_digits-medium from global;
+}

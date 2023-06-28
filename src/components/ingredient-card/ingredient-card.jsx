@@ -1,11 +1,11 @@
-import { CurrencyIcon } from '@ya.praktikum/react-developer-burger-ui-components';
-import styles from './ingredient-card.module.css';
-import { Counter } from '@ya.praktikum/react-developer-burger-ui-components';
-import { ingredientPropType, functionPropType, ingredientsListPropType } from '../../utils/prop-types';
 import React from 'react';
-import { IngredientsListContext } from '../../contexts/ingredients-list-context';
+import {IngredientsListContext} from '../../contexts/ingredients-list-context';
+import styles from './ingredient-card.module.css';
+import { CurrencyIcon, Counter } from '@ya.praktikum/react-developer-burger-ui-components';
+import { ingredientPropType, functionPropType } from '../../utils/prop-types';
 
 const IngredientCard = ({ itemData, addIngredientToList}) => {
+  
   const {bun, others} = React.useContext(IngredientsListContext);
 
   const handleClick = () => {

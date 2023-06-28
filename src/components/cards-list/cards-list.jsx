@@ -1,6 +1,6 @@
+import React from 'react';
 import styles from './cards-list.module.css';
 import IngredientCard from '../ingredient-card/ingredient-card';
-import React from "react";
 import { arrayOfIngredientsPropType, functionPropType, stringPropType } from '../../utils/prop-types';
 
 const CardsList = ({ type, data, addIngredientToList }) => {
@@ -17,7 +17,7 @@ const CardsList = ({ type, data, addIngredientToList }) => {
       break
   }
 
-  function generateList(type) {
+  const generateList = (type) => {
     return data.map((item) => {
       if (item.type === type) {
         return (

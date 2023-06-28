@@ -1,11 +1,11 @@
+import {useState, useCallback} from 'react';
 import styles from "./app.module.css";
 import {data} from "../../utils/data";
 import AppHeader from "../app-header/app-header";
 import BurgerIngredients from "../burger-ingredients/burger-ingredients";
 import BurgerConstructor from "../burger-constructor/burger-constructor";
-import {useState, useCallback} from 'react';
 import { nanoid } from "nanoid";
-import { IngredientsListContext } from '../../contexts/ingredients-list-context'
+import {IngredientsListContext} from '../../contexts/ingredients-list-context'
 
 function App() {
   
