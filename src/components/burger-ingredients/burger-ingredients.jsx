@@ -8,7 +8,13 @@ import { productTypes } from '../../utils/constants';
 const BurgerIngredients = ({ data, addIngredientToList }) => {
   const [current, setCurrent] = useState('buns')
 
-  function generateIngredientsList() {
+  const setTab = (tab) => {
+    setCurrent(tab);
+    const element = document.getElementById(tab);
+    if (element) element.scrollIntoView({ behavior: "smooth" });
+  };
+
+  const generateIngredientsList = () => {
     return productTypes.map((type) => (
       <CardsList type={type} data={data} key={type} addIngredientToList={addIngredientToList} />
     ))
@@ -17,13 +23,13 @@ const BurgerIngredients = ({ data, addIngredientToList }) => {
   return (
     <>
       <div style={{ display: 'flex' }}>
-        <Tab value="buns" active={current === 'buns'} onClick={setCurrent}>
+        <Tab value="buns" active={current === 'buns'} onClick={setTab}>
           Булки
         </Tab>
-        <Tab value="sauces" active={current === 'sauces'} onClick={setCurrent}>
+        <Tab value="sauces" active={current === 'sauces'} onClick={setTab}>
           Соусы
         </Tab>
-        <Tab value="mains" active={current === 'mains'} onClick={setCurrent}>
+        <Tab value="mains" active={current === 'mains'} onClick={setTab}>
           Начинки
         </Tab>
       </div>

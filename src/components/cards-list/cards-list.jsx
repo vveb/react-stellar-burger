@@ -28,7 +28,7 @@ const CardsList = ({ type, data, addIngredientToList }) => {
   }
 
   return (
-    <li className={styles.tableItem}>
+    <li className={styles.tableItem} id={type + 's'}>
       <h3 className={styles.title}>{ingredientTypeName}</h3>
       <ul className={styles.list}>
         {generateList(type)}
