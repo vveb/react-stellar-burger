@@ -3,3 +3,8 @@ export const productTypes = [
   'sauce',
   'main',
 ]
+
+export const baseUrl = 'https://norma.nomoreparties.space/api'
+export const endpointURLs = {
+  ingredients: '/ingredients',
+}

@@ -1,17 +1,18 @@
-import {useState, useCallback} from 'react';
+import React from 'react';
 import styles from "./app.module.css";
-import {data} from "../../utils/data";
 import AppHeader from "../app-header/app-header";
 import BurgerIngredients from "../burger-ingredients/burger-ingredients";
 import BurgerConstructor from "../burger-constructor/burger-constructor";
 import { nanoid } from "nanoid";
 import {IngredientsListContext} from '../../contexts/ingredients-list-context'
+import { useIngredientsData } from '../../hooks/use-ingredients-data';
 
 function App() {
-  
-  const [ingredientsList, setIngredientsList] = useState({bun: null, others: []})
 
-  const addIngredientToList = useCallback((item) => {
+  const {success, data} = useIngredientsData();
+  const [ingredientsList, setIngredientsList] = React.useState({bun: null, others: []});
+
+  const addIngredientToList = React.useCallback((item) => {
     if (item.type === 'bun') {
       setIngredientsList((prevState) => ({...prevState, bun: item}))
     } else {
@@ -19,7 +20,7 @@ function App() {
     }
   }, []);
 
-  const deleteIngredientFromList = useCallback((item) => {
+  const deleteIngredientFromList = React.useCallback((item) => {
     setIngredientsList((prevState) => ({
       ...prevState,
       others: prevState.others.filter((ingredient) => ingredient.uniqueId !== item.uniqueId),
@@ -33,7 +34,7 @@ function App() {
         <main className={styles.main}>
           <section className={styles.ingredients}>
             <h2 className={styles.title}>Соберите бургер</h2>
-            <BurgerIngredients data={data} addIngredientToList={addIngredientToList} />
+            {success && <BurgerIngredients data={data} addIngredientToList={addIngredientToList} />}
           </section>
           <section className={styles.burgerConstructor}>
             <BurgerConstructor deleteIngredientFromList={deleteIngredientFromList}/>
