@@ -4,7 +4,7 @@ import styles from './modal.module.css';
 import ModalOverlay from '../modal-overlay/modal-overlay';
 import { CloseIcon } from '@ya.praktikum/react-developer-burger-ui-components';
 
-const Modal = ({ title, children, extraClass, handleCleanIngredient }) => {
+const Modal = React.forwardRef(({ title, children, extraClass, handleCleanIngredient }, onCloseRef) => {
   const modalRoot = document.getElementById('modals');
 
   const modalRef = React.useRef(null);
@@ -18,14 +18,15 @@ const Modal = ({ title, children, extraClass, handleCleanIngredient }) => {
     setTimeout(() => {
       handleCleanIngredient(null)
     }, 550);
-  }
+  };
   
   React.useEffect(() => {
+    onCloseRef.current = closeModal;
     overlayRef.current.style.opacity = 1;
     setTimeout(() => {
       modalRef.current.style.opacity = 1;
     }, 200);
-  })
+  });
 
   return ReactDOM.createPortal((
     <>
@@ -39,7 +40,7 @@ const Modal = ({ title, children, extraClass, handleCleanIngredient }) => {
       </div>
     </>
   ), modalRoot);
-}
+});
 
 Modal.defaultProps = {
   title: '',

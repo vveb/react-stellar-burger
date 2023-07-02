@@ -5,7 +5,7 @@ import { ConstructorElement, DragIcon, Button } from '@ya.praktikum/react-develo
 import {functionPropType} from '../../utils/prop-types';
 import TotalPrice from '../total-price/total-price';
 
-const BurgerConstructor = ({ deleteIngredientFromList }) => {
+const BurgerConstructor = ({ deleteIngredientFromList, setOrderId }) => {
   const ingredientsList = React.useContext(IngredientsListContext);
 
   const addBun = (type) => {
@@ -23,7 +23,7 @@ const BurgerConstructor = ({ deleteIngredientFromList }) => {
     )
   }
 
-  function addOthers() {
+  const addOthers = () => {
     return ingredientsList.others.map((item) => 
       (
         <li className={styles.listItem} key={item.uniqueId}>
@@ -41,6 +41,29 @@ const BurgerConstructor = ({ deleteIngredientFromList }) => {
       )
     )
   }
+
+  const cleanIngredientsList = ({ bun, others }) => {
+    if (bun) {deleteIngredientFromList(bun)}
+    if (others.length > 0) {
+      others.forEach((ingredient) => deleteIngredientFromList(ingredient))
+    }
+  }
+
+  const assignOrderNumber = React.useMemo(() => {
+    let orderNumber='';
+    for (let i = 0; i < 6; i++) {
+      orderNumber += String(Math.round(Math.random() * 9))
+    };
+    return orderNumber;
+  }, [ingredientsList]);
+
+  const placeAnOrder = React.useCallback(() => {
+    const { bun, others } = ingredientsList;
+    if (bun || others.length > 0) {
+      cleanIngredientsList(ingredientsList);
+      setOrderId(assignOrderNumber);
+    }
+  }, [ingredientsList]);
   
   return (
     <div className={styles.table}>
@@ -51,7 +74,7 @@ const BurgerConstructor = ({ deleteIngredientFromList }) => {
       {addBun('bottom')}
       <div className={styles.total}>
         <TotalPrice />
-        <Button htmlType="button" type="primary" size="large">Оформить заказ</Button>
+        <Button htmlType="button" type="primary" size="large" onClick={placeAnOrder}>Оформить заказ</Button>
       </div>
     </div>
   )
@@ -59,6 +82,7 @@ const BurgerConstructor = ({ deleteIngredientFromList }) => {
 
 BurgerConstructor.propTypes = {
   deleteIngredientFromList: functionPropType.isRequired,
+  setOrderId: functionPropType.isRequired,
 }
 
 export default React.memo(BurgerConstructor);
