@@ -21,3 +21,4 @@ export const ingredientsListPropType = PropTypes.shape({
 })
 export const functionPropType = PropTypes.func;
 export const stringPropType = PropTypes.string;
+export const numberPropType = PropTypes.number;

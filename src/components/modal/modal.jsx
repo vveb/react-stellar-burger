@@ -19,6 +19,7 @@ const Modal = ({ title, children, extraClass, handleCleanIngredient }) => {
       handleCleanIngredient(null)
     }, 550);
   }
+  
   React.useEffect(() => {
     overlayRef.current.style.opacity = 1;
     setTimeout(() => {

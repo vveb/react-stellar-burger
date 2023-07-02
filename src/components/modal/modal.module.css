@@ -22,7 +22,6 @@
   width: 100%;
   height: 64px;
   box-sizing: border-box;
-  /* composes: pl-10 pr-10 pt-10 from global; */
 }
 
 .title {

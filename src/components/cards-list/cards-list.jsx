@@ -2,13 +2,9 @@ import React from 'react';
 import styles from './cards-list.module.css';
 import IngredientCard from '../ingredient-card/ingredient-card';
 import { arrayOfIngredientsPropType, functionPropType, stringPropType } from '../../utils/prop-types';
+import { ingredientTypeName } from '../../utils/constants';
 
 const CardsList = ({ type, data, addIngredientToList, handleSelectIngredient }) => {
-  const ingredientTypeName = {
-    bun: 'Булки',
-    main: 'Начинки',
-    sauce: 'Соусы',
-  }
 
   const generateList = (type) => {
     return data.map((item) => {

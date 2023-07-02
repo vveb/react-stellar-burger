@@ -1,31 +1,25 @@
 import styles from './ingredient-details.module.css';
+import NutritionValue from '../nutrition-value/nutrition-value';
+import { ingredientPropType } from '../../utils/prop-types'
 
 const IngredientDetails = ({ ingredientData }) => {
-  console.log(ingredientData)
+  const { calories, proteins, fat, carbohydrates } = ingredientData;
   return (
     <>
       <img className={styles.image} src={ingredientData.image} alt={ingredientData.name} />
       <p className={styles.name}>{ingredientData.name}</p>
       <div className={styles.details}>
-        <div className={styles.detailsItem}>
-          <p className={styles.detailsTitle}>Калории, ккал</p>
-          <p className={styles.detailsAmount}>{ingredientData.calories}</p>
-        </div>
-        <div className={styles.detailsItem}>
-          <p className={styles.detailsTitle}>Белки, г</p>
-          <p className={styles.detailsAmount}>{ingredientData.proteins}</p>
-        </div>
-        <div className={styles.detailsItem}>
-          <p className={styles.detailsTitle}>Жиры, г</p>
-          <p className={styles.detailsAmount}>{ingredientData.fat}</p>
-        </div>
-        <div className={styles.detailsItem}>
-          <p className={styles.detailsTitle}>Углеводы, г</p>
-          <p className={styles.detailsAmount}>{ingredientData.carbohydrates}</p>
-        </div>
+        <NutritionValue title='Калории, ккал' amount={calories} />
+        <NutritionValue title='Белки, г' amount={proteins} />
+        <NutritionValue title='Жиры, г' amount={fat} />
+        <NutritionValue title='Углеводы, г' amount={carbohydrates} />
       </div>
     </>
   )
+}
+
+IngredientDetails.propTypes = {
+  ingredientData: ingredientPropType.isRequired,
 }
 
 export default IngredientDetails;
