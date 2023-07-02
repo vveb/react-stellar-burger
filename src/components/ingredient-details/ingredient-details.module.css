@@ -1,0 +1,37 @@
+.image {
+  display: block;
+  width: 480px;
+  height: 240px;
+}
+
+.name {
+  composes: text text_type_main-medium from global;
+  composes: mt-4 from global;
+}
+
+.details {
+  width: 516px;
+  composes: mt-8 from global;
+  display: flex;
+  justify-content: flex-start;
+  align-items: center;
+}
+
+.detailsItem {
+  display: flex;
+  flex-direction: column;
+  row-gap: 8px;
+  align-items: center;
+  width: 100%;
+  min-width: 112px;
+}
+
+.detailsTitle {
+  margin: 0;
+  composes: text text_type_main-default text_color_inactive from global;
+}
+
+.detailsAmount {
+  margin: 0;
+  composes: text text_type_digits-default text_color_inactive from global;
+}

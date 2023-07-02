@@ -1,10 +1,16 @@
-export const productTypes = [
+const productTypes = [
   'bun',
   'sauce',
   'main',
 ]
 
-export const baseUrl = 'https://norma.nomoreparties.space/api'
-export const endpointURLs = {
+const baseUrl = 'https://norma.nomoreparties.space/api'
+const endpointURLs = {
   ingredients: '/ingredients',
+}
+
+export {
+  productTypes,
+  baseUrl,
+  endpointURLs,
 }

@@ -3,25 +3,18 @@ import styles from './cards-list.module.css';
 import IngredientCard from '../ingredient-card/ingredient-card';
 import { arrayOfIngredientsPropType, functionPropType, stringPropType } from '../../utils/prop-types';
 
-const CardsList = ({ type, data, addIngredientToList }) => {
-  let ingredientTypeName;
-  switch (type) {
-    case 'bun':
-      ingredientTypeName = 'Булки'
-      break
-    case 'main':
-      ingredientTypeName = 'Начинки'
-      break
-    case 'sauce':
-      ingredientTypeName = 'Соусы'
-      break
+const CardsList = ({ type, data, addIngredientToList, handleSelectIngredient }) => {
+  const ingredientTypeName = {
+    bun: 'Булки',
+    main: 'Начинки',
+    sauce: 'Соусы',
   }
 
   const generateList = (type) => {
     return data.map((item) => {
       if (item.type === type) {
         return (
-          <IngredientCard itemData = {item} addIngredientToList={addIngredientToList} key={item._id}/>
+          <IngredientCard itemData = {item} addIngredientToList={addIngredientToList} key={item._id} handleSelectIngredient={handleSelectIngredient}/>
         )
       }
     })
@@ -29,7 +22,7 @@ const CardsList = ({ type, data, addIngredientToList }) => {
 
   return (
     <li className={styles.tableItem} id={type + 's'}>
-      <h3 className={styles.title}>{ingredientTypeName}</h3>
+      <h3 className={styles.title}>{ingredientTypeName[type]}</h3>
       <ul className={styles.list}>
         {generateList(type)}
       </ul>
@@ -41,6 +34,7 @@ CardsList.propTypes = {
   type: stringPropType.isRequired,
   data: arrayOfIngredientsPropType.isRequired,
   addIngredientToList: functionPropType.isRequired,
+  handleSelectIngredient: functionPropType.isRequired,
 }
 
 export default React.memo(CardsList);
