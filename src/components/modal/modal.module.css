@@ -24,6 +24,16 @@
   box-sizing: border-box;
 }
 
+.closeIconContainer {
+  cursor: pointer;
+  opacity: 1;
+  transition: opacity .3s ease;
+}
+
+.closeIconContainer:hover {
+  opacity: .6;
+}
+
 .title {
   margin: 0;
   composes: text text_type_main-large from global;

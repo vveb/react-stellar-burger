@@ -10,6 +10,12 @@
   box-sizing: border-box;
   display: block;
   cursor: pointer;
+  filter: opacity(85%);
+  transition: filter .3s ease;
+}
+
+.image:hover {
+  filter: opacity(100%);
 }
 
 .priceBox {
@@ -24,7 +30,14 @@
 }
 
 .name {
+  cursor: pointer;
   composes: text text_type_main-default from global;
   composes: pb-6 from global;
   text-align: center;
+  opacity: 1;
+  transition: opacity .3s ease;
+}
+
+.name:hover {
+  opacity: .6;
 }

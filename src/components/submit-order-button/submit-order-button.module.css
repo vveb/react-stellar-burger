@@ -7,6 +7,12 @@
   align-items: center;
   position: relative;
   cursor: pointer;
+  filter: brightness(80%);
+  transition: filter .3s ease;
+}
+
+.submit:hover {
+  filter: brightness(100%);
 }
 
 .polygonBack {

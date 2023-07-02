@@ -10,7 +10,7 @@ const Modal = React.forwardRef(({ title, children, extraClass, handleCleanIngred
   const modalRef = React.useRef(null);
   const overlayRef = React.useRef(null);
   
-  const closeModal = () => {
+  const closeModal = React.useCallback(() => {
     modalRef.current.style.opacity = 0;
     setTimeout(() => {
       overlayRef.current.style.opacity = 0;
@@ -18,15 +18,28 @@ const Modal = React.forwardRef(({ title, children, extraClass, handleCleanIngred
     setTimeout(() => {
       handleCleanIngredient(null)
     }, 550);
-  };
+  }, []);
   
   React.useEffect(() => {
-    onCloseRef.current = closeModal;
+    onCloseRef.current = closeModal; //Это нужно, чтобы прокинуть функцию закрытия до кнопки сабмита в OrderDetails
+    overlayRef.current.style.cursor = 'pointer';
     overlayRef.current.style.opacity = 1;
     setTimeout(() => {
       modalRef.current.style.opacity = 1;
     }, 200);
   });
+
+  React.useEffect(() => {
+    const handleEscClose = (evt) => {
+      if (evt.key === 'Escape') {
+        closeModal();
+      }
+    }
+    document.addEventListener('keydown', handleEscClose);
+    return () => {
+      document.removeEventListener('keydown', handleEscClose);
+    }
+  }, [])
 
   return ReactDOM.createPortal((
     <>
@@ -34,7 +47,7 @@ const Modal = React.forwardRef(({ title, children, extraClass, handleCleanIngred
       <div ref={modalRef} aria-modal='true' className={`${styles.modal} ${extraClass}`}>
         <header className={styles.header}>
           <h2 className={styles.title}>{title}</h2>
-          <CloseIcon type='primary' onClick={closeModal}/>
+          <div className={styles.closeIconContainer}><CloseIcon type='primary' onClick={closeModal}/></div>
         </header>
         {children}
       </div>
