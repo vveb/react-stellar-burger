@@ -43,6 +43,7 @@ const BurgerIngredients = ({ data, addIngredientToList, handleSelectIngredient }
 BurgerIngredients.propTypes = {
   data: arrayOfIngredientsPropType.isRequired,
   addIngredientToList: functionPropType.isRequired,
+  handleSelectIngredient: functionPropType.isRequired,
 }
 
 export default React.memo(BurgerIngredients);
