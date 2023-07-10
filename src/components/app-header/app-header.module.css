@@ -18,14 +18,38 @@
 }
 
 .link {
+  cursor: pointer;
   display: flex;
   align-items: center;
   composes: pl-5 pr-5 pt-4 pb-4 from global;
+  color: inherit;
+  filter: brightness(100%);
+  transition: filter .3s ease;
+  text-decoration: none;
+}
+
+.link:hover {
+  filter: brightness(50%);
 }
 
 .link_inactive {
   composes: link;
-  composes: text_color_inactive from global;
+  color: #8585ad;
+  filter: brightness(100%)
+}
+
+.link_inactive:hover {
+  filter: brightness(200%)
+}
+
+.logoLink {
+  cursor: pointer;
+  filter: saturate(100%);
+  transition: filter .2s ease;
+}
+
+.logoLink:hover {
+  filter: saturate(500%);
 }
 
 .lk {

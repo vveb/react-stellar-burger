@@ -4,12 +4,16 @@ import styles from './ingredient-card.module.css';
 import { CurrencyIcon, Counter } from '@ya.praktikum/react-developer-burger-ui-components';
 import { ingredientPropType, functionPropType } from '../../utils/prop-types';
 
-const IngredientCard = ({ itemData, addIngredientToList}) => {
+const IngredientCard = ({ itemData, addIngredientToList, handleSelectIngredient}) => {
   
   const {bun, others} = React.useContext(IngredientsListContext);
 
-  const handleClick = () => {
+  const handleImageClick = () => {
     addIngredientToList(itemData);
+  }
+
+  const handleNameClick = () => {
+    handleSelectIngredient(itemData)
   }
 
   const count = React.useMemo(() => {
@@ -23,12 +27,12 @@ const IngredientCard = ({ itemData, addIngredientToList}) => {
   return (
     <li className={styles.listItem}>
       {count !== 0 && <Counter count={count} />}
-      <img src = {itemData.image} className={styles.image} onClick={handleClick} />
+      <img role='button' src = {itemData.image} className={styles.image} onClick={handleImageClick} />
       <div className={styles.priceBox}>
         <p className={styles.price}>{itemData.price}</p>
         <CurrencyIcon />
       </div>
-      <p className={styles.name}>{itemData.name}</p>
+      <p role='button' className={styles.name} onClick={handleNameClick}>{itemData.name}</p>
     </li>
   )
 }
@@ -36,6 +40,7 @@ const IngredientCard = ({ itemData, addIngredientToList}) => {
 IngredientCard.propTypes = {
   itemData: ingredientPropType.isRequired,
   addIngredientToList: functionPropType.isRequired,
+  handleSelectIngredient: functionPropType.isRequired,
 }
 
 /* Благодаря этому (мемоизации) мы избегаем перерендера карточки при перерендере родителя

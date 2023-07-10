@@ -1,0 +1,18 @@
+.image {
+  display: block;
+  width: 480px;
+  height: 240px;
+}
+
+.name {
+  composes: text text_type_main-medium from global;
+  composes: mt-4 from global;
+}
+
+.details {
+  width: 516px;
+  composes: mt-8 from global;
+  display: flex;
+  justify-content: flex-start;
+  align-items: center;
+}
