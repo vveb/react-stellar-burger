@@ -8,9 +8,10 @@ import Api from '../../utils/api';
 
 const BurgerConstructor = ({ setOrderId }) => {
   const { currentBurger, currentBurgerDispatcher } = React.useContext(CurrentBurgerContext);
+  const { bun, others } = currentBurger;
+  const [orderLoading, setOrderLoading] = React.useState(false)
 
   const addBun = (type) => {
-    const { bun } = currentBurger;
     if (!bun) {return null}
     return (
       <ConstructorElement
@@ -25,7 +26,7 @@ const BurgerConstructor = ({ setOrderId }) => {
   }
 
   const addOthers = () => {
-    return currentBurger.others.map((item) => 
+    return others.map((item) => 
       (
         <li className={styles.listItem} key={item.uniqueId}>
           <DragIcon />
@@ -44,22 +45,27 @@ const BurgerConstructor = ({ setOrderId }) => {
   }
 
   const assignOrderNumber = React.useCallback((bun, others) => {
-    let orderNumber='0';
     let allIngredientsId = {ingredients: []};
-    allIngredientsId.ingredients.push(bun._id);
-    // console.log(allIngredientsId)
+    if (bun) {
+      allIngredientsId.ingredients.push(bun._id);
+    }
     others.map((item) => item._id).forEach((item) => allIngredientsId.ingredients.push(item));
-    console.log(allIngredientsId)
+    setOrderLoading(true);
     Api.addNewOrder(allIngredientsId)
-    .then((data) => console.log(data))
-    return orderNumber;
-  }, [currentBurger]);
+    .then((data) => {
+      currentBurgerDispatcher({type: 'reset'});
+      setOrderId(data.order.number);
+    })
+    .catch((err) => {
+      const error = err.statusCode ? err.message : 'Connection trouble, check your network';
+      console.log(error);
+    })
+    .finally(() => setOrderLoading(false))
+  }, []);
 
   const placeAnOrder = React.useCallback(() => {
-    const { bun, others } = currentBurger;
-    if (bun && others.length > 0) {
-      currentBurgerDispatcher({type: 'reset'})
-      setOrderId(assignOrderNumber(bun, others));
+    if (bun || others.length > 0) {
+      assignOrderNumber(bun, others);
     }
   }, [currentBurger]);
   
@@ -72,7 +78,14 @@ const BurgerConstructor = ({ setOrderId }) => {
       {addBun('bottom')}
       <div className={styles.total}>
         <TotalPrice />
-        <Button htmlType="button" type="primary" size="large" onClick={placeAnOrder}>Оформить заказ</Button>
+        <Button
+          htmlType="button"
+          type="primary"
+          size="large"
+          onClick={placeAnOrder}
+          disabled={!bun && others.length < 1}>
+          {orderLoading ? 'Минутку...' : 'Оформить заказ'}
+        </Button>
       </div>
     </div>
   )

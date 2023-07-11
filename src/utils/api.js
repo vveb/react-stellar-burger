@@ -12,7 +12,7 @@ const checkResponseOk = (res) => {
 
 const goFetch = async ( { endpoint, data, method }) => {
   const options = {
-    headers: {},
+    headers: method === 'GET' ? {} : { 'Content-Type': 'application/json' },
     method,
   }
   if (data) {

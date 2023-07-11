@@ -44,7 +44,6 @@ const IngredientCard = ({ itemData, handleSelectIngredient}) => {
 
 IngredientCard.propTypes = {
   itemData: ingredientPropType.isRequired,
-  // addIngredientToList: functionPropType.isRequired,
   handleSelectIngredient: functionPropType.isRequired,
 }
 

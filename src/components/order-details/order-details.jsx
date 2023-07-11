@@ -1,7 +1,7 @@
 import React from 'react';
 import styles from './order-details.module.css';
 import SubmitOrderButton from '../submit-order-button/submit-order-button';
-import { stringPropType } from '../../utils/prop-types'
+import { numberPropType } from '../../utils/prop-types'
 
 const OrderDetails = React.forwardRef(({ orderId }, onCloseRef) => {
   return (
@@ -16,7 +16,7 @@ const OrderDetails = React.forwardRef(({ orderId }, onCloseRef) => {
 })
 
 OrderDetails.propTypes = {
-  orderId: stringPropType,
+  orderId: numberPropType,
 }
 
 export default OrderDetails;

@@ -13,6 +13,7 @@ import OrderDetails from '../order-details/order-details';
 function App() {
 
   const {success, data, hasError, errorText} = useIngredientsData();
+
   const currentBurgerInitialState = {bun: null, others: []};
   const [currentBurger, currentBurgerDispatcher] = React.useReducer(currentBurgerReducer, currentBurgerInitialState);
   function currentBurgerReducer (state, action) {
@@ -29,6 +30,7 @@ function App() {
         return state;
     }
   }
+  
   const [currentIngredient, setCurrentIngredient] = React.useState(null);
   const [orderId, setOrderId] = React.useState(null);
 
@@ -55,11 +57,11 @@ function App() {
               </main>
             </CurrentBurgerContext.Provider>
             {currentIngredient &&
-              <Modal ref={onCloseRef} title='Детали ингредиента' extraClass='pt-10 pr-10 pb-15 pl-10' handleCleanIngredient={setCurrentIngredient}>
+              <Modal ref={onCloseRef} title='Детали ингредиента' extraClass='pt-10 pr-10 pb-15 pl-10' handleCleanModalData={setCurrentIngredient}>
                 <IngredientDetails ingredientData={currentIngredient} />
               </Modal>}
             {orderId &&
-            <Modal ref={onCloseRef} extraClass='pt-10 pr-10 pb-30 pl-10' handleCleanIngredient={setOrderId}>
+            <Modal ref={onCloseRef} extraClass='pt-10 pr-10 pb-30 pl-10' handleCleanModalData={setOrderId}>
               <OrderDetails ref={onCloseRef} orderId={orderId} />
             </Modal>}
           </>
