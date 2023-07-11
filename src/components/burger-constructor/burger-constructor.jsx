@@ -1,15 +1,15 @@
 import React from 'react';
-import {IngredientsListContext} from '../../contexts/ingredients-list-context';
+import {CurrentBurgerContext} from '../../contexts/current-burger-context';
 import styles from './burger-constructor.module.css';
 import { ConstructorElement, DragIcon, Button } from '@ya.praktikum/react-developer-burger-ui-components';
 import {functionPropType} from '../../utils/prop-types';
 import TotalPrice from '../total-price/total-price';
 
 const BurgerConstructor = ({ setOrderId }) => {
-  const { ingredientsList, ingredientsListDispatcher } = React.useContext(IngredientsListContext);
+  const { currentBurger, currentBurgerDispatcher } = React.useContext(CurrentBurgerContext);
 
   const addBun = (type) => {
-    const { bun } = ingredientsList;
+    const { bun } = currentBurger;
     if (!bun) {return null}
     return (
       <ConstructorElement
@@ -24,7 +24,7 @@ const BurgerConstructor = ({ setOrderId }) => {
   }
 
   const addOthers = () => {
-    return ingredientsList.others.map((item) => 
+    return currentBurger.others.map((item) => 
       (
         <li className={styles.listItem} key={item.uniqueId}>
           <DragIcon />
@@ -34,7 +34,7 @@ const BurgerConstructor = ({ setOrderId }) => {
             thumbnail={item.image}
             extraClass={styles.backgroundColorTrue}
             handleClose={() => {
-              ingredientsListDispatcher({ type: 'delete', ingredient: item })
+              currentBurgerDispatcher({ type: 'delete', ingredient: item })
             }}
           />
         </li>
@@ -42,14 +42,14 @@ const BurgerConstructor = ({ setOrderId }) => {
     )
   }
 
-  const cleanIngredientsList = ({ bun, others }) => {
-    // if (bun) {deleteIngredientFromList(bun)}
-    if (bun) {ingredientsListDispatcher({ type: 'delete', ingredient: bun })}
-    if (others.length > 0) {
-      // others.forEach((ingredient) => deleteIngredientFromList(ingredient))
-      others.forEach((item) => ingredientsListDispatcher({ type: 'delete', ingredient: item }))
-    }
-  }
+  // const cleanIngredientsList = ({ bun, others }) => {
+  //   // if (bun) {deleteIngredientFromList(bun)}
+  //   if (bun) {currentBurgerDispatcher({ type: 'delete', ingredient: bun })}
+  //   if (others.length > 0) {
+  //     // others.forEach((ingredient) => deleteIngredientFromList(ingredient))
+  //     others.forEach((item) => currentBurgerDispatcher({ type: 'delete', ingredient: item }))
+  //   }
+  // }
 
   const assignOrderNumber = React.useMemo(() => {
     let orderNumber='';
@@ -57,15 +57,15 @@ const BurgerConstructor = ({ setOrderId }) => {
       orderNumber += String(Math.round(Math.random() * 9))
     };
     return orderNumber;
-  }, [ingredientsList]);
+  }, [currentBurger]);
 
   const placeAnOrder = React.useCallback(() => {
-    const { bun, others } = ingredientsList;
+    const { bun, others } = currentBurger;
     if (bun || others.length > 0) {
-      cleanIngredientsList(ingredientsList);
+      currentBurgerDispatcher({type: 'reset'})
       setOrderId(assignOrderNumber);
     }
-  }, [ingredientsList]);
+  }, [currentBurger]);
   
   return (
     <div className={styles.table}>
@@ -83,7 +83,6 @@ const BurgerConstructor = ({ setOrderId }) => {
 }
 
 BurgerConstructor.propTypes = {
-  // deleteIngredientFromList: functionPropType.isRequired,
   setOrderId: functionPropType.isRequired,
 }
 

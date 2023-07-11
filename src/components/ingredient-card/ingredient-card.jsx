@@ -1,17 +1,20 @@
 import React from 'react';
-import {IngredientsListContext} from '../../contexts/ingredients-list-context';
+import {CurrentBurgerContext} from '../../contexts/current-burger-context';
 import styles from './ingredient-card.module.css';
 import { CurrencyIcon, Counter } from '@ya.praktikum/react-developer-burger-ui-components';
 import { ingredientPropType, functionPropType } from '../../utils/prop-types';
 
 const IngredientCard = ({ itemData, handleSelectIngredient}) => {
   
-  const {ingredientsList, ingredientsListDispatcher} = React.useContext(IngredientsListContext);
-  const { bun, others } = ingredientsList;
+  const {currentBurger, currentBurgerDispatcher} = React.useContext(CurrentBurgerContext);
+  const { bun, others } = currentBurger;
 
   const handleImageClick = () => {
-    ingredientsListDispatcher({ type: 'add', ingredient: itemData });
-    // addIngredientToList(itemData);
+    if (itemData.type === 'bun') {
+      currentBurgerDispatcher({ type: 'addBun', ingredient: itemData })
+    } else {
+      currentBurgerDispatcher({ type: 'addOther', ingredient: itemData })
+    }
   }
 
   const handleNameClick = () => {

@@ -42,7 +42,6 @@ const BurgerIngredients = ({ data, handleSelectIngredient }) => {
 
 BurgerIngredients.propTypes = {
   data: arrayOfIngredientsPropType.isRequired,
-  // addIngredientToList: functionPropType.isRequired,
   handleSelectIngredient: functionPropType.isRequired,
 }
 

@@ -29,7 +29,6 @@ const CardsList = ({ type, data, handleSelectIngredient }) => {
 CardsList.propTypes = {
   type: stringPropType.isRequired,
   data: arrayOfIngredientsPropType.isRequired,
-  // addIngredientToList: functionPropType.isRequired,
   handleSelectIngredient: functionPropType.isRequired,
 }
 
