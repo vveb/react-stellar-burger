@@ -4,6 +4,7 @@ import styles from './burger-constructor.module.css';
 import { ConstructorElement, DragIcon, Button } from '@ya.praktikum/react-developer-burger-ui-components';
 import {functionPropType} from '../../utils/prop-types';
 import TotalPrice from '../total-price/total-price';
+import Api from '../../utils/api';
 
 const BurgerConstructor = ({ setOrderId }) => {
   const { currentBurger, currentBurgerDispatcher } = React.useContext(CurrentBurgerContext);
@@ -42,19 +43,23 @@ const BurgerConstructor = ({ setOrderId }) => {
     )
   }
 
-  const assignOrderNumber = React.useMemo(() => {
-    let orderNumber='';
-    for (let i = 0; i < 6; i++) {
-      orderNumber += String(Math.round(Math.random() * 9))
-    };
+  const assignOrderNumber = React.useCallback((bun, others) => {
+    let orderNumber='0';
+    let allIngredientsId = {ingredients: []};
+    allIngredientsId.ingredients.push(bun._id);
+    // console.log(allIngredientsId)
+    others.map((item) => item._id).forEach((item) => allIngredientsId.ingredients.push(item));
+    console.log(allIngredientsId)
+    Api.addNewOrder(allIngredientsId)
+    .then((data) => console.log(data))
     return orderNumber;
   }, [currentBurger]);
 
   const placeAnOrder = React.useCallback(() => {
     const { bun, others } = currentBurger;
-    if (bun || others.length > 0) {
+    if (bun && others.length > 0) {
       currentBurgerDispatcher({type: 'reset'})
-      setOrderId(assignOrderNumber);
+      setOrderId(assignOrderNumber(bun, others));
     }
   }, [currentBurger]);
   

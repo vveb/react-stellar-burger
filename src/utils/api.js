@@ -27,8 +27,13 @@ const getIngredientsData = () => {
   return goFetch({ endpoint: endpointURLs.ingredients, method: 'GET' })
 }
 
+const addNewOrder = (ingredientsIdList) => {
+  return goFetch({ endpoint: endpointURLs.orders, data: ingredientsIdList, method: 'POST' })
+}
+
 const Api = {
   getIngredientsData,
+  addNewOrder,
 }
 
 export default Api;
