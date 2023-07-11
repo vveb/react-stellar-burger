@@ -4,13 +4,13 @@ import IngredientCard from '../ingredient-card/ingredient-card';
 import { arrayOfIngredientsPropType, functionPropType, stringPropType } from '../../utils/prop-types';
 import { ingredientTypeName } from '../../utils/constants';
 
-const CardsList = ({ type, data, addIngredientToList, handleSelectIngredient }) => {
+const CardsList = ({ type, data, handleSelectIngredient }) => {
 
   const generateList = (type) => {
     return data.map((item) => {
       if (item.type === type) {
         return (
-          <IngredientCard itemData = {item} addIngredientToList={addIngredientToList} key={item._id} handleSelectIngredient={handleSelectIngredient}/>
+          <IngredientCard itemData = {item} key={item._id} handleSelectIngredient={handleSelectIngredient}/>
         )
       }
     })
@@ -29,7 +29,7 @@ const CardsList = ({ type, data, addIngredientToList, handleSelectIngredient }) 
 CardsList.propTypes = {
   type: stringPropType.isRequired,
   data: arrayOfIngredientsPropType.isRequired,
-  addIngredientToList: functionPropType.isRequired,
+  // addIngredientToList: functionPropType.isRequired,
   handleSelectIngredient: functionPropType.isRequired,
 }
 

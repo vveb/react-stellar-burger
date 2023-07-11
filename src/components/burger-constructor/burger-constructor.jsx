@@ -5,8 +5,8 @@ import { ConstructorElement, DragIcon, Button } from '@ya.praktikum/react-develo
 import {functionPropType} from '../../utils/prop-types';
 import TotalPrice from '../total-price/total-price';
 
-const BurgerConstructor = ({ deleteIngredientFromList, setOrderId }) => {
-  const ingredientsList = React.useContext(IngredientsListContext);
+const BurgerConstructor = ({ setOrderId }) => {
+  const { ingredientsList, ingredientsListDispatcher } = React.useContext(IngredientsListContext);
 
   const addBun = (type) => {
     const { bun } = ingredientsList;
@@ -34,7 +34,7 @@ const BurgerConstructor = ({ deleteIngredientFromList, setOrderId }) => {
             thumbnail={item.image}
             extraClass={styles.backgroundColorTrue}
             handleClose={() => {
-              deleteIngredientFromList(item)
+              ingredientsListDispatcher({ type: 'delete', ingredient: item })
             }}
           />
         </li>
@@ -43,9 +43,11 @@ const BurgerConstructor = ({ deleteIngredientFromList, setOrderId }) => {
   }
 
   const cleanIngredientsList = ({ bun, others }) => {
-    if (bun) {deleteIngredientFromList(bun)}
+    // if (bun) {deleteIngredientFromList(bun)}
+    if (bun) {ingredientsListDispatcher({ type: 'delete', ingredient: bun })}
     if (others.length > 0) {
-      others.forEach((ingredient) => deleteIngredientFromList(ingredient))
+      // others.forEach((ingredient) => deleteIngredientFromList(ingredient))
+      others.forEach((item) => ingredientsListDispatcher({ type: 'delete', ingredient: item }))
     }
   }
 
@@ -81,7 +83,7 @@ const BurgerConstructor = ({ deleteIngredientFromList, setOrderId }) => {
 }
 
 BurgerConstructor.propTypes = {
-  deleteIngredientFromList: functionPropType.isRequired,
+  // deleteIngredientFromList: functionPropType.isRequired,
   setOrderId: functionPropType.isRequired,
 }
 

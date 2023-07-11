@@ -5,7 +5,7 @@ import { Tab } from '@ya.praktikum/react-developer-burger-ui-components';
 import {functionPropType, arrayOfIngredientsPropType} from '../../utils/prop-types';
 import { productTypes } from '../../utils/constants';
 
-const BurgerIngredients = ({ data, addIngredientToList, handleSelectIngredient }) => {
+const BurgerIngredients = ({ data, handleSelectIngredient }) => {
   const [current, setCurrent] = React.useState('buns')
 
   const setTab = (tab) => {
@@ -16,7 +16,7 @@ const BurgerIngredients = ({ data, addIngredientToList, handleSelectIngredient }
 
   const generateIngredientsList = () => {
     return productTypes.map((type) => (
-      <CardsList type={type} data={data} key={type} addIngredientToList={addIngredientToList} handleSelectIngredient={handleSelectIngredient} />
+      <CardsList type={type} data={data} key={type} handleSelectIngredient={handleSelectIngredient} />
     ))
   }
 
@@ -42,7 +42,7 @@ const BurgerIngredients = ({ data, addIngredientToList, handleSelectIngredient }
 
 BurgerIngredients.propTypes = {
   data: arrayOfIngredientsPropType.isRequired,
-  addIngredientToList: functionPropType.isRequired,
+  // addIngredientToList: functionPropType.isRequired,
   handleSelectIngredient: functionPropType.isRequired,
 }
 
