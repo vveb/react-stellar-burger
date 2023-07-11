@@ -1,5 +1,5 @@
 import React from 'react';
-import {CurrentBurgerContext} from '../../contexts/current-burger-context';
+import {CurrentBurgerContext} from '../../contexts';
 import styles from './burger-constructor.module.css';
 import { ConstructorElement, DragIcon, Button } from '@ya.praktikum/react-developer-burger-ui-components';
 import {functionPropType} from '../../utils/prop-types';
@@ -41,15 +41,6 @@ const BurgerConstructor = ({ setOrderId }) => {
       )
     )
   }
-
-  // const cleanIngredientsList = ({ bun, others }) => {
-  //   // if (bun) {deleteIngredientFromList(bun)}
-  //   if (bun) {currentBurgerDispatcher({ type: 'delete', ingredient: bun })}
-  //   if (others.length > 0) {
-  //     // others.forEach((ingredient) => deleteIngredientFromList(ingredient))
-  //     others.forEach((item) => currentBurgerDispatcher({ type: 'delete', ingredient: item }))
-  //   }
-  // }
 
   const assignOrderNumber = React.useMemo(() => {
     let orderNumber='';

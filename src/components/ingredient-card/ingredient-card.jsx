@@ -1,5 +1,5 @@
 import React from 'react';
-import {CurrentBurgerContext} from '../../contexts/current-burger-context';
+import {CurrentBurgerContext} from '../../contexts';
 import styles from './ingredient-card.module.css';
 import { CurrencyIcon, Counter } from '@ya.praktikum/react-developer-burger-ui-components';
 import { ingredientPropType, functionPropType } from '../../utils/prop-types';

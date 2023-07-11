@@ -4,7 +4,7 @@ import AppHeader from "../app-header/app-header";
 import BurgerIngredients from "../burger-ingredients/burger-ingredients";
 import BurgerConstructor from "../burger-constructor/burger-constructor";
 import { nanoid } from "nanoid";
-import {CurrentBurgerContext} from '../../contexts/current-burger-context'
+import { CurrentBurgerContext, IngredientsDataContext } from '../../contexts/'
 import { useIngredientsData } from '../../hooks/use-ingredients-data';
 import Modal from '../modal/modal';
 import IngredientDetails from '../ingredient-details/ingredient-details';
@@ -45,7 +45,9 @@ function App() {
               <main className={styles.main}>
                 <section className={styles.ingredients}>
                   <h2 className={styles.title}>Соберите бургер</h2>
-                  <BurgerIngredients data={data} handleSelectIngredient={setCurrentIngredient}/>
+                  <IngredientsDataContext.Provider value={data}>
+                    <BurgerIngredients handleSelectIngredient={setCurrentIngredient}/>
+                  </IngredientsDataContext.Provider>
                 </section>
                 <section className={styles.burgerConstructor}>
                   <BurgerConstructor setOrderId={setOrderId}/>

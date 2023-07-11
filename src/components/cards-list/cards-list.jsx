@@ -3,8 +3,11 @@ import styles from './cards-list.module.css';
 import IngredientCard from '../ingredient-card/ingredient-card';
 import { arrayOfIngredientsPropType, functionPropType, stringPropType } from '../../utils/prop-types';
 import { ingredientTypeName } from '../../utils/constants';
+import { IngredientsDataContext } from '../../contexts';
 
-const CardsList = ({ type, data, handleSelectIngredient }) => {
+const CardsList = ({ type, handleSelectIngredient }) => {
+
+  const data = React.useContext(IngredientsDataContext);
 
   const generateList = (type) => {
     return data.map((item) => {
@@ -28,7 +31,6 @@ const CardsList = ({ type, data, handleSelectIngredient }) => {
 
 CardsList.propTypes = {
   type: stringPropType.isRequired,
-  data: arrayOfIngredientsPropType.isRequired,
   handleSelectIngredient: functionPropType.isRequired,
 }
 

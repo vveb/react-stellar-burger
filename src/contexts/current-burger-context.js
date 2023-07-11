@@ -1,3 +1,5 @@
 import React from "react"
 
-export const CurrentBurgerContext = React.createContext({})
+const CurrentBurgerContext = React.createContext({});
+
+export default CurrentBurgerContext;
