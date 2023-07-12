@@ -1,55 +1,30 @@
 import React from 'react';
 import {CurrentBurgerContext} from '../../contexts';
 import styles from './burger-constructor.module.css';
-import { ConstructorElement, DragIcon, Button } from '@ya.praktikum/react-developer-burger-ui-components';
+import { Button } from '@ya.praktikum/react-developer-burger-ui-components';
+import Bun from '../bun/bun';
 import {functionPropType} from '../../utils/prop-types';
 import TotalPrice from '../total-price/total-price';
 import Api from '../../utils/api';
+import Others from '../others/others';
 
 const BurgerConstructor = ({ setOrderId }) => {
   const { currentBurger, currentBurgerDispatcher } = React.useContext(CurrentBurgerContext);
   const { bun, others } = currentBurger;
-  const [orderLoading, setOrderLoading] = React.useState(false)
+  const [orderLoading, setOrderLoading] = React.useState(false);
 
-  const addBun = (type) => {
-    if (!bun) {return null}
-    return (
-      <ConstructorElement
-        type={type}
-        isLocked={true}
-        text={bun.name + (type === 'top' ? ' (верх)' : ' (низ)')}
-        price={bun.price}
-        thumbnail={bun.image}
-        extraClass={styles.bordIngredient}
-      />
-    )
-  }
+  const assignOrderNumber = (bun, others) => {
+    // Не решил, какая из записей лучше - эта...
 
-  const addOthers = () => {
-    return others.map((item) => 
-      (
-        <li className={styles.listItem} key={item.uniqueId}>
-          <DragIcon />
-          <ConstructorElement
-            text={item.name}
-            price={item.price}
-            thumbnail={item.image}
-            extraClass={styles.backgroundColorTrue}
-            handleClose={() => {
-              currentBurgerDispatcher({ type: 'delete', ingredient: item })
-            }}
-          />
-        </li>
-      )
-    )
-  }
-
-  const assignOrderNumber = React.useCallback((bun, others) => {
-    let allIngredientsId = {ingredients: []};
+    // const allIngredientsId = bun ? 
+    // {ingredients: [bun ? bun._id : null, ...others.map(item => item._id), bun ? bun._id : null]} :
+    // {ingredients: [...others.map(item => item._id)]}
+    
+    //...или эта...
+    const allIngredientsId = {ingredients: others.map(item => item._id)};
     if (bun) {
-      allIngredientsId.ingredients.push(bun._id);
+      allIngredientsId.ingredients = [bun._id, ...allIngredientsId.ingredients, bun._id];
     }
-    others.map((item) => item._id).forEach((item) => allIngredientsId.ingredients.push(item));
     setOrderLoading(true);
     Api.addNewOrder(allIngredientsId)
     .then((data) => {
@@ -61,21 +36,19 @@ const BurgerConstructor = ({ setOrderId }) => {
       console.log(error);
     })
     .finally(() => setOrderLoading(false))
-  }, []);
+  };
 
-  const placeAnOrder = React.useCallback(() => {
+  const placeAnOrder = () => {
     if (bun || others.length > 0) {
       assignOrderNumber(bun, others);
     }
-  }, [currentBurger]);
+  };
   
   return (
     <div className={styles.table}>
-      {addBun('top')}
-      <ul className={styles.list}>
-        {addOthers()}
-      </ul>
-      {addBun('bottom')}
+      {bun && <Bun ingredient={bun} type='top' extraClass={styles.bordIngredient} />}
+      <Others ingredientsList={others} />
+      {bun && <Bun ingredient={bun} type='bottom' extraClass={styles.bordIngredient} />}
       <div className={styles.total}>
         <TotalPrice />
         <Button
