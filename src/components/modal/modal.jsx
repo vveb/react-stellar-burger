@@ -3,9 +3,9 @@ import React from 'react';
 import styles from './modal.module.css';
 import ModalOverlay from '../modal-overlay/modal-overlay';
 import { CloseIcon } from '@ya.praktikum/react-developer-burger-ui-components';
-import { stringPropType, reactElementPropType, functionPropType } from '../../utils/prop-types'
+import { stringPropType, reactElementPropType, functionPropType, booleanPropType } from '../../utils/prop-types'
 
-const Modal = React.forwardRef(({ title, children, extraClass, handleCleanModalData }, onCloseRef) => {
+const Modal = ({ title, children, extraClass, handleCleanModalData, closeRequest }) => {
   const modalRoot = document.getElementById('modals');
 
   const modalRef = React.useRef(null);
@@ -22,13 +22,18 @@ const Modal = React.forwardRef(({ title, children, extraClass, handleCleanModalD
   }, []);
   
   React.useEffect(() => {
-    onCloseRef.current = closeModal; //Это нужно, чтобы прокинуть функцию закрытия до кнопки сабмита в OrderDetails
     overlayRef.current.style.cursor = 'pointer';
     overlayRef.current.style.opacity = 1;
     setTimeout(() => {
       modalRef.current.style.opacity = 1;
     }, 200);
   }, []);
+
+  React.useEffect(() => {
+    if (closeRequest) {
+      closeModal();
+    }
+  }, [closeRequest, closeModal])
 
   React.useEffect(() => {
     const handleEscClose = (evt) => {
@@ -54,17 +59,19 @@ const Modal = React.forwardRef(({ title, children, extraClass, handleCleanModalD
       </div>
     </>
   ), modalRoot);
-});
+};
 
 Modal.defaultProps = {
   title: '',
+  closeRequest: false,
 }
 
 Modal.propTypes = {
-  title: stringPropType.isRequired,
+  title: stringPropType,
   children: reactElementPropType.isRequired,
   extraClass: stringPropType.isRequired,
   handleCleanModalData: functionPropType.isRequired,
+  closeRequest: booleanPropType,
 }
 
 export default Modal;

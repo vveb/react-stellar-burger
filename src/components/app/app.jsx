@@ -6,9 +6,6 @@ import BurgerConstructor from "../burger-constructor/burger-constructor";
 import { nanoid } from "nanoid";
 import { CurrentBurgerContext, IngredientsDataContext } from '../../contexts/'
 import { useIngredientsData } from '../../hooks/use-ingredients-data';
-import Modal from '../modal/modal';
-import IngredientDetails from '../ingredient-details/ingredient-details';
-import OrderDetails from '../order-details/order-details';
 
 function App() {
 
@@ -30,11 +27,6 @@ function App() {
         return state;
     }
   }
-  
-  const [currentIngredient, setCurrentIngredient] = React.useState(null);
-  const [orderId, setOrderId] = React.useState(null);
-
-  const onCloseRef = React.createRef();
 
     return (
       <div className={styles.app}>
@@ -48,22 +40,14 @@ function App() {
                 <section className={styles.ingredients}>
                   <h2 className={styles.title}>Соберите бургер</h2>
                   <IngredientsDataContext.Provider value={data}>
-                    <BurgerIngredients handleSelectIngredient={setCurrentIngredient}/>
+                    <BurgerIngredients />
                   </IngredientsDataContext.Provider>
                 </section>
                 <section className={styles.burgerConstructor}>
-                  <BurgerConstructor setOrderId={setOrderId}/>
+                  <BurgerConstructor />
                 </section>
               </main>
             </CurrentBurgerContext.Provider>
-            {currentIngredient &&
-              <Modal ref={onCloseRef} title='Детали ингредиента' extraClass='pt-10 pr-10 pb-15 pl-10' handleCleanModalData={setCurrentIngredient}>
-                <IngredientDetails ingredientData={currentIngredient} />
-              </Modal>}
-            {orderId &&
-            <Modal ref={onCloseRef} extraClass='pt-10 pr-10 pb-30 pl-10' handleCleanModalData={setOrderId}>
-              <OrderDetails ref={onCloseRef} orderId={orderId} />
-            </Modal>}
           </>
         }
       </div>

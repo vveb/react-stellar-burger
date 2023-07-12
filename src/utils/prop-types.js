@@ -23,3 +23,4 @@ export const functionPropType = PropTypes.func;
 export const stringPropType = PropTypes.string;
 export const numberPropType = PropTypes.number;
 export const reactElementPropType = PropTypes.element;
+export const booleanPropType = PropTypes.bool;
