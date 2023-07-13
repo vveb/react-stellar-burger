@@ -14,6 +14,10 @@ const Bun = ({ ingredient, type, extraClass }) => {
   )
 }
 
+Bun.defaultProps = {
+  extraClass: '',
+}
+
 Bun.propTypes = {
   ingredient: ingredientPropType.isRequired,
   type: stringPropType.isRequired,

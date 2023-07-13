@@ -1,5 +1,5 @@
 import React from 'react';
-import {CurrentBurgerContext} from '../../contexts';
+import { ApiStateContext, CurrentBurgerContext } from '../../contexts';
 import styles from './burger-constructor.module.css';
 import { Button } from '@ya.praktikum/react-developer-burger-ui-components';
 import Bun from '../bun/bun';
@@ -10,8 +10,8 @@ import Api from '../../utils/api';
 import Others from '../others/others';
 import { orderFailed, orderPending, orderPlaced } from '../../utils/action-creators'
 
-const BurgerConstructor = ({ apiStateReducer }) => {
-  const { apiState, apiStateDispatcher } = apiStateReducer;
+const BurgerConstructor = () => {
+  const { apiState, apiStateDispatcher } = React.useContext(ApiStateContext);
   const { currentBurger, currentBurgerDispatcher } = React.useContext(CurrentBurgerContext);
   const { bun, others } = currentBurger;
 
@@ -21,13 +21,7 @@ const BurgerConstructor = ({ apiStateReducer }) => {
   const [isCloseRequested, setIsCloseRequested] = React.useState(false);
 
   const assignOrderNumber = (bun, others) => {
-    // Не решил, какая из записей лучше - эта...
 
-    // const allIngredientsId = bun ? 
-    // {ingredients: [bun ? bun._id : null, ...others.map(item => item._id), bun ? bun._id : null]} :
-    // {ingredients: [...others.map(item => item._id)]}
-    
-    //...или эта...
     const allIngredientsId = {ingredients: others.map(item => item._id)};
     if (bun) {
       allIngredientsId.ingredients = [bun._id, ...allIngredientsId.ingredients, bun._id];
@@ -41,7 +35,7 @@ const BurgerConstructor = ({ apiStateReducer }) => {
     })
     .catch((err) => {
       const errorText = err.statusCode ? err.message : 'Проблема с подключением, проверьте свою сеть';
-      apiStateDispatcher(orderFailed(`Ошибка при отправке заказа: ${errorText}`))
+      apiStateDispatcher(orderFailed(`Ошибка при отправке заказа: ${errorText}`));
     })
   };
 
@@ -54,7 +48,7 @@ const BurgerConstructor = ({ apiStateReducer }) => {
   const resetOrderModal = React.useCallback((value) => {
     setOrderId(value);
     setIsCloseRequested(false);
-  })
+  });
 
   return (
     <>
@@ -79,7 +73,7 @@ const BurgerConstructor = ({ apiStateReducer }) => {
         <OrderDetails handleCloseRequest={setIsCloseRequested} orderId={orderId} />
       </Modal>}
     </>
-  )
-}
+  );
+};
 
 export default React.memo(BurgerConstructor);

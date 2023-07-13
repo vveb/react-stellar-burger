@@ -11,8 +11,8 @@ const BurgerIngredients = () => {
 
   const [currentIngredient, setCurrentIngredient] = React.useState(null);
 
+  //Обработка переключения табов при скролле
   const baseRef = React.useRef(null);
-
   const bunsRef = React.useRef(null);
   const saucesRef = React.useRef(null);
   const mainsRef = React.useRef(null);
@@ -30,6 +30,7 @@ const BurgerIngredients = () => {
     root: baseRef.current,
   });
 
+  //Обработка скролла при клике на таб
   const setBunsTab = React.useCallback(() => {
     bunsRef.current.scrollIntoView({ behavior: "smooth" });
   }, []);
@@ -41,11 +42,6 @@ const BurgerIngredients = () => {
   const setMainsTab = React.useCallback(() => {
     mainsRef.current.scrollIntoView({ behavior: "smooth" });
   }, []);
-
-  // React.useEffect(() => {
-  //   console.log(mainsInView)
-  //   console.dir(mainsViewRef)
-  // }, [mainsInView, mainsViewRef])
 
   return (
     <>

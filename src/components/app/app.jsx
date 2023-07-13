@@ -4,7 +4,7 @@ import AppHeader from "../app-header/app-header";
 import BurgerIngredients from "../burger-ingredients/burger-ingredients";
 import BurgerConstructor from "../burger-constructor/burger-constructor";
 import Modal from '../modal/modal';
-import { CurrentBurgerContext, IngredientsDataContext } from '../../contexts/'
+import { CurrentBurgerContext, IngredientsDataContext, ApiStateContext } from '../../contexts/'
 import { useIngredientsData } from '../../hooks/use-ingredients-data';
 import { CLEAR_API_ERROR,
   SET_API_ERROR,
@@ -80,31 +80,33 @@ function App() {
 
     return (
       <div className={styles.app}>
-        <AppHeader />
-        {apiState.isIngredientsRequested && <p className={styles.loadText}>Идет загрузка данных с сервера...</p>}
-        {apiState.isIngredientsFailed && <p className={styles.errorText}>{apiState.error}</p>}
-        {apiState.isIngredientsRecieved &&
-          <>
-            <CurrentBurgerContext.Provider value={{currentBurger, currentBurgerDispatcher}}>
-              <main className={styles.main}>
-                <section className={styles.ingredients}>
-                  <h2 className={styles.title}>Соберите бургер</h2>
-                  <IngredientsDataContext.Provider value={data}>
-                    <BurgerIngredients />
-                  </IngredientsDataContext.Provider>
-                </section>
-                <section className={styles.burgerConstructor}>
-                  <BurgerConstructor apiStateReducer={{apiState, apiStateDispatcher}} />
-                </section>
-              </main>
-            </CurrentBurgerContext.Provider>
-          </>
-        }
-        {(apiState.error && !apiState.isIngredientsFailed) && 
-        <Modal title='Что-то пошло не так :(' handleCleanModalData={closeErrorModal} extraClass='pt-10 pr-10 pb-15 pl-10'>
-          <p className={styles.modalErrorText}>{apiState.error}</p>
-        </Modal>
-        }
+        <ApiStateContext.Provider value={{apiState, apiStateDispatcher}}>
+          <AppHeader />
+          {apiState.isIngredientsRequested && <p className={styles.loadText}>Идет загрузка данных с сервера...</p>}
+          {apiState.isIngredientsFailed && <p className={styles.errorText}>{apiState.error}</p>}
+          {apiState.isIngredientsRecieved &&
+            <>
+              <CurrentBurgerContext.Provider value={{currentBurger, currentBurgerDispatcher}}>
+                <main className={styles.main}>
+                  <section className={styles.ingredients}>
+                    <h2 className={styles.title}>Соберите бургер</h2>
+                    <IngredientsDataContext.Provider value={data}>
+                      <BurgerIngredients />
+                    </IngredientsDataContext.Provider>
+                  </section>
+                  <section className={styles.burgerConstructor}>
+                    <BurgerConstructor />
+                  </section>
+                </main>
+              </CurrentBurgerContext.Provider>
+            </>
+          }
+          {(apiState.error && !apiState.isIngredientsFailed) && 
+          <Modal title='Что-то пошло не так :(' handleCleanModalData={closeErrorModal} extraClass='pt-10 pr-10 pb-15 pl-10'>
+            <p className={styles.modalErrorText}>{apiState.error}</p>
+          </Modal>
+          }
+        </ApiStateContext.Provider>
       </div>
     );
 }

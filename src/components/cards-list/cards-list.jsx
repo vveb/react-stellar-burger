@@ -2,7 +2,6 @@ import React from 'react';
 import styles from './cards-list.module.css';
 import IngredientCard from '../ingredient-card/ingredient-card';
 import { functionPropType, stringPropType } from '../../utils/prop-types';
-import { ingredientTypeName } from '../../utils/constants';
 import { IngredientsDataContext } from '../../contexts';
 
 const CardsList = ({ type, handleSelectIngredient }) => {
