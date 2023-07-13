@@ -3,6 +3,7 @@ import {CurrentBurgerContext} from '../../contexts';
 import styles from './ingredient-card.module.css';
 import { CurrencyIcon, Counter } from '@ya.praktikum/react-developer-burger-ui-components';
 import { ingredientPropType, functionPropType } from '../../utils/prop-types';
+import { nanoid } from 'nanoid';
 
 const IngredientCard = ({ itemData, handleSelectIngredient}) => {
   
@@ -11,9 +12,9 @@ const IngredientCard = ({ itemData, handleSelectIngredient}) => {
 
   const handleImageClick = () => {
     if (itemData.type === 'bun') {
-      currentBurgerDispatcher({ type: 'addBun', ingredient: itemData })
+      currentBurgerDispatcher({ type: 'addBun', ingredient: {...itemData, uniqueId: nanoid(8)} })
     } else {
-      currentBurgerDispatcher({ type: 'addOther', ingredient: itemData })
+      currentBurgerDispatcher({ type: 'addOther', ingredient: {...itemData, uniqueId: nanoid(8)} })
     }
   }
 

@@ -1,19 +1,26 @@
 import React from 'react';
 import Api from '../utils/api';
+import { INGREDIENTS_FAILED, INGREDIENTS_RECIEVED, INGREDIENTS_REQUESTED } from '../utils/constants';
+import { ingredientsFailed, ingredientsRecieved, setApiError } from '../utils/action-creators';
 
-const useIngredientsData = () => {
+const useIngredientsData = (apiStateDispatcher) => {
 
-  const [state, setState] = React.useState({success: false, hasError: false, errorText: null, data: []});
+  const [ingredientsData, setIngredientsData] = React.useState(null);
 
   React.useEffect(() => {
+    apiStateDispatcher({type: INGREDIENTS_REQUESTED});
     Api.getIngredientsData()
-    .then((data) => setState({...state, success: data.success, data: data.data}))
+    .then((data) => {
+      setIngredientsData(data.data);
+      apiStateDispatcher(ingredientsRecieved());
+    })
     .catch((err) => {
-      const error = err.statusCode ? err.message : 'Connection trouble, check your network';
-      setState({...state, hasError: true, errorText: error});
+      const errorText = err.statusCode ? err.message : 'Проблема с подключением, проверьте свою сеть';
+      apiStateDispatcher(ingredientsFailed(`Ошибка при загрузке данных с сервера: ${errorText}`));
+      setIngredientsData(null);
   })}, []);
 
-  return state;
+  return ingredientsData;
 };
 
 export { useIngredientsData }

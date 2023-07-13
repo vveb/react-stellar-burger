@@ -64,12 +64,13 @@ const Modal = ({ title, children, extraClass, handleCleanModalData, closeRequest
 Modal.defaultProps = {
   title: '',
   closeRequest: false,
+  extraClass: '',
 }
 
 Modal.propTypes = {
   title: stringPropType,
   children: reactElementPropType.isRequired,
-  extraClass: stringPropType.isRequired,
+  extraClass: stringPropType,
   handleCleanModalData: functionPropType.isRequired,
   closeRequest: booleanPropType,
 }

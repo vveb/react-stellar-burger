@@ -8,14 +8,16 @@ import OrderDetails from '../order-details/order-details';
 import TotalPrice from '../total-price/total-price';
 import Api from '../../utils/api';
 import Others from '../others/others';
+import { orderFailed, orderPending, orderPlaced } from '../../utils/action-creators'
 
-const BurgerConstructor = () => {
+const BurgerConstructor = ({ apiStateReducer }) => {
+  const { apiState, apiStateDispatcher } = apiStateReducer;
   const { currentBurger, currentBurgerDispatcher } = React.useContext(CurrentBurgerContext);
   const { bun, others } = currentBurger;
-  const [orderLoading, setOrderLoading] = React.useState(false);
 
   const [orderId, setOrderId] = React.useState(null);
 
+  // Это дополнительный стейт для управления закрытием модального окна элементами, не принадлежащими компоненту Modal
   const [isCloseRequested, setIsCloseRequested] = React.useState(false);
 
   const assignOrderNumber = (bun, others) => {
@@ -30,17 +32,17 @@ const BurgerConstructor = () => {
     if (bun) {
       allIngredientsId.ingredients = [bun._id, ...allIngredientsId.ingredients, bun._id];
     }
-    setOrderLoading(true);
+    apiStateDispatcher(orderPending());
     Api.addNewOrder(allIngredientsId)
     .then((data) => {
+      apiStateDispatcher(orderPlaced());
       setOrderId(data.order.number);
       currentBurgerDispatcher({type: 'reset'});
     })
     .catch((err) => {
-      const error = err.statusCode ? err.message : 'Connection trouble, check your network';
-      console.log(error);
+      const errorText = err.statusCode ? err.message : 'Проблема с подключением, проверьте свою сеть';
+      apiStateDispatcher(orderFailed(`Ошибка при отправке заказа: ${errorText}`))
     })
-    .finally(() => setOrderLoading(false))
   };
 
   const placeAnOrder = () => {
@@ -68,7 +70,7 @@ const BurgerConstructor = () => {
             size="large"
             onClick={placeAnOrder}
             disabled={!bun && others.length < 1}>
-            {orderLoading ? 'Минутку...' : 'Оформить заказ'}
+            {apiState.isOrderPending ? 'Минутку...' : 'Оформить заказ'}
           </Button>
         </div>
       </div>

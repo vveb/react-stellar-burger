@@ -20,14 +20,11 @@ const CardsList = ({ type, handleSelectIngredient }) => {
   }
 
   return (
-    <li className={styles.tableItem} id={type + 's'}>
-      <h3 className={styles.title}>{ingredientTypeName[type]}</h3>
       <ul className={styles.list}>
         {generateList(type)}
       </ul>
-    </li>
   )
-}
+};
 
 CardsList.propTypes = {
   type: stringPropType.isRequired,
