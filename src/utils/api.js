@@ -12,7 +12,7 @@ const checkResponseOk = (res) => {
 
 const goFetch = async ( { endpoint, data, method }) => {
   const options = {
-    headers: {},
+    headers: method === 'GET' ? {} : { 'Content-Type': 'application/json' },
     method,
   }
   if (data) {
@@ -27,8 +27,13 @@ const getIngredientsData = () => {
   return goFetch({ endpoint: endpointURLs.ingredients, method: 'GET' })
 }
 
+const addNewOrder = (ingredientsIdList) => {
+  return goFetch({ endpoint: endpointURLs.orders, data: ingredientsIdList, method: 'POST' })
+}
+
 const Api = {
   getIngredientsData,
+  addNewOrder,
 }
 
 export default Api;

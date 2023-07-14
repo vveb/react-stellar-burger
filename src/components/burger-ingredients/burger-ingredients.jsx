@@ -1,49 +1,81 @@
 import React from 'react';
 import styles from './burger-ingredients.module.css';
 import CardsList from '../cards-list/cards-list';
+import IngredientDetails from '../ingredient-details/ingredient-details';
+import Modal from '../modal/modal';
 import { Tab } from '@ya.praktikum/react-developer-burger-ui-components';
-import {functionPropType, arrayOfIngredientsPropType} from '../../utils/prop-types';
-import { productTypes } from '../../utils/constants';
+import { productTypes, ingredientTypeName } from '../../utils/constants';
+import { useInView } from 'react-intersection-observer';
 
-const BurgerIngredients = ({ data, addIngredientToList, handleSelectIngredient }) => {
-  const [current, setCurrent] = React.useState('buns')
+const BurgerIngredients = () => {
 
-  const setTab = (tab) => {
-    setCurrent(tab);
-    const element = document.getElementById(tab);
-    if (element) element.scrollIntoView({ behavior: "smooth" });
-  };
+  const [currentIngredient, setCurrentIngredient] = React.useState(null);
 
-  const generateIngredientsList = () => {
-    return productTypes.map((type) => (
-      <CardsList type={type} data={data} key={type} addIngredientToList={addIngredientToList} handleSelectIngredient={handleSelectIngredient} />
-    ))
-  }
+  //Обработка переключения табов при скролле
+  const baseRef = React.useRef(null);
+  const bunsRef = React.useRef(null);
+  const saucesRef = React.useRef(null);
+  const mainsRef = React.useRef(null);
+
+  const [bunsViewRef, bunsActiveView] = useInView({
+    threshold: .5,
+    root: baseRef.current,
+  });
+  const [saucesViewRef, saucesActiveView] = useInView({
+    threshold: .1,
+    root: baseRef.current,
+  });
+  const [mainsViewRef, mainsActiveView] = useInView({
+    threshold: .2,
+    root: baseRef.current,
+  });
+
+  //Обработка скролла при клике на таб
+  const setBunsTab = React.useCallback(() => {
+    bunsRef.current.scrollIntoView({ behavior: "smooth" });
+  }, []);
+
+  const setSaucesTab = React.useCallback(() => {
+    saucesRef.current.scrollIntoView({ behavior: "smooth" });
+  }, []);
+
+  const setMainsTab = React.useCallback(() => {
+    mainsRef.current.scrollIntoView({ behavior: "smooth" });
+  }, []);
 
   return (
     <>
       <div style={{ display: 'flex' }}>
-        <Tab value="buns" active={current === 'buns'} onClick={setTab}>
+        <Tab value="buns" active={bunsActiveView} onClick={setBunsTab}>
           Булки
         </Tab>
-        <Tab value="sauces" active={current === 'sauces'} onClick={setTab}>
+        <Tab value="sauces" active={saucesActiveView && !bunsActiveView} onClick={setSaucesTab}>
           Соусы
         </Tab>
-        <Tab value="mains" active={current === 'mains'} onClick={setTab}>
+        <Tab value="mains" active={mainsActiveView && !saucesActiveView} onClick={setMainsTab}>
           Начинки
         </Tab>
       </div>
-      <ul className={styles.table}>
-        {generateIngredientsList()}
+      <ul ref={baseRef} className={styles.table}>
+        <li ref={bunsViewRef} className={styles.tableItem} key='buns'>
+          <h3 ref={bunsRef} className={styles.title}>{ingredientTypeName.bun}</h3>
+            <CardsList type={productTypes.bun} key={productTypes.bun} handleSelectIngredient={setCurrentIngredient} />
+        </li>
+        <li ref={saucesViewRef} className={styles.tableItem} key='sauces'>
+          <h3 ref={saucesRef} className={styles.title}>{ingredientTypeName.sauce}</h3>
+            <CardsList type={productTypes.sauce} key={productTypes.sauce} handleSelectIngredient={setCurrentIngredient} />
+        </li>
+        <li ref={mainsViewRef} className={styles.tableItem} key='mains'>
+          <h3 ref={mainsRef} className={styles.title}>{ingredientTypeName.main}</h3>
+            <CardsList type={productTypes.main} key={productTypes.main} handleSelectIngredient={setCurrentIngredient} />
+        </li>
       </ul>
+      {currentIngredient &&
+      <Modal title='Детали ингредиента' extraClass='pt-10 pr-10 pb-15 pl-10' handleCleanModalData={setCurrentIngredient}>
+        <IngredientDetails ingredientData={currentIngredient} />
+      </Modal>}
     </>
   )
-}
-
-BurgerIngredients.propTypes = {
-  data: arrayOfIngredientsPropType.isRequired,
-  addIngredientToList: functionPropType.isRequired,
-  handleSelectIngredient: functionPropType.isRequired,
 }
 
 export default React.memo(BurgerIngredients);

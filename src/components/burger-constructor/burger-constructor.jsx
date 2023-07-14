@@ -1,88 +1,79 @@
 import React from 'react';
-import {IngredientsListContext} from '../../contexts/ingredients-list-context';
+import { ApiStateContext, CurrentBurgerContext } from '../../contexts';
 import styles from './burger-constructor.module.css';
-import { ConstructorElement, DragIcon, Button } from '@ya.praktikum/react-developer-burger-ui-components';
-import {functionPropType} from '../../utils/prop-types';
+import { Button } from '@ya.praktikum/react-developer-burger-ui-components';
+import Bun from '../bun/bun';
+import Modal from '../modal/modal';
+import OrderDetails from '../order-details/order-details';
 import TotalPrice from '../total-price/total-price';
+import Api from '../../utils/api';
+import Others from '../others/others';
+import { orderFailed, orderPending, orderPlaced } from '../../utils/action-creators'
 
-const BurgerConstructor = ({ deleteIngredientFromList, setOrderId }) => {
-  const ingredientsList = React.useContext(IngredientsListContext);
+const BurgerConstructor = () => {
+  const { apiState, apiStateDispatcher } = React.useContext(ApiStateContext);
+  const { currentBurger, currentBurgerDispatcher } = React.useContext(CurrentBurgerContext);
+  const { bun, others } = currentBurger;
 
-  const addBun = (type) => {
-    const { bun } = ingredientsList;
-    if (!bun) {return null}
-    return (
-      <ConstructorElement
-        type={type}
-        isLocked={true}
-        text={bun.name + (type === 'top' ? ' (верх)' : ' (низ)')}
-        price={bun.price}
-        thumbnail={bun.image}
-        extraClass={styles.bordIngredient}
-      />
-    )
-  }
+  const [orderId, setOrderId] = React.useState(null);
 
-  const addOthers = () => {
-    return ingredientsList.others.map((item) => 
-      (
-        <li className={styles.listItem} key={item.uniqueId}>
-          <DragIcon />
-          <ConstructorElement
-            text={item.name}
-            price={item.price}
-            thumbnail={item.image}
-            extraClass={styles.backgroundColorTrue}
-            handleClose={() => {
-              deleteIngredientFromList(item)
-            }}
-          />
-        </li>
-      )
-    )
-  }
+  // Это дополнительный стейт для управления закрытием модального окна элементами, не принадлежащими компоненту Modal
+  const [isCloseRequested, setIsCloseRequested] = React.useState(false);
 
-  const cleanIngredientsList = ({ bun, others }) => {
-    if (bun) {deleteIngredientFromList(bun)}
-    if (others.length > 0) {
-      others.forEach((ingredient) => deleteIngredientFromList(ingredient))
+  const assignOrderNumber = (bun, others) => {
+
+    const allIngredientsId = {ingredients: others.map(item => item._id)};
+    if (bun) {
+      allIngredientsId.ingredients = [bun._id, ...allIngredientsId.ingredients, bun._id];
     }
-  }
+    apiStateDispatcher(orderPending());
+    Api.addNewOrder(allIngredientsId)
+    .then((data) => {
+      apiStateDispatcher(orderPlaced());
+      setOrderId(data.order.number);
+      currentBurgerDispatcher({type: 'reset'});
+    })
+    .catch((err) => {
+      const errorText = err.statusCode ? err.message : 'Проблема с подключением, проверьте свою сеть';
+      apiStateDispatcher(orderFailed(`Ошибка при отправке заказа: ${errorText}`));
+    })
+  };
 
-  const assignOrderNumber = React.useMemo(() => {
-    let orderNumber='';
-    for (let i = 0; i < 6; i++) {
-      orderNumber += String(Math.round(Math.random() * 9))
-    };
-    return orderNumber;
-  }, [ingredientsList]);
-
-  const placeAnOrder = React.useCallback(() => {
-    const { bun, others } = ingredientsList;
+  const placeAnOrder = () => {
     if (bun || others.length > 0) {
-      cleanIngredientsList(ingredientsList);
-      setOrderId(assignOrderNumber);
+      assignOrderNumber(bun, others);
     }
-  }, [ingredientsList]);
-  
-  return (
-    <div className={styles.table}>
-      {addBun('top')}
-      <ul className={styles.list}>
-        {addOthers()}
-      </ul>
-      {addBun('bottom')}
-      <div className={styles.total}>
-        <TotalPrice />
-        <Button htmlType="button" type="primary" size="large" onClick={placeAnOrder}>Оформить заказ</Button>
-      </div>
-    </div>
-  )
-}
+  };
 
-BurgerConstructor.propTypes = {
-  deleteIngredientFromList: functionPropType.isRequired,
-  setOrderId: functionPropType.isRequired,
-}
+  const resetOrderModal = React.useCallback((value) => {
+    setOrderId(value);
+    setIsCloseRequested(false);
+  });
+
+  return (
+    <>
+      <div className={styles.table}>
+        {bun && <Bun ingredient={bun} type='top' extraClass={styles.bordIngredient} />}
+        <Others ingredientsList={others} />
+        {bun && <Bun ingredient={bun} type='bottom' extraClass={styles.bordIngredient} />}
+        <div className={styles.total}>
+          <TotalPrice />
+          <Button
+            htmlType="button"
+            type="primary"
+            size="large"
+            onClick={placeAnOrder}
+            disabled={!bun && others.length < 1}>
+            {apiState.isOrderPending ? 'Минутку...' : 'Оформить заказ'}
+          </Button>
+        </div>
+      </div>
+      {orderId &&
+      <Modal extraClass='pt-10 pr-10 pb-30 pl-10' handleCleanModalData={resetOrderModal} closeRequest={isCloseRequested}>
+        <OrderDetails handleCloseRequest={setIsCloseRequested} orderId={orderId} />
+      </Modal>}
+    </>
+  );
+};
 
 export default React.memo(BurgerConstructor);

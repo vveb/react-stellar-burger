@@ -15,11 +15,12 @@ export const ingredientPropType = PropTypes.shape({
   __v: PropTypes.number.isRequired,
 });
 export const arrayOfIngredientsPropType = PropTypes.arrayOf(ingredientPropType)
-export const ingredientsListPropType = PropTypes.shape({
-  bun: ingredientPropType.isRequired,
-  others: PropTypes.arrayOf(ingredientPropType).isRequired,
-})
+// export const ingredientsListPropType = PropTypes.shape({
+//   bun: ingredientPropType.isRequired,
+//   others: PropTypes.arrayOf(ingredientPropType).isRequired,
+// })
 export const functionPropType = PropTypes.func;
 export const stringPropType = PropTypes.string;
 export const numberPropType = PropTypes.number;
 export const reactElementPropType = PropTypes.element;
+export const booleanPropType = PropTypes.bool;

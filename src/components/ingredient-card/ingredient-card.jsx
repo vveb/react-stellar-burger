@@ -1,15 +1,21 @@
 import React from 'react';
-import {IngredientsListContext} from '../../contexts/ingredients-list-context';
+import { CurrentBurgerContext } from '../../contexts';
 import styles from './ingredient-card.module.css';
 import { CurrencyIcon, Counter } from '@ya.praktikum/react-developer-burger-ui-components';
 import { ingredientPropType, functionPropType } from '../../utils/prop-types';
+import { nanoid } from 'nanoid';
 
-const IngredientCard = ({ itemData, addIngredientToList, handleSelectIngredient}) => {
+const IngredientCard = ({ itemData, handleSelectIngredient}) => {
   
-  const {bun, others} = React.useContext(IngredientsListContext);
+  const { currentBurger, currentBurgerDispatcher } = React.useContext(CurrentBurgerContext);
+  const { bun, others } = currentBurger;
 
   const handleImageClick = () => {
-    addIngredientToList(itemData);
+    if (itemData.type === 'bun') {
+      currentBurgerDispatcher({ type: 'addBun', ingredient: {...itemData, uniqueId: nanoid(8)} })
+    } else {
+      currentBurgerDispatcher({ type: 'addOther', ingredient: {...itemData, uniqueId: nanoid(8)} })
+    }
   }
 
   const handleNameClick = () => {
@@ -27,7 +33,7 @@ const IngredientCard = ({ itemData, addIngredientToList, handleSelectIngredient}
   return (
     <li className={styles.listItem}>
       {count !== 0 && <Counter count={count} />}
-      <img role='button' src = {itemData.image} className={styles.image} onClick={handleImageClick} />
+      <img role='button' src={itemData.image} alt={itemData.name} className={styles.image} onClick={handleImageClick} />
       <div className={styles.priceBox}>
         <p className={styles.price}>{itemData.price}</p>
         <CurrencyIcon />
@@ -39,7 +45,6 @@ const IngredientCard = ({ itemData, addIngredientToList, handleSelectIngredient}
 
 IngredientCard.propTypes = {
   itemData: ingredientPropType.isRequired,
-  addIngredientToList: functionPropType.isRequired,
   handleSelectIngredient: functionPropType.isRequired,
 }
 
