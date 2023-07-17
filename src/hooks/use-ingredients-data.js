@@ -1,24 +1,30 @@
 import React from 'react';
+import { useDispatch } from 'react-redux';
 import Api from '../utils/api';
-import { INGREDIENTS_FAILED, INGREDIENTS_RECIEVED, INGREDIENTS_REQUESTED } from '../utils/constants';
-import { ingredientsFailed, ingredientsRecieved, setApiError } from '../utils/action-creators';
+import { 
+  ingredientsFailed,
+  ingredientsRecieved,
+  ingredientsRequested,
+} from '../utils/action-creators';
 
-const useIngredientsData = (apiStateDispatcher) => {
+const useIngredientsData = () => {
+
+  const dispatch = useDispatch();
 
   const [ingredientsData, setIngredientsData] = React.useState(null);
 
   React.useEffect(() => {
-    apiStateDispatcher({type: INGREDIENTS_REQUESTED});
+    dispatch(ingredientsRequested());
     Api.getIngredientsData()
     .then((data) => {
       setIngredientsData(data.data);
-      apiStateDispatcher(ingredientsRecieved());
+      dispatch(ingredientsRecieved());
     })
     .catch((err) => {
       const errorText = err.statusCode ? err.message : 'Проблема с подключением, проверьте свою сеть';
-      apiStateDispatcher(ingredientsFailed(`Ошибка при загрузке данных с сервера: ${errorText}`));
+      dispatch(ingredientsFailed(`Ошибка при загрузке данных с сервера: ${errorText}`));
       setIngredientsData(null);
-  })}, []);
+  })}, [dispatch]);
 
   return ingredientsData;
 };

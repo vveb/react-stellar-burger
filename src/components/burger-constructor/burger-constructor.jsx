@@ -1,5 +1,6 @@
 import React from 'react';
-import { ApiStateContext, CurrentBurgerContext } from '../../contexts';
+import { useDispatch, useSelector } from 'react-redux';
+import { CurrentBurgerContext } from '../../contexts';
 import styles from './burger-constructor.module.css';
 import { Button } from '@ya.praktikum/react-developer-burger-ui-components';
 import Bun from '../bun/bun';
@@ -8,10 +9,11 @@ import OrderDetails from '../order-details/order-details';
 import TotalPrice from '../total-price/total-price';
 import Api from '../../utils/api';
 import Others from '../others/others';
-import { orderFailed, orderPending, orderPlaced } from '../../utils/action-creators'
+import { orderFailed, orderPending, orderPlaced } from '../../services/store/actions/api-action-creators';
 
 const BurgerConstructor = () => {
-  const { apiState, apiStateDispatcher } = React.useContext(ApiStateContext);
+  const dispatch = useDispatch();
+  const { isOrderPending } = useSelector((store) => store.api);
   const { currentBurger, currentBurgerDispatcher } = React.useContext(CurrentBurgerContext);
   const { bun, others } = currentBurger;
 
@@ -26,16 +28,16 @@ const BurgerConstructor = () => {
     if (bun) {
       allIngredientsId.ingredients = [bun._id, ...allIngredientsId.ingredients, bun._id];
     }
-    apiStateDispatcher(orderPending());
+    dispatch(orderPending());
     Api.addNewOrder(allIngredientsId)
     .then((data) => {
-      apiStateDispatcher(orderPlaced());
+      dispatch(orderPlaced());
       setOrderId(data.order.number);
       currentBurgerDispatcher({type: 'reset'});
     })
     .catch((err) => {
       const errorText = err.statusCode ? err.message : 'Проблема с подключением, проверьте свою сеть';
-      apiStateDispatcher(orderFailed(`Ошибка при отправке заказа: ${errorText}`));
+      dispatch(orderFailed(`Ошибка при отправке заказа: ${errorText}`));
     })
   };
 
@@ -64,7 +66,7 @@ const BurgerConstructor = () => {
             size="large"
             onClick={placeAnOrder}
             disabled={!bun && others.length < 1}>
-            {apiState.isOrderPending ? 'Минутку...' : 'Оформить заказ'}
+            {isOrderPending ? 'Минутку...' : 'Оформить заказ'}
           </Button>
         </div>
       </div>
