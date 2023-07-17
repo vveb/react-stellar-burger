@@ -1,10 +1,10 @@
 import React from 'react';
 import styles from './cards-list.module.css';
 import IngredientCard from '../ingredient-card/ingredient-card';
-import { functionPropType, stringPropType } from '../../utils/prop-types';
+import { stringPropType } from '../../utils/prop-types';
 import { IngredientsDataContext } from '../../contexts';
 
-const CardsList = ({ type, handleSelectIngredient }) => {
+const CardsList = ({ type }) => {
 
   const data = React.useContext(IngredientsDataContext);
 
@@ -12,7 +12,7 @@ const CardsList = ({ type, handleSelectIngredient }) => {
     return data.map((item) => {
       if (item.type === type) {
         return (
-          <IngredientCard itemData = {item} key={item._id} handleSelectIngredient={handleSelectIngredient}/>
+          <IngredientCard itemData = {item} key={item._id} />
         )
       }
     })
@@ -27,7 +27,6 @@ const CardsList = ({ type, handleSelectIngredient }) => {
 
 CardsList.propTypes = {
   type: stringPropType.isRequired,
-  handleSelectIngredient: functionPropType.isRequired,
 }
 
 export default React.memo(CardsList);

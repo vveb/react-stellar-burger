@@ -5,8 +5,9 @@ import { CurrencyIcon, Counter } from '@ya.praktikum/react-developer-burger-ui-c
 import { ingredientPropType, functionPropType } from '../../utils/prop-types';
 import { nanoid } from 'nanoid';
 import { addBun, addOther } from '../../services/store/actions/current-burger-action-creators';
+import { setCurrentIngredient } from '../../services/store/actions/current-ingredient-action-creators';
 
-const IngredientCard = ({ itemData, handleSelectIngredient}) => {
+const IngredientCard = ({ itemData }) => {
 
   const dispatch = useDispatch();
   const { bun, others } = useSelector((store) => store.currentBurger);
@@ -20,7 +21,7 @@ const IngredientCard = ({ itemData, handleSelectIngredient}) => {
   }
 
   const handleNameClick = () => {
-    handleSelectIngredient(itemData)
+    dispatch(setCurrentIngredient(itemData))
   }
 
   const count = React.useMemo(() => {
@@ -46,7 +47,6 @@ const IngredientCard = ({ itemData, handleSelectIngredient}) => {
 
 IngredientCard.propTypes = {
   itemData: ingredientPropType.isRequired,
-  handleSelectIngredient: functionPropType.isRequired,
 }
 
 /* Благодаря этому (мемоизации) мы избегаем перерендера карточки при перерендере родителя

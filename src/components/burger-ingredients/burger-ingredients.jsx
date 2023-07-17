@@ -1,4 +1,5 @@
 import React from 'react';
+import { useSelector, useDispatch } from 'react-redux';
 import styles from './burger-ingredients.module.css';
 import CardsList from '../cards-list/cards-list';
 import IngredientDetails from '../ingredient-details/ingredient-details';
@@ -6,11 +7,18 @@ import Modal from '../modal/modal';
 import { Tab } from '@ya.praktikum/react-developer-burger-ui-components';
 import { productTypes, ingredientTypeName } from '../../utils/constants';
 import { useInView } from 'react-intersection-observer';
+import { resetCurrentIngredient } from '../../services/store/actions/current-ingredient-action-creators';
 
 const BurgerIngredients = () => {
+  const dispatch = useDispatch();
 
-  const [currentIngredient, setCurrentIngredient] = React.useState(null);
+  // const [currentIngredient, setCurrentIngredient] = React.useState(null);
+  const currentIngredient = useSelector((store) => store.currentIngredient);
   console.log(currentIngredient)
+
+  const handleCloseModal = () => {
+    dispatch(resetCurrentIngredient());
+  }
 
   //Обработка переключения табов при скролле
   const baseRef = React.useRef(null);
@@ -60,20 +68,20 @@ const BurgerIngredients = () => {
       <ul ref={baseRef} className={styles.table}>
         <li ref={bunsViewRef} className={styles.tableItem} key='buns'>
           <h3 ref={bunsRef} className={styles.title}>{ingredientTypeName.bun}</h3>
-            <CardsList type={productTypes.bun} key={productTypes.bun} handleSelectIngredient={setCurrentIngredient} />
+            <CardsList type={productTypes.bun} key={productTypes.bun} />
         </li>
         <li ref={saucesViewRef} className={styles.tableItem} key='sauces'>
           <h3 ref={saucesRef} className={styles.title}>{ingredientTypeName.sauce}</h3>
-            <CardsList type={productTypes.sauce} key={productTypes.sauce} handleSelectIngredient={setCurrentIngredient} />
+            <CardsList type={productTypes.sauce} key={productTypes.sauce} />
         </li>
         <li ref={mainsViewRef} className={styles.tableItem} key='mains'>
           <h3 ref={mainsRef} className={styles.title}>{ingredientTypeName.main}</h3>
-            <CardsList type={productTypes.main} key={productTypes.main} handleSelectIngredient={setCurrentIngredient} />
+            <CardsList type={productTypes.main} key={productTypes.main} />
         </li>
       </ul>
-      {currentIngredient &&
-      <Modal title='Детали ингредиента' extraClass='pt-10 pr-10 pb-15 pl-10' handleCleanModalData={setCurrentIngredient}>
-        <IngredientDetails ingredientData={currentIngredient} />
+      {currentIngredient.isSetted &&
+      <Modal title='Детали ингредиента' extraClass='pt-10 pr-10 pb-15 pl-10' handleCleanModalData={handleCloseModal}>
+        <IngredientDetails ingredientData={currentIngredient.ingredient} />
       </Modal>}
     </>
   )

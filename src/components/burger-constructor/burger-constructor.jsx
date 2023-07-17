@@ -17,6 +17,7 @@ const BurgerConstructor = () => {
   const { isOrderPending } = useSelector((store) => store.api);
   const { bun, others } = useSelector((store) => store.currentBurger);
   const orderId = useSelector((store) => store.orderDetails.order.number); //Можно ли как-то проще?
+  const orderSuccess = useSelector((store) => store.orderDetails.success); //Можно ли как-то проще?
 
   // Это дополнительный стейт для управления закрытием модального окна элементами, не принадлежащими компоненту Modal
   const [isCloseRequested, setIsCloseRequested] = React.useState(false);
@@ -76,7 +77,7 @@ const BurgerConstructor = () => {
           </Button>
         </div>
       </div>
-      {orderId &&
+      {orderSuccess &&
       <Modal extraClass='pt-10 pr-10 pb-30 pl-10' handleCleanModalData={resetOrderModal} closeRequest={isCloseRequested}>
         <OrderDetails handleCloseRequest={setIsCloseRequested} orderId={orderId} />
       </Modal>}
