@@ -5,7 +5,7 @@ import {
   ingredientsFailed,
   ingredientsRecieved,
   ingredientsRequested,
-} from '../utils/action-creators';
+} from '../services/store/actions/api-action-creators';
 
 const useIngredientsData = () => {
 
