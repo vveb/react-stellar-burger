@@ -6,9 +6,9 @@ const currentBurgerReducer = (state = currentBurgerInitialState, action) => {
     case ADD_BUN:
       return { ...state, bun: action.payload };
     case ADD_OTHER:
-      return { ...state, others: [...state.others, action.payload] }
+      return { ...state, others: [...state.others, action.payload] };
     case REMOVE_INGREDIENT:
-        return {...state, others: state.others.filter((ingredient) => ingredient.uniqueId !== action.payload.uniqueId)}
+      return {...state, others: state.others.filter((ingredient) => ingredient.uniqueId !== action.payload.uniqueId)};
     case RESET_BURGER:
       return currentBurgerInitialState;
     default:

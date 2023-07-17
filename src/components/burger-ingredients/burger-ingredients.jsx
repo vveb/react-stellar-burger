@@ -10,6 +10,7 @@ import { useInView } from 'react-intersection-observer';
 const BurgerIngredients = () => {
 
   const [currentIngredient, setCurrentIngredient] = React.useState(null);
+  console.log(currentIngredient)
 
   //Обработка переключения табов при скролле
   const baseRef = React.useRef(null);

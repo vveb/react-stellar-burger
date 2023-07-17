@@ -17,7 +17,8 @@ const Modal = ({ title, children, extraClass, handleCleanModalData, closeRequest
       overlayRef.current.style.opacity = 0;
     }, 300);
     setTimeout(() => {
-      handleCleanModalData(null)
+      // handleCleanModalData(null)
+      handleCleanModalData()
     }, 550);
   }, []);
   

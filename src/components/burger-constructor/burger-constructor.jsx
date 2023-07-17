@@ -10,13 +10,13 @@ import Api from '../../utils/api';
 import Others from '../others/others';
 import { orderFailed, orderPending, orderPlaced } from '../../services/store/actions/api-action-creators';
 import { resetBurger } from '../../services/store/actions/current-burger-action-creators';
+import { resetOrderDetails, setOrderDetails } from '../../services/store/actions/order-details-action-creators';
 
 const BurgerConstructor = () => {
   const dispatch = useDispatch();
   const { isOrderPending } = useSelector((store) => store.api);
   const { bun, others } = useSelector((store) => store.currentBurger);
-
-  const [orderId, setOrderId] = React.useState(null);
+  const orderId = useSelector((store) => store.orderDetails.order.number); //Можно ли как-то проще?
 
   // Это дополнительный стейт для управления закрытием модального окна элементами, не принадлежащими компоненту Modal
   const [isCloseRequested, setIsCloseRequested] = React.useState(false);
@@ -31,7 +31,7 @@ const BurgerConstructor = () => {
     Api.addNewOrder(allIngredientsId)
     .then((data) => {
       dispatch(orderPlaced());
-      setOrderId(data.order.number);
+      dispatch(setOrderDetails(data))
       dispatch(resetBurger());
     })
     .catch((err) => {
@@ -46,10 +46,17 @@ const BurgerConstructor = () => {
     }
   };
 
-  const resetOrderModal = React.useCallback((value) => {
-    setOrderId(value);
+  // const resetOrderModal = React.useCallback((value) => {
+  //   // setOrderId(value);
+  //   resetOrderId();
+  //   setIsCloseRequested(false);
+  // });
+
+  const resetOrderModal = React.useCallback(() => {
+    dispatch(resetOrderDetails());
     setIsCloseRequested(false);
   });
+
 
   return (
     <>
