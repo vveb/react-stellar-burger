@@ -5,7 +5,7 @@ import AppHeader from "../app-header/app-header";
 import BurgerIngredients from "../burger-ingredients/burger-ingredients";
 import BurgerConstructor from "../burger-constructor/burger-constructor";
 import Modal from '../modal/modal';
-import { CurrentBurgerContext, IngredientsDataContext } from '../../contexts/'
+import { IngredientsDataContext } from '../../contexts/'
 import { useIngredientsData } from '../../hooks/use-ingredients-data';
 import { resetApiError } from '../../services/store/actions/api-action-creators';
 
@@ -15,24 +15,6 @@ function App() {
   const { error, isIngredientsFailed, isIngredientsRecieved, isIngredientsRequested } = useSelector((store) => store.api);
 
   const data = useIngredientsData();
-  
-  //Редьюсер для currentBurger в следующей части проекта должен уехать в services
-  const currentBurgerInitialState = {bun: null, others: []};
-  const currentBurgerReducer = (state, action) => {
-    switch (action.type) {
-      case 'addBun':
-        return { ...state, bun: action.ingredient };
-      case 'addOther':
-        return { ...state, others: [...state.others, action.ingredient] }
-      case 'delete':
-          return {...state, others: state.others.filter((ingredient) => ingredient.uniqueId !== action.ingredient.uniqueId)}
-      case 'reset':
-        return currentBurgerInitialState;
-      default:
-        return state;
-    }
-  }
-  const [currentBurger, currentBurgerDispatcher] = React.useReducer(currentBurgerReducer, currentBurgerInitialState);
 
   const closeErrorModal = React.useCallback((value) => {
     if (!value) {
@@ -47,19 +29,17 @@ function App() {
         {isIngredientsFailed && <p className={styles.errorText}>{error}</p>}
         {isIngredientsRecieved &&
           <>
-            <CurrentBurgerContext.Provider value={{currentBurger, currentBurgerDispatcher}}>
-              <main className={styles.main}>
-                <section className={styles.ingredients}>
-                  <h2 className={styles.title}>Соберите бургер</h2>
-                  <IngredientsDataContext.Provider value={data}>
-                    <BurgerIngredients />
-                  </IngredientsDataContext.Provider>
-                </section>
-                <section className={styles.burgerConstructor}>
-                  <BurgerConstructor />
-                </section>
-              </main>
-            </CurrentBurgerContext.Provider>
+            <main className={styles.main}>
+              <section className={styles.ingredients}>
+                <h2 className={styles.title}>Соберите бургер</h2>
+                <IngredientsDataContext.Provider value={data}>
+                  <BurgerIngredients />
+                </IngredientsDataContext.Provider>
+              </section>
+              <section className={styles.burgerConstructor}>
+                <BurgerConstructor />
+              </section>
+            </main>
           </>
         }
         {(error && !isIngredientsFailed) && 

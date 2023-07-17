@@ -1,6 +1,5 @@
 import React from 'react';
 import { useDispatch, useSelector } from 'react-redux';
-import { CurrentBurgerContext } from '../../contexts';
 import styles from './burger-constructor.module.css';
 import { Button } from '@ya.praktikum/react-developer-burger-ui-components';
 import Bun from '../bun/bun';
@@ -10,12 +9,12 @@ import TotalPrice from '../total-price/total-price';
 import Api from '../../utils/api';
 import Others from '../others/others';
 import { orderFailed, orderPending, orderPlaced } from '../../services/store/actions/api-action-creators';
+import { resetBurger } from '../../services/store/actions/current-burger-action-creators';
 
 const BurgerConstructor = () => {
   const dispatch = useDispatch();
   const { isOrderPending } = useSelector((store) => store.api);
-  const { currentBurger, currentBurgerDispatcher } = React.useContext(CurrentBurgerContext);
-  const { bun, others } = currentBurger;
+  const { bun, others } = useSelector((store) => store.currentBurger);
 
   const [orderId, setOrderId] = React.useState(null);
 
@@ -33,7 +32,7 @@ const BurgerConstructor = () => {
     .then((data) => {
       dispatch(orderPlaced());
       setOrderId(data.order.number);
-      currentBurgerDispatcher({type: 'reset'});
+      dispatch(resetBurger());
     })
     .catch((err) => {
       const errorText = err.statusCode ? err.message : 'Проблема с подключением, проверьте свою сеть';

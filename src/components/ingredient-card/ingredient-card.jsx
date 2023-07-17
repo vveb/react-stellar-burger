@@ -1,20 +1,21 @@
 import React from 'react';
-import { CurrentBurgerContext } from '../../contexts';
+import { useDispatch, useSelector } from 'react-redux';
 import styles from './ingredient-card.module.css';
 import { CurrencyIcon, Counter } from '@ya.praktikum/react-developer-burger-ui-components';
 import { ingredientPropType, functionPropType } from '../../utils/prop-types';
 import { nanoid } from 'nanoid';
+import { addBun, addOther } from '../../services/store/actions/current-burger-action-creators';
 
 const IngredientCard = ({ itemData, handleSelectIngredient}) => {
-  
-  const { currentBurger, currentBurgerDispatcher } = React.useContext(CurrentBurgerContext);
-  const { bun, others } = currentBurger;
+
+  const dispatch = useDispatch();
+  const { bun, others } = useSelector((store) => store.currentBurger);
 
   const handleImageClick = () => {
     if (itemData.type === 'bun') {
-      currentBurgerDispatcher({ type: 'addBun', ingredient: {...itemData, uniqueId: nanoid(8)} })
+      dispatch(addBun({...itemData, uniqueId: nanoid(8)}));
     } else {
-      currentBurgerDispatcher({ type: 'addOther', ingredient: {...itemData, uniqueId: nanoid(8)} })
+      dispatch(addOther({...itemData, uniqueId: nanoid(8)}));
     }
   }
 

@@ -1,11 +1,11 @@
-import React from 'react';
-import { CurrentBurgerContext } from '../../contexts';
+import { useDispatch } from 'react-redux';
 import { ConstructorElement, DragIcon } from '@ya.praktikum/react-developer-burger-ui-components';
 import { arrayOfIngredientsPropType } from '../../utils/prop-types';
 import styles from './others.module.css';
+import { removeIngredient } from '../../services/store/actions/current-burger-action-creators';
 
 const Others = ({ ingredientsList }) => {
-  const { currentBurgerDispatcher } = React.useContext(CurrentBurgerContext);
+  const dispatch = useDispatch();
 
   return (
       <ul className={styles.list}>
@@ -18,7 +18,7 @@ const Others = ({ ingredientsList }) => {
             thumbnail={item.image}
             extraClass={styles.backgroundColorTrue}
             handleClose={() => {
-              currentBurgerDispatcher({ type: 'delete', ingredient: item })
+              dispatch(removeIngredient(item));
             }}
           />
         </li>))}
