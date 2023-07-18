@@ -8,7 +8,7 @@ import OrderDetails from '../order-details/order-details';
 import TotalPrice from '../total-price/total-price';
 import Api from '../../utils/api';
 import Others from '../others/others';
-import { orderFailed, orderPending, orderPlaced } from '../../services/store/actions/api-action-creators';
+import { orderFailed, orderPending, orderPlaced } from '../../services/store/actions/api-state-action-creators';
 import { resetBurger } from '../../services/store/actions/current-burger-action-creators';
 import { resetOrderId, setOrderId } from '../../services/store/actions/modals-action-creators';
 
@@ -46,12 +46,6 @@ const BurgerConstructor = () => {
       assignOrderNumber(bun, others);
     }
   };
-
-  // const resetOrderModal = React.useCallback((value) => {
-  //   // setOrderId(value);
-  //   resetOrderId();
-  //   setIsCloseRequested(false);
-  // });
 
   const resetOrderModal = React.useCallback(() => {
     dispatch(resetOrderId());

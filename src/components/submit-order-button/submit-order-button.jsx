@@ -1,3 +1,4 @@
+import React from 'react';
 import styles from './submit-order-button.module.css';
 import { CheckMarkIcon } from '@ya.praktikum/react-developer-burger-ui-components';
 import { functionPropType } from '../../utils/prop-types';
@@ -22,4 +23,4 @@ SubmitOrderButton.propTypes = {
   handleCloseRequest: functionPropType.isRequired,
 }
 
-export default SubmitOrderButton;
+export default React.memo(SubmitOrderButton);

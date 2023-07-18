@@ -6,15 +6,18 @@ import BurgerIngredients from "../burger-ingredients/burger-ingredients";
 import BurgerConstructor from "../burger-constructor/burger-constructor";
 import Modal from '../modal/modal';
 import { IngredientsDataContext } from '../../contexts/'
-import { useIngredientsData } from '../../hooks/use-ingredients-data';
-import { resetApiError } from '../../services/store/actions/api-action-creators';
+import { resetApiError } from '../../services/store/actions/api-state-action-creators';
+import getIngredientsData from '../../services/store/thunks/get-ingredients-data';
 
 function App() {
 
   const dispatch = useDispatch();
-  const { error, isIngredientsFailed, isIngredientsRecieved, isIngredientsRequested } = useSelector((store) => store.api);
+  React.useEffect(() => {
+    dispatch(getIngredientsData());
+  }, [])
 
-  const data = useIngredientsData();
+  const { error, isIngredientsFailed, isIngredientsRecieved, isIngredientsRequested } = useSelector((store) => store.api);
+  const { data } = useSelector((store) => store.ingredientsData);
 
   const closeErrorModal = React.useCallback((value) => {
     if (!value) {

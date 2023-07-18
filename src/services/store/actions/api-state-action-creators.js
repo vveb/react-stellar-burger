@@ -16,15 +16,22 @@ export const setApiError = (errorText) => (
   }
 );
 
+export const resetApiError = () => (
+  {
+    type: CLEAR_API_ERROR,
+  }
+);
+
 export const ingredientsRequested = () => (
   {
     type: INGREDIENTS_REQUESTED,
   }
 )
 
-export const ingredientsRecieved = () => (
+export const ingredientsRecieved = (ingredientsData) => (
   {
     type: INGREDIENTS_RECIEVED,
+    payload: ingredientsData,
   }
 );
 
@@ -53,9 +60,3 @@ export const orderFailed = (errorText) => (
     payload: errorText,
   }
 )
-
-export const resetApiError = () => (
-  {
-    type: CLEAR_API_ERROR,
-  }
-);
