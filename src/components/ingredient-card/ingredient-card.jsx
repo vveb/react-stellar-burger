@@ -2,7 +2,7 @@ import React from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import styles from './ingredient-card.module.css';
 import { CurrencyIcon, Counter } from '@ya.praktikum/react-developer-burger-ui-components';
-import { ingredientPropType, functionPropType } from '../../utils/prop-types';
+import { ingredientPropType } from '../../utils/prop-types';
 import { nanoid } from 'nanoid';
 import { addBun, addOther } from '../../services/store/actions/current-burger-action-creators';
 import { setCurrentIngredient } from '../../services/store/actions/modals-action-creators';

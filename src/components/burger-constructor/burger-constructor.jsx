@@ -65,4 +65,4 @@ const BurgerConstructor = () => {
   );
 };
 
-export default React.memo(BurgerConstructor);
+export default BurgerConstructor;
