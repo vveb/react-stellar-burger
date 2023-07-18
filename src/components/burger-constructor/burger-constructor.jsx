@@ -6,11 +6,9 @@ import Bun from '../bun/bun';
 import Modal from '../modal/modal';
 import OrderDetails from '../order-details/order-details';
 import TotalPrice from '../total-price/total-price';
-import Api from '../../utils/api';
 import Others from '../others/others';
-import { orderFailed, orderPending, orderPlaced } from '../../services/store/actions/api-state-action-creators';
-import { resetBurger } from '../../services/store/actions/current-burger-action-creators';
-import { resetOrderId, setOrderId } from '../../services/store/actions/modals-action-creators';
+import { resetOrderId } from '../../services/store/actions/modals-action-creators';
+import getOrderNumber from '../../services/store/thunks/get-order-number';
 
 
 const BurgerConstructor = () => {
@@ -23,22 +21,11 @@ const BurgerConstructor = () => {
   const [isCloseRequested, setIsCloseRequested] = React.useState(false);
 
   const assignOrderNumber = (bun, others) => {
-
     const allIngredientsId = {ingredients: others.map(item => item._id)};
     if (bun) {
       allIngredientsId.ingredients = [bun._id, ...allIngredientsId.ingredients, bun._id];
     }
-    dispatch(orderPending());
-    Api.addNewOrder(allIngredientsId)
-    .then((data) => {
-      dispatch(orderPlaced());
-      dispatch(setOrderId(data.order.number))
-      dispatch(resetBurger());
-    })
-    .catch((err) => {
-      const errorText = err.statusCode ? err.message : 'Проблема с подключением, проверьте свою сеть';
-      dispatch(orderFailed(`Ошибка при отправке заказа: ${errorText}`));
-    })
+    dispatch(getOrderNumber(allIngredientsId));
   };
 
   const placeAnOrder = () => {

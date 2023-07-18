@@ -1,3 +1,4 @@
+import React from 'react';
 import { useDispatch } from 'react-redux';
 import { ConstructorElement, DragIcon } from '@ya.praktikum/react-developer-burger-ui-components';
 import { arrayOfIngredientsPropType } from '../../utils/prop-types';
@@ -30,4 +31,4 @@ Others.propTypes = {
   ingredientsList: arrayOfIngredientsPropType.isRequired, 
 }
 
-export default Others;
+export default React.memo(Others);

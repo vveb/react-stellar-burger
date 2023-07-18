@@ -12,4 +12,4 @@ ModalOverlay.propTypes = {
   handleClose: functionPropType.isRequired,
 }
 
-export default ModalOverlay;
+export default React.memo(ModalOverlay);

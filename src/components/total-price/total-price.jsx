@@ -21,4 +21,4 @@ const TotalPrice = () => {
   )
 }
 
-export default TotalPrice;
+export default React.memo(TotalPrice);

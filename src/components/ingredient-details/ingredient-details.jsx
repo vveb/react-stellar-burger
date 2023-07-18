@@ -1,3 +1,4 @@
+import React from 'react';
 import styles from './ingredient-details.module.css';
 import NutritionValue from '../nutrition-value/nutrition-value';
 import { ingredientPropType } from '../../utils/prop-types'
@@ -22,4 +23,4 @@ IngredientDetails.propTypes = {
   ingredientData: ingredientPropType.isRequired,
 }
 
-export default IngredientDetails;
+export default React.memo(IngredientDetails);

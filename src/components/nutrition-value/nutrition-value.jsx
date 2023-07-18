@@ -1,3 +1,4 @@
+import React from 'react';
 import styles from './nutrition-value.module.css';
 import { stringPropType, numberPropType } from '../../utils/prop-types'
 
@@ -15,4 +16,4 @@ NutritionValue.propTypes = {
   amount: numberPropType.isRequired,
 }
 
-export default NutritionValue;
+export default React.memo(NutritionValue);
