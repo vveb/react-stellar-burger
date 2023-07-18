@@ -5,7 +5,6 @@ import AppHeader from "../app-header/app-header";
 import BurgerIngredients from "../burger-ingredients/burger-ingredients";
 import BurgerConstructor from "../burger-constructor/burger-constructor";
 import Modal from '../modal/modal';
-import { IngredientsDataContext } from '../../contexts/'
 import { resetApiError } from '../../services/store/actions/api-state-action-creators';
 import getIngredientsData from '../../services/store/thunks/get-ingredients-data';
 
@@ -17,7 +16,6 @@ function App() {
   }, [])
 
   const { error, isIngredientsFailed, isIngredientsRecieved, isIngredientsRequested } = useSelector((store) => store.api);
-  const { data } = useSelector((store) => store.ingredientsData);
 
   const closeErrorModal = React.useCallback((value) => {
     if (!value) {
@@ -35,9 +33,7 @@ function App() {
             <main className={styles.main}>
               <section className={styles.ingredients}>
                 <h2 className={styles.title}>Соберите бургер</h2>
-                <IngredientsDataContext.Provider value={data}>
                   <BurgerIngredients />
-                </IngredientsDataContext.Provider>
               </section>
               <section className={styles.burgerConstructor}>
                 <BurgerConstructor />

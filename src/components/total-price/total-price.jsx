@@ -1,11 +1,9 @@
 import React from 'react';
-// import {CurrentBurgerContext} from '../../contexts';
 import { useSelector } from 'react-redux';
 import styles from './total-price.module.css';
 import {CurrencyIcon} from '@ya.praktikum/react-developer-burger-ui-components';
 
 const TotalPrice = () => {
-  // const { currentBurger } = React.useContext(CurrentBurgerContext);
   const currentBurger = useSelector((store) => store.currentBurger);
 
   const totalSum = React.useMemo(() => {

@@ -1,12 +1,12 @@
 import React from 'react';
+import { useSelector } from 'react-redux';
 import styles from './cards-list.module.css';
 import IngredientCard from '../ingredient-card/ingredient-card';
 import { stringPropType } from '../../utils/prop-types';
-import { IngredientsDataContext } from '../../contexts';
 
 const CardsList = ({ type }) => {
 
-  const data = React.useContext(IngredientsDataContext);
+  const { data } = useSelector((store) => store.ingredientsData);
 
   const generateList = (type) => {
     return data.map((item) => {
