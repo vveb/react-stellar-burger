@@ -10,14 +10,14 @@ import Api from '../../utils/api';
 import Others from '../others/others';
 import { orderFailed, orderPending, orderPlaced } from '../../services/store/actions/api-action-creators';
 import { resetBurger } from '../../services/store/actions/current-burger-action-creators';
-import { resetOrderDetails, setOrderDetails } from '../../services/store/actions/order-details-action-creators';
+import { resetOrderId, setOrderId } from '../../services/store/actions/modals-action-creators';
+
 
 const BurgerConstructor = () => {
   const dispatch = useDispatch();
   const { isOrderPending } = useSelector((store) => store.api);
   const { bun, others } = useSelector((store) => store.currentBurger);
-  const orderId = useSelector((store) => store.orderDetails.order.number); //Можно ли как-то проще?
-  const orderSuccess = useSelector((store) => store.orderDetails.success); //Можно ли как-то проще?
+  const { orderId } = useSelector((store) => store.modals);
 
   // Это дополнительный стейт для управления закрытием модального окна элементами, не принадлежащими компоненту Modal
   const [isCloseRequested, setIsCloseRequested] = React.useState(false);
@@ -32,7 +32,7 @@ const BurgerConstructor = () => {
     Api.addNewOrder(allIngredientsId)
     .then((data) => {
       dispatch(orderPlaced());
-      dispatch(setOrderDetails(data))
+      dispatch(setOrderId(data.order.number))
       dispatch(resetBurger());
     })
     .catch((err) => {
@@ -54,10 +54,9 @@ const BurgerConstructor = () => {
   // });
 
   const resetOrderModal = React.useCallback(() => {
-    dispatch(resetOrderDetails());
+    dispatch(resetOrderId());
     setIsCloseRequested(false);
   });
-
 
   return (
     <>
@@ -77,7 +76,7 @@ const BurgerConstructor = () => {
           </Button>
         </div>
       </div>
-      {orderSuccess &&
+      {orderId &&
       <Modal extraClass='pt-10 pr-10 pb-30 pl-10' handleCleanModalData={resetOrderModal} closeRequest={isCloseRequested}>
         <OrderDetails handleCloseRequest={setIsCloseRequested} orderId={orderId} />
       </Modal>}

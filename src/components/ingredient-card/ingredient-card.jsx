@@ -5,7 +5,7 @@ import { CurrencyIcon, Counter } from '@ya.praktikum/react-developer-burger-ui-c
 import { ingredientPropType, functionPropType } from '../../utils/prop-types';
 import { nanoid } from 'nanoid';
 import { addBun, addOther } from '../../services/store/actions/current-burger-action-creators';
-import { setCurrentIngredient } from '../../services/store/actions/current-ingredient-action-creators';
+import { setCurrentIngredient } from '../../services/store/actions/modals-action-creators';
 
 const IngredientCard = ({ itemData }) => {
 

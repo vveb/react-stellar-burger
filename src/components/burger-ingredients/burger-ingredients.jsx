@@ -7,14 +7,12 @@ import Modal from '../modal/modal';
 import { Tab } from '@ya.praktikum/react-developer-burger-ui-components';
 import { productTypes, ingredientTypeName } from '../../utils/constants';
 import { useInView } from 'react-intersection-observer';
-import { resetCurrentIngredient } from '../../services/store/actions/current-ingredient-action-creators';
+import { resetCurrentIngredient } from '../../services/store/actions/modals-action-creators';
 
 const BurgerIngredients = () => {
   const dispatch = useDispatch();
 
-  // const [currentIngredient, setCurrentIngredient] = React.useState(null);
-  const currentIngredient = useSelector((store) => store.currentIngredient);
-  console.log(currentIngredient)
+  const { currentIngredient } = useSelector((store) => store.modals);
 
   const handleCloseModal = () => {
     dispatch(resetCurrentIngredient());
@@ -79,9 +77,9 @@ const BurgerIngredients = () => {
             <CardsList type={productTypes.main} key={productTypes.main} />
         </li>
       </ul>
-      {currentIngredient.isSetted &&
+      {currentIngredient &&
       <Modal title='Детали ингредиента' extraClass='pt-10 pr-10 pb-15 pl-10' handleCleanModalData={handleCloseModal}>
-        <IngredientDetails ingredientData={currentIngredient.ingredient} />
+        <IngredientDetails ingredientData={currentIngredient} />
       </Modal>}
     </>
   )
