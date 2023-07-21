@@ -1,6 +1,7 @@
 import {
   ADD_BUN,
   ADD_OTHER,
+  CHANGE_ORDER,
   REMOVE_INGREDIENT,
   RESET_BURGER,
 } from '../constants';
@@ -29,5 +30,12 @@ export const removeIngredient = (ingredient) => (
 export const resetBurger = () => (
   {
     type: RESET_BURGER,
+  }
+);
+
+export const changeOrder = (data) => (
+  {
+    type: CHANGE_ORDER,
+    payload: data,
   }
 );

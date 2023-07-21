@@ -1,0 +1,28 @@
+.listItem {
+  cursor: pointer;
+  column-gap: 8px;
+  transform: scaleY(1);
+  transition: transform .2s;
+}
+
+.backgroundColorTrue {
+  background-color: #1C1C21;
+  padding-top: 16px;
+}
+
+.dropBox {
+  width: 100%;
+  display: flex;
+  align-items: center;
+  column-gap: 8px;
+  filter: brightness(100%);
+  transition: filter .3s ease;
+}
+
+.dropBox:hover {
+  filter: brightness(125%);
+}
+
+.dragging {
+  transform: scaleY(0);
+}

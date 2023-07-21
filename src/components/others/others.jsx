@@ -1,28 +1,17 @@
 import React from 'react';
-import { useDispatch } from 'react-redux';
-import { ConstructorElement, DragIcon } from '@ya.praktikum/react-developer-burger-ui-components';
+import { useSelector } from 'react-redux';
 import { arrayOfIngredientsPropType } from '../../utils/prop-types';
 import styles from './others.module.css';
-import { removeIngredient } from '../../services/store/actions/current-burger-action-creators';
+import OtherIngredient from '../other-ingredient/other-ingredient';
 
 const Others = ({ ingredientsList }) => {
-  const dispatch = useDispatch();
+
+  const { bun, others } = useSelector((store) => store.currentBurger);
 
   return (
-      <ul className={styles.list}>
-        {ingredientsList.map((item) => (
-        <li className={styles.listItem} key={item.uniqueId}>
-          <DragIcon />
-          <ConstructorElement
-            text={item.name}
-            price={item.price}
-            thumbnail={item.image}
-            extraClass={styles.backgroundColorTrue}
-            handleClose={() => {
-              dispatch(removeIngredient(item));
-            }}
-          />
-        </li>))}
+      <ul className={`${styles.list} && ${(!bun && others.length < 1) && styles.list_empty}`}>
+        {(!bun && others.length < 1) && <h2 className={styles.title}>Добавьте ингредиенты</h2>}
+        {ingredientsList.map((item, index) => <OtherIngredient itemData={item} key={item.uniqueId} index={index} />)}
       </ul>
   )
 }

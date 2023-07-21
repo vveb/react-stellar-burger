@@ -1,5 +1,7 @@
 import React from 'react';
 import { useDispatch, useSelector } from 'react-redux';
+import { HTML5Backend } from 'react-dnd-html5-backend';
+import { DndProvider } from 'react-dnd';
 import styles from "./app.module.css";
 import AppHeader from "../app-header/app-header";
 import BurgerIngredients from "../burger-ingredients/burger-ingredients";
@@ -31,13 +33,13 @@ function App() {
         {isIngredientsRecieved &&
           <>
             <main className={styles.main}>
-              <section className={styles.ingredients}>
-                <h2 className={styles.title}>Соберите бургер</h2>
-                  <BurgerIngredients />
-              </section>
-              <section className={styles.burgerConstructor}>
-                <BurgerConstructor />
-              </section>
+              <DndProvider backend={HTML5Backend}>
+                <section className={styles.ingredients}>
+                  <h2 className={styles.title}>Соберите бургер</h2>
+                    <BurgerIngredients />
+                </section>
+                  <BurgerConstructor />
+              </DndProvider>
             </main>
           </>
         }
