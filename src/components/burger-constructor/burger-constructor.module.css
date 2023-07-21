@@ -24,7 +24,7 @@
 
 .total {
   display: flex;
-  justify-content: end;
+  justify-content: flex-end;
   composes: mr-4 pt-10 from global;
   column-gap: 40px;
 }
