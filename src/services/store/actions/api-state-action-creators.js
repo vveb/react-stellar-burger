@@ -2,7 +2,7 @@ import {
   SET_API_ERROR,
   CLEAR_API_ERROR,
   INGREDIENTS_REQUESTED,
-  INGREDIENTS_RECIEVED,
+  INGREDIENTS_RECEIVED,
   INGREDIENTS_FAILED,
   ORDER_PENDING,
   ORDER_PLACED,
@@ -28,9 +28,9 @@ export const ingredientsRequested = () => (
   }
 )
 
-export const ingredientsRecieved = (ingredientsData) => (
+export const ingredientsReceived = (ingredientsData) => (
   {
-    type: INGREDIENTS_RECIEVED,
+    type: INGREDIENTS_RECEIVED,
     payload: ingredientsData,
   }
 );

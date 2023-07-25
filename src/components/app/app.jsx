@@ -1,4 +1,4 @@
-import React from 'react';
+import { useEffect, useCallback } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import { HTML5Backend } from 'react-dnd-html5-backend';
 import { DndProvider } from 'react-dnd';
@@ -13,24 +13,24 @@ import getIngredientsData from '../../services/store/thunks/get-ingredients-data
 function App() {
 
   const dispatch = useDispatch();
-  React.useEffect(() => {
+  useEffect(() => {
     dispatch(getIngredientsData());
-  }, [])
+  }, [dispatch])
 
-  const { error, isIngredientsFailed, isIngredientsRecieved, isIngredientsRequested } = useSelector((store) => store.api);
+  const { error, isIngredientsFailed, isIngredientsReceived, isIngredientsRequested } = useSelector((store) => store.api);
 
-  const closeErrorModal = React.useCallback((value) => {
+  const closeErrorModal = useCallback((value) => {
     if (!value) {
       dispatch(resetApiError())
     }
-  }, [])
+  }, [dispatch])
 
     return (
       <div className={styles.app}>
         <AppHeader />
         {isIngredientsRequested && <p className={styles.loadText}>Идет загрузка данных с сервера...</p>}
         {isIngredientsFailed && <p className={styles.errorText}>{error}</p>}
-        {isIngredientsRecieved &&
+        {isIngredientsReceived &&
           <>
             <main className={styles.main}>
               <DndProvider backend={HTML5Backend}>

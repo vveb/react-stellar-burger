@@ -1,4 +1,4 @@
-import React from 'react';
+import { useMemo } from 'react';
 import { useSelector } from 'react-redux';
 import styles from './total-price.module.css';
 import {CurrencyIcon} from '@ya.praktikum/react-developer-burger-ui-components';
@@ -6,7 +6,7 @@ import {CurrencyIcon} from '@ya.praktikum/react-developer-burger-ui-components';
 const TotalPrice = () => {
   const {bun, others} = useSelector((store) => store.currentBurger);
 
-  const totalSum = React.useMemo(() => {
+  const totalSum = useMemo(() => {
     const bunPrice = bun ? bun.price * 2 : 0;
     return others.reduce((acc, item) => {
       return acc + item.price

@@ -1,5 +1,4 @@
 const swapItems = (arr, from, to) => {
-  console.log(`moving from position ${from} to position ${to} arr.length ${arr.length}`)
   if (from === to) {
     return arr;
   };

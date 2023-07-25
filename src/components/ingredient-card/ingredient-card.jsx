@@ -1,4 +1,5 @@
 import React from 'react';
+import { useContext, useEffect, useMemo } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import { useDrag } from 'react-dnd';
 import styles from './ingredient-card.module.css';
@@ -9,7 +10,7 @@ import { IsDraggingIngredientContext } from '../../contexts/is-dragging-ingredie
 
 const IngredientCard = ({ itemData }) => {
 
-  const { drag, handleDrag} = React.useContext(IsDraggingIngredientContext)
+  const { drag, handleDrag} = useContext(IsDraggingIngredientContext)
 
   const [{ isDrag }, dragRef] = useDrag({
     type: 'ingredientCard',
@@ -19,9 +20,9 @@ const IngredientCard = ({ itemData }) => {
     })
   });
 
-  React.useEffect(() => {
+  useEffect(() => {
     handleDrag(isDrag);
-  }, [isDrag]);
+  }, [isDrag, handleDrag]);
 
   const dispatch = useDispatch();
   const { bun, others } = useSelector((store) => store.currentBurger);
@@ -30,13 +31,13 @@ const IngredientCard = ({ itemData }) => {
     dispatch(setCurrentIngredient(itemData))
   }
 
-  const count = React.useMemo(() => {
+  const count = useMemo(() => {
     if (itemData.type === 'bun') {
       if (!bun) {return 0}
       return itemData._id === bun._id ? 1 : 0;
     }
     return others.filter((item) => itemData._id === item._id).length;
-  }, [bun, others])
+  }, [bun, others, itemData._id, itemData.type])
   
   return (
     <li className={`${styles.listItem} ${(drag && !isDrag) && styles.darker}`} onClick={handleClick} ref={dragRef}>

@@ -1,4 +1,4 @@
-import React from 'react';
+import { useState, useRef, useCallback } from 'react';
 import { useSelector, useDispatch } from 'react-redux';
 import styles from './burger-ingredients.module.css';
 import CardsList from '../cards-list/cards-list';
@@ -13,19 +13,19 @@ import { IsDraggingIngredientContext } from '../../contexts/is-dragging-ingredie
 const BurgerIngredients = () => {
   const dispatch = useDispatch();
 
-  const [isDraggingNow, setIsDraggingNow] = React.useState(false);
+  const [isDraggingNow, setIsDraggingNow] = useState(false);
 
-  const { currentIngredient } = useSelector((store) => store.modals);
+  const currentIngredient = useSelector((store) => store.modals.currentIngredient);
 
   const handleCloseModal = () => {
     dispatch(resetCurrentIngredient());
   }
 
   //Обработка переключения табов при скролле
-  const baseRef = React.useRef(null);
-  const bunsRef = React.useRef(null);
-  const saucesRef = React.useRef(null);
-  const mainsRef = React.useRef(null);
+  const baseRef = useRef(null);
+  const bunsRef = useRef(null);
+  const saucesRef = useRef(null);
+  const mainsRef = useRef(null);
 
   const [bunsViewRef, bunsActiveView] = useInView({
     threshold: .5,
@@ -41,15 +41,15 @@ const BurgerIngredients = () => {
   });
 
   //Обработка скролла при клике на таб
-  const setBunsTab = React.useCallback(() => {
+  const setBunsTab = useCallback(() => {
     bunsRef.current.scrollIntoView({ behavior: "smooth" });
   }, []);
 
-  const setSaucesTab = React.useCallback(() => {
+  const setSaucesTab = useCallback(() => {
     saucesRef.current.scrollIntoView({ behavior: "smooth" });
   }, []);
 
-  const setMainsTab = React.useCallback(() => {
+  const setMainsTab = useCallback(() => {
     mainsRef.current.scrollIntoView({ behavior: "smooth" });
   }, []);
 

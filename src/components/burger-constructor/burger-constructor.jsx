@@ -1,4 +1,4 @@
-import React from 'react';
+import { useState, useCallback } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import { useDrop } from 'react-dnd';
 import styles from './burger-constructor.module.css';
@@ -16,12 +16,12 @@ import { nanoid } from 'nanoid';
 
 const BurgerConstructor = () => {
   const dispatch = useDispatch();
-  const { isOrderPending } = useSelector((store) => store.api);
+  const isOrderPending = useSelector((store) => store.api.isOrderPending);
   const { bun, others } = useSelector((store) => store.currentBurger);
-  const { orderId } = useSelector((store) => store.modals);
+  const orderId = useSelector((store) => store.modals.orderId);
 
   // Это дополнительный стейт для управления закрытием модального окна элементами, не принадлежащими компоненту Modal
-  const [isCloseRequested, setIsCloseRequested] = React.useState(false);
+  const [isCloseRequested, setIsCloseRequested] = useState(false);
   
   const handleDrop = (itemData) => {
     if (itemData.type === 'bun') {
@@ -55,7 +55,7 @@ const BurgerConstructor = () => {
     }
   };
 
-  const resetOrderModal = React.useCallback(() => {
+  const resetOrderModal = useCallback(() => {
     dispatch(resetOrderId());
     setIsCloseRequested(false);
   }, [dispatch]);

@@ -2,7 +2,7 @@ import {
   SET_API_ERROR,
   CLEAR_API_ERROR,
   INGREDIENTS_REQUESTED,
-  INGREDIENTS_RECIEVED,
+  INGREDIENTS_RECEIVED,
   INGREDIENTS_FAILED,
   ORDER_PENDING,
   ORDER_PLACED,
@@ -11,7 +11,7 @@ import {
 
 const initialApiState = {
   isIngredientsRequested: false,
-  isIngredientsRecieved: false,
+  isIngredientsReceived: false,
   isIngredientsFailed: false,
   isOrderPending: false,
   isOrderPlaced: false,
@@ -26,11 +26,11 @@ const apiStateReducer = (state = initialApiState, action) => {
     case CLEAR_API_ERROR:
       return {...state, error: null};
     case INGREDIENTS_REQUESTED:
-      return {...state, isIngredientsRequested: true, isIngredientsRecieved: false, isIngredientsFailed: false, error: null};
-    case INGREDIENTS_RECIEVED:
-      return {...state, isIngredientsRequested: false, isIngredientsRecieved: true, isIngredientsFailed: false, error: null};
+      return {...state, isIngredientsRequested: true, isIngredientsReceived: false, isIngredientsFailed: false, error: null};
+    case INGREDIENTS_RECEIVED:
+      return {...state, isIngredientsRequested: false, isIngredientsReceived: true, isIngredientsFailed: false, error: null};
     case INGREDIENTS_FAILED:
-      return {...state, isIngredientsRequested: false, isIngredientsRecieved: false, isIngredientsFailed: true, error: action.payload};
+      return {...state, isIngredientsRequested: false, isIngredientsReceived: false, isIngredientsFailed: true, error: action.payload};
     case ORDER_PENDING:
       return {...state, isOrderPending: true, isOrderPlaced: false, isOrderFailed: false, error: null};
     case ORDER_PLACED:

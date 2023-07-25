@@ -1,4 +1,4 @@
-import { ingredientsFailed, ingredientsRecieved, ingredientsRequested } from "../actions/api-state-action-creators";
+import { ingredientsFailed, ingredientsReceived, ingredientsRequested } from "../actions/api-state-action-creators";
 import Api from "../../../utils/api";
 
 const getIngredientsData = () => {
@@ -6,7 +6,7 @@ const getIngredientsData = () => {
     dispatch(ingredientsRequested());
     Api.getIngredientsData()
       .then((data) => {
-        dispatch(ingredientsRecieved(data));
+        dispatch(ingredientsReceived(data));
       })
       .catch((err) => {
         const errorText = err.statusCode ? err.message : 'Проблема с подключением, проверьте свою сеть';
