@@ -1,4 +1,4 @@
-import { useState, useRef, useCallback } from 'react';
+import { useRef, useCallback } from 'react';
 import { useSelector, useDispatch } from 'react-redux';
 import styles from './burger-ingredients.module.css';
 import CardsList from '../cards-list/cards-list';
@@ -8,12 +8,9 @@ import { Tab } from '@ya.praktikum/react-developer-burger-ui-components';
 import { productTypes, ingredientTypeName } from '../../utils/constants';
 import { useInView } from 'react-intersection-observer';
 import { resetCurrentIngredient } from '../../services/store/actions/modals-action-creators';
-import { IsDraggingIngredientContext } from '../../contexts/is-dragging-ingredient-context';
 
 const BurgerIngredients = () => {
   const dispatch = useDispatch();
-
-  const [isDraggingNow, setIsDraggingNow] = useState(false);
 
   const currentIngredient = useSelector((store) => store.modals.currentIngredient);
 
@@ -66,22 +63,20 @@ const BurgerIngredients = () => {
           Начинки
         </Tab>
       </div>
-      <IsDraggingIngredientContext.Provider value={{drag: isDraggingNow, handleDrag: setIsDraggingNow}}>
-        <ul ref={baseRef} className={styles.table}>
-          <li ref={bunsViewRef} className={styles.tableItem} key='buns'>
-            <h3 ref={bunsRef} className={styles.title}>{ingredientTypeName.bun}</h3>
-              <CardsList type={productTypes.bun} key={productTypes.bun} />
-          </li>
-          <li ref={saucesViewRef} className={styles.tableItem} key='sauces'>
-            <h3 ref={saucesRef} className={styles.title}>{ingredientTypeName.sauce}</h3>
-              <CardsList type={productTypes.sauce} key={productTypes.sauce} />
-          </li>
-          <li ref={mainsViewRef} className={styles.tableItem} key='mains'>
-            <h3 ref={mainsRef} className={styles.title}>{ingredientTypeName.main}</h3>
-              <CardsList type={productTypes.main} key={productTypes.main} />
-          </li>
-        </ul>
-      </IsDraggingIngredientContext.Provider>
+      <ul ref={baseRef} className={styles.table}>
+        <li ref={bunsViewRef} className={styles.tableItem} key='buns'>
+          <h3 ref={bunsRef} className={styles.title}>{ingredientTypeName.bun}</h3>
+            <CardsList type={productTypes.bun} key={productTypes.bun} />
+        </li>
+        <li ref={saucesViewRef} className={styles.tableItem} key='sauces'>
+          <h3 ref={saucesRef} className={styles.title}>{ingredientTypeName.sauce}</h3>
+            <CardsList type={productTypes.sauce} key={productTypes.sauce} />
+        </li>
+        <li ref={mainsViewRef} className={styles.tableItem} key='mains'>
+          <h3 ref={mainsRef} className={styles.title}>{ingredientTypeName.main}</h3>
+            <CardsList type={productTypes.main} key={productTypes.main} />
+        </li>
+      </ul>
       {currentIngredient &&
       <Modal title='Детали ингредиента' extraClass='pt-10 pr-10 pb-15 pl-10' handleCleanModalData={handleCloseModal}>
         <IngredientDetails ingredientData={currentIngredient} />

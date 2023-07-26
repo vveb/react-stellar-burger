@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useEffect, useState } from 'react';
 import { ConstructorElement, DragIcon } from "@ya.praktikum/react-developer-burger-ui-components";
 import { changeOrder, removeIngredient } from "../../services/store/actions/current-burger-action-creators";
 import { useDispatch } from "react-redux";
@@ -10,6 +10,8 @@ const OtherIngredient = ({ itemData, index }) => {
 
   const dispatch = useDispatch();
 
+  const [isDragging, setIsDragging] = useState(false);
+
   const [{ isDrag }, dragRef] = useDrag({
     type: 'burgerIngredient',
     item: itemData,
@@ -18,15 +20,20 @@ const OtherIngredient = ({ itemData, index }) => {
     }),
   });
 
+  //Дополнительный стейт для перерендера при перетаскивании ингредиентов в конструкторе и отработке анимации
+  useEffect(() => {
+    setIsDragging(isDrag);
+  }, [isDrag]);
+
   const [, dropRef] = useDrop({
     accept: 'burgerIngredient',
     drop(itemData) {
       dispatch(changeOrder({other: itemData, index}));
     }
-  })
+  });
 
   return (
-      <li className={`${styles.listItem} ${isDrag && styles.dragging}`} ref={dragRef}>
+      <li className={`${styles.listItem} ${isDragging && styles.dragging}`} ref={dragRef}>
         <div className={styles.dropBox} ref={dropRef}>
           <DragIcon />
           <ConstructorElement

@@ -9,13 +9,9 @@ const CardsList = ({ type }) => {
   const { data } = useSelector((store) => store.ingredientsData);
 
   const generateList = (type) => {
-    return data.map((item) => {
-      if (item.type === type) {
-        return (
-          <IngredientCard itemData = {item} key={item._id} />
-        )
-      }
-    })
+    return data
+      .filter((item) => item.type === type)
+      .map((item) => (<IngredientCard itemData = {item} key={item._id} />));
   }
 
   return (
