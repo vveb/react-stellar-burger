@@ -5,8 +5,14 @@
   flex-direction: column;
   row-gap: 16px;
   overflow-y: scroll;
-  max-height: 464px;
+  height: 100%;
+  height: 464px;
   composes: custom-scroll from global;
+}
+
+.list_empty {
+  justify-content: center;
+  align-items: center;
 }
 
 .list::-webkit-scrollbar {
@@ -18,13 +24,6 @@
   border-radius: 0;
 }
 
-.listItem {
-  display: flex;
-  align-items: center;
-  column-gap: 8px;
-  composes: mr-2 from global;
-}
-
-.backgroundColorTrue {
-  background-color: #1C1C21;
+.title {
+  composes: text text_type_main-large from global;
 }

@@ -36,11 +36,6 @@
   composes: pr-10 from global;
 }
 
-.burgerConstructor {
-  composes: pt-25 from global;
-  width: 100%;
-}
-
 .modalErrorText {
   composes: text text_type_main-medium from global;
   composes: pt-10 from global;

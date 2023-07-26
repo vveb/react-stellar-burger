@@ -1,17 +1,17 @@
-import React from 'react';
-import {CurrentBurgerContext} from '../../contexts';
+import { useMemo } from 'react';
+import { useSelector } from 'react-redux';
 import styles from './total-price.module.css';
 import {CurrencyIcon} from '@ya.praktikum/react-developer-burger-ui-components';
 
 const TotalPrice = () => {
-  const { currentBurger } = React.useContext(CurrentBurgerContext);
+  const {bun, others} = useSelector((store) => store.currentBurger);
 
-  const totalSum = React.useMemo(() => {
-    const bunPrice = currentBurger.bun ? currentBurger.bun.price * 2 : 0;
-    return currentBurger.others.reduce((acc, item) => {
+  const totalSum = useMemo(() => {
+    const bunPrice = bun ? bun.price * 2 : 0;
+    return others.reduce((acc, item) => {
       return acc + item.price
     }, bunPrice);
-  }, [currentBurger.bun, currentBurger.others])
+  }, [bun, others])
 
   return (
     <div className={styles.totalPrice}>

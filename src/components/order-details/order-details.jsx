@@ -1,3 +1,4 @@
+import React from 'react';
 import styles from './order-details.module.css';
 import SubmitOrderButton from '../submit-order-button/submit-order-button';
 import { functionPropType, numberPropType } from '../../utils/prop-types'
@@ -19,4 +20,4 @@ OrderDetails.propTypes = {
   handleCloseRequest: functionPropType.isRequired,
 }
 
-export default OrderDetails;
+export default React.memo(OrderDetails);

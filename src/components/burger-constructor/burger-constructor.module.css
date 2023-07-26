@@ -1,7 +1,20 @@
+.section {
+  composes: pt-25 from global;
+  width: 100%;
+  display: flex;
+  flex-direction: column;
+}
+
 .table {
   display: flex;
   flex-direction: column;
   composes: pl-4 from global;
+  filter: brightness(100%);
+  transition: filter .3s ease;
+}
+
+.table.onHover {
+  filter: brightness(125%);
 }
 
 .bordIngredient {
@@ -11,7 +24,11 @@
 
 .total {
   display: flex;
-  justify-content: end;
+  justify-content: flex-end;
   composes: mr-4 pt-10 from global;
   column-gap: 40px;
+}
+
+.bunStub {
+  height: 80px;
 }

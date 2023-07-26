@@ -1,21 +1,27 @@
 .listItem {
+  cursor: pointer;
   position: relative;
   display: flex;
   flex-direction: column;
   row-gap: 8px;
-}
-
-.image {
-  composes: pl-4 pr-4 from global;
-  box-sizing: border-box;
-  display: block;
-  cursor: pointer;
   filter: opacity(85%);
   transition: filter .3s ease;
 }
 
-.image:hover, .image:hover ~ .priceBox {
+.image {
+  transition: filter .3s ease;
+  composes: pl-4 pr-4 from global;
+  box-sizing: border-box;
+  display: block;
+  filter: drop-shadow(0);
+}
+
+.listItem:hover {
   filter: opacity(100%);
+}
+
+.listItem:hover > .image {
+  filter: drop-shadow(0 1px #9090e8);
 }
 
 .priceBox {
@@ -32,14 +38,12 @@
 }
 
 .name {
-  cursor: pointer;
   composes: text text_type_main-default from global;
   composes: pb-6 from global;
   text-align: center;
-  opacity: 1;
-  transition: opacity .3s ease;
+  opacity: .85;
 }
 
-.name:hover {
-  opacity: .6;
+.darker {
+  filter: opacity(20%);
 }

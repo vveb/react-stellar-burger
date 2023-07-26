@@ -1,5 +1,6 @@
 import ReactDOM from 'react-dom';
 import React from 'react';
+import { useRef, useCallback, useEffect } from 'react';
 import styles from './modal.module.css';
 import ModalOverlay from '../modal-overlay/modal-overlay';
 import { CloseIcon } from '@ya.praktikum/react-developer-burger-ui-components';
@@ -8,20 +9,21 @@ import { stringPropType, reactElementPropType, functionPropType, booleanPropType
 const Modal = ({ title, children, extraClass, handleCleanModalData, closeRequest }) => {
   const modalRoot = document.getElementById('modals');
 
-  const modalRef = React.useRef(null);
-  const overlayRef = React.useRef(null);
+  const modalRef = useRef(null);
+  const overlayRef = useRef(null);
   
-  const closeModal = React.useCallback(() => {
+  const closeModal = useCallback(() => {
     modalRef.current.style.opacity = 0;
     setTimeout(() => {
       overlayRef.current.style.opacity = 0;
     }, 300);
     setTimeout(() => {
-      handleCleanModalData(null)
+      // handleCleanModalData(null)
+      handleCleanModalData()
     }, 550);
-  }, []);
+  }, [handleCleanModalData]);
   
-  React.useEffect(() => {
+  useEffect(() => {
     overlayRef.current.style.cursor = 'pointer';
     overlayRef.current.style.opacity = 1;
     setTimeout(() => {
@@ -29,13 +31,13 @@ const Modal = ({ title, children, extraClass, handleCleanModalData, closeRequest
     }, 200);
   }, []);
 
-  React.useEffect(() => {
+  useEffect(() => {
     if (closeRequest) {
       closeModal();
     }
   }, [closeRequest, closeModal])
 
-  React.useEffect(() => {
+  useEffect(() => {
     const handleEscClose = (evt) => {
       if (evt.key === 'Escape') {
         closeModal();
@@ -45,7 +47,7 @@ const Modal = ({ title, children, extraClass, handleCleanModalData, closeRequest
     return () => {
       document.removeEventListener('keydown', handleEscClose);
     }
-  }, [])
+  }, [closeModal])
 
   return ReactDOM.createPortal((
     <>
@@ -75,4 +77,4 @@ Modal.propTypes = {
   closeRequest: booleanPropType,
 }
 
-export default Modal;
+export default React.memo(Modal);

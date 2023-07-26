@@ -23,4 +23,4 @@ SubmitOrderButton.propTypes = {
   handleCloseRequest: functionPropType.isRequired,
 }
 
-export default SubmitOrderButton;
+export default React.memo(SubmitOrderButton);

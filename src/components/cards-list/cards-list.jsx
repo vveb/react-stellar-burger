@@ -1,21 +1,17 @@
 import React from 'react';
+import { useSelector } from 'react-redux';
 import styles from './cards-list.module.css';
 import IngredientCard from '../ingredient-card/ingredient-card';
-import { functionPropType, stringPropType } from '../../utils/prop-types';
-import { IngredientsDataContext } from '../../contexts';
+import { stringPropType } from '../../utils/prop-types';
 
-const CardsList = ({ type, handleSelectIngredient }) => {
+const CardsList = ({ type }) => {
 
-  const data = React.useContext(IngredientsDataContext);
+  const { data } = useSelector((store) => store.ingredientsData);
 
   const generateList = (type) => {
-    return data.map((item) => {
-      if (item.type === type) {
-        return (
-          <IngredientCard itemData = {item} key={item._id} handleSelectIngredient={handleSelectIngredient}/>
-        )
-      }
-    })
+    return data
+      .filter((item) => item.type === type)
+      .map((item) => (<IngredientCard itemData = {item} key={item._id} />));
   }
 
   return (
@@ -27,7 +23,6 @@ const CardsList = ({ type, handleSelectIngredient }) => {
 
 CardsList.propTypes = {
   type: stringPropType.isRequired,
-  handleSelectIngredient: functionPropType.isRequired,
 }
 
 export default React.memo(CardsList);
