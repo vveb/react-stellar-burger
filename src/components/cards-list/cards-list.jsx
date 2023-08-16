@@ -6,7 +6,7 @@ import { stringPropType } from '../../utils/prop-types';
 
 const CardsList = ({ type }) => {
 
-  const { data } = useSelector((store) => store.ingredientsData);
+  const { data } = useSelector((store) => store.ingredients);
 
   const generateList = (type) => {
     return data

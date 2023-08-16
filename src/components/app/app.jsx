@@ -7,21 +7,26 @@ import AppHeader from "../app-header/app-header";
 import BurgerIngredients from "../burger-ingredients/burger-ingredients";
 import BurgerConstructor from "../burger-constructor/burger-constructor";
 import Modal from '../modal/modal';
-import { resetApiError } from '../../services/store/actions/api-state-action-creators';
-import getIngredientsData from '../../services/store/thunks/get-ingredients-data';
+import { getIngredientsDataThunk } from '../../services/store/ingredients-slice';
+import { clearApiError } from '../../services/store/api-state-slice';
 
 function App() {
 
   const dispatch = useDispatch();
   useEffect(() => {
-    dispatch(getIngredientsData());
+    dispatch(getIngredientsDataThunk());
   }, [dispatch])
 
-  const { error, isIngredientsFailed, isIngredientsReceived, isIngredientsRequested } = useSelector((store) => store.api);
+  const {
+    error,
+    isIngredientsFailed,
+    isIngredientsReceived,
+    isIngredientsRequested
+  } = useSelector((store) => store.api);
 
   const closeErrorModal = useCallback((value) => {
     if (!value) {
-      dispatch(resetApiError())
+      dispatch(clearApiError())
     }
   }, [dispatch])
 
