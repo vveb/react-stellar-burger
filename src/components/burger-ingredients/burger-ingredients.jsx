@@ -7,15 +7,15 @@ import Modal from '../modal/modal';
 import { Tab } from '@ya.praktikum/react-developer-burger-ui-components';
 import { productTypes, ingredientTypeName } from '../../utils/constants';
 import { useInView } from 'react-intersection-observer';
-import { resetCurrentIngredient } from '../../services/store/actions/modals-action-creators';
+import { clearCurrentIngredient } from '../../services/store/ui-slice';
 
 const BurgerIngredients = () => {
   const dispatch = useDispatch();
 
-  const currentIngredient = useSelector((store) => store.modals.currentIngredient);
+  const currentIngredient = useSelector((store) => store.ui.currentIngredient);
 
   const handleCloseModal = () => {
-    dispatch(resetCurrentIngredient());
+    dispatch(clearCurrentIngredient());
   }
 
   //Обработка переключения табов при скролле

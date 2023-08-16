@@ -8,26 +8,24 @@ import Modal from '../modal/modal';
 import OrderDetails from '../order-details/order-details';
 import TotalPrice from '../total-price/total-price';
 import Others from '../others/others';
-import { resetOrderId } from '../../services/store/actions/modals-action-creators';
-import getOrderNumber from '../../services/store/thunks/get-order-number';
-import { addBun, addOther } from '../../services/store/actions/current-burger-action-creators';
+import { addBun, addOther, getOrderNumberThunk } from '../../services/store/current-burger-slice';
 import { nanoid } from 'nanoid';
+import { clearOrderId } from '../../services/store/current-burger-slice';
 
 
 const BurgerConstructor = () => {
   const dispatch = useDispatch();
   const isOrderPending = useSelector((store) => store.api.isOrderPending);
-  const { bun, others } = useSelector((store) => store.currentBurger);
-  const orderId = useSelector((store) => store.modals.orderId);
+  const { bun, others, orderId } = useSelector((store) => store.currentBurger);
 
   // Это дополнительный стейт для управления закрытием модального окна элементами, не принадлежащими компоненту Modal
   const [isCloseRequested, setIsCloseRequested] = useState(false);
   
   const handleDrop = (itemData) => {
     if (itemData.type === 'bun') {
-      dispatch(addBun({...itemData, uniqueId: nanoid(8)}));
+      dispatch(addBun({bun: {...itemData, uniqueId: nanoid(8)}}));
     } else {
-      dispatch(addOther({...itemData, uniqueId: nanoid(8)}));
+      dispatch(addOther({other: {...itemData, uniqueId: nanoid(8)}}));
     }
   }
 
@@ -46,7 +44,7 @@ const BurgerConstructor = () => {
     if (bun) {
       allIngredientsId.ingredients = [bun._id, ...allIngredientsId.ingredients, bun._id];
     }
-    dispatch(getOrderNumber(allIngredientsId));
+    dispatch(getOrderNumberThunk({allIngredientsId}));
   };
 
   const placeAnOrder = () => {
@@ -56,7 +54,7 @@ const BurgerConstructor = () => {
   };
 
   const resetOrderModal = useCallback(() => {
-    dispatch(resetOrderId());
+    dispatch(clearOrderId());
     setIsCloseRequested(false);
   }, [dispatch]);
 

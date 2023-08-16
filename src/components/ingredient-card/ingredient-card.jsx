@@ -5,15 +5,14 @@ import { useDrag } from 'react-dnd';
 import styles from './ingredient-card.module.css';
 import { CurrencyIcon, Counter } from '@ya.praktikum/react-developer-burger-ui-components';
 import { ingredientPropType } from '../../utils/prop-types';
-import { setCurrentIngredient } from '../../services/store/actions/modals-action-creators';
-import { setIsDraggingIngredient } from '../../services/store/actions/ingredient-dragstate-action-creators';
+import { setCurrentIngredient, setIsIngredientDragging } from '../../services/store/ui-slice';
 
 const IngredientCard = ({ itemData }) => {
   
   const dispatch = useDispatch();
   const { bun, others } = useSelector((store) => store.currentBurger);
 
-  const isIngredientDraggingNow = useSelector((store) => store.isIngredientDraggingNow);
+  const isIngredientDraggingNow = useSelector((store) => store.ui.isIngredientDragging);
 
   const [{ isDrag }, dragRef] = useDrag({
     type: 'ingredientCard',
@@ -24,11 +23,11 @@ const IngredientCard = ({ itemData }) => {
   });
 
   useEffect(() => {
-    dispatch(setIsDraggingIngredient(isDrag));
+    dispatch(setIsIngredientDragging({isDrag}));
   }, [isDrag, dispatch]);
 
   const handleClick = () => {
-    dispatch(setCurrentIngredient(itemData))
+    dispatch(setCurrentIngredient({itemData}))
   }
 
   const count = useMemo(() => {

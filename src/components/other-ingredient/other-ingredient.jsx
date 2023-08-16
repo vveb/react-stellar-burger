@@ -1,10 +1,10 @@
 import React, { useEffect, useState } from 'react';
 import { ConstructorElement, DragIcon } from "@ya.praktikum/react-developer-burger-ui-components";
-import { changeOrder, removeIngredient } from "../../services/store/actions/current-burger-action-creators";
 import { useDispatch } from "react-redux";
 import { useDrag, useDrop } from 'react-dnd';
 import styles from './other-ingredient.module.css'
 import { ingredientPropType, numberPropType } from '../../utils/prop-types';
+import { changeOrder, removeIngredient } from '../../services/store/current-burger-slice';
 
 const OtherIngredient = ({ itemData, index }) => {
 
@@ -42,7 +42,7 @@ const OtherIngredient = ({ itemData, index }) => {
             thumbnail={itemData.image}
             extraClass={styles.backgroundColorTrue}
             handleClose={() => {
-              dispatch(removeIngredient(itemData));
+              dispatch(removeIngredient({itemData}));
             }}
           />
         </div>
