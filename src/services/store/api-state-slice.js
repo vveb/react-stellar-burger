@@ -1,6 +1,6 @@
 import { createSlice } from "@reduxjs/toolkit";
 import { getIngredientsDataThunk } from "./ingredients-slice";
-import { getOrderNumberThunk } from "./current-burger-slice";
+import { getOrderNumberThunk } from "./ui-slice";
 
 const initialApiState = {
   isIngredientsRequested: false,

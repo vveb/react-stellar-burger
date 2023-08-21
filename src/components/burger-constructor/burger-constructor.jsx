@@ -8,15 +8,16 @@ import Modal from '../modal/modal';
 import OrderDetails from '../order-details/order-details';
 import TotalPrice from '../total-price/total-price';
 import Others from '../others/others';
-import { addBun, addOther, getOrderNumberThunk } from '../../services/store/current-burger-slice';
+import { addBun, addOther } from '../../services/store/current-burger-slice';
+import { getOrderNumberThunk, clearOrderId } from '../../services/store/ui-slice';
 import { nanoid } from 'nanoid';
-import { clearOrderId } from '../../services/store/current-burger-slice';
 
 
 const BurgerConstructor = () => {
   const dispatch = useDispatch();
   const isOrderPending = useSelector((store) => store.api.isOrderPending);
-  const { bun, others, orderId } = useSelector((store) => store.currentBurger);
+  const { bun, others } = useSelector((store) => store.currentBurger);
+  const { orderId } = useSelector((store) => store.ui);
 
   // Это дополнительный стейт для управления закрытием модального окна элементами, не принадлежащими компоненту Modal
   const [isCloseRequested, setIsCloseRequested] = useState(false);
