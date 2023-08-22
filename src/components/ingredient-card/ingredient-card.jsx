@@ -2,6 +2,7 @@ import React from 'react';
 import { useEffect, useMemo } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import { useDrag } from 'react-dnd';
+import { useLocation, useNavigate } from 'react-router-dom';
 import styles from './ingredient-card.module.css';
 import { CurrencyIcon, Counter } from '@ya.praktikum/react-developer-burger-ui-components';
 import { ingredientPropType } from '../../utils/prop-types';
@@ -10,6 +11,10 @@ import { setCurrentIngredient, setIsIngredientDragging } from '../../services/st
 const IngredientCard = ({ itemData }) => {
   
   const dispatch = useDispatch();
+  
+  const location = useLocation();
+  const navigate = useNavigate();
+  
   const { bun, others } = useSelector((store) => store.currentBurger);
 
   const isIngredientDraggingNow = useSelector((store) => store.ui.isIngredientDragging);
@@ -27,7 +32,8 @@ const IngredientCard = ({ itemData }) => {
   }, [isDrag, dispatch]);
 
   const handleClick = () => {
-    dispatch(setCurrentIngredient({itemData}))
+    dispatch(setCurrentIngredient({itemData}));
+    navigate(`/ingredients/${itemData._id}`, { state: { background: location } });
   }
 
   const count = useMemo(() => {
@@ -48,8 +54,8 @@ const IngredientCard = ({ itemData }) => {
       </div>
       <p role='button' className={styles.name}>{itemData.name}</p>
     </li>
-  )
-}
+  );
+};
 
 IngredientCard.propTypes = {
   itemData: ingredientPropType.isRequired,

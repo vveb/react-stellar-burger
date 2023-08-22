@@ -7,35 +7,6 @@
   align-items: center;
 }
 
-.loadText, .errorText {
-  composes: text text_type_main-large from global;
-  composes: pl-20 pr-20 from global;
-  height: 100vh;
-  transform: translateY(10%);
-  text-align: justify;
-}
-
-.main {
-  display: flex;
-  width: 100%;
-  max-width: 1240px;
-}
-
-.title {
-  margin: 0;
-  composes: text text_type_main-large from global;
-  composes: pt-10 pb-5 from global;
-}
-
-.ingredients {
-  display: flex;
-  flex-direction: column;
-  width: 100%;
-  max-width: 600px;
-  max-height: 912px;
-  composes: pr-10 from global;
-}
-
 .modalErrorText {
   composes: text text_type_main-medium from global;
   composes: pt-10 from global;

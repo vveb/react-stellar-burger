@@ -1,27 +1,28 @@
 import { useEffect, useCallback } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
-import { HTML5Backend } from 'react-dnd-html5-backend';
-import { DndProvider } from 'react-dnd';
+import { Route, Routes, useLocation } from 'react-router-dom';
 import styles from "./app.module.css";
 import AppHeader from "../app-header/app-header";
-import BurgerIngredients from "../burger-ingredients/burger-ingredients";
-import BurgerConstructor from "../burger-constructor/burger-constructor";
+import HomePage from '../../pages/home-page';
 import Modal from '../modal/modal';
 import { getIngredientsDataThunk } from '../../services/store/ingredients-slice';
 import { clearApiError } from '../../services/store/api-state-slice';
+import IngredientPage from '../../pages/ingredient-page';
 
 function App() {
 
   const dispatch = useDispatch();
+
+  const location = useLocation();
+  const background = location.state && location.state.background;
+
   useEffect(() => {
     dispatch(getIngredientsDataThunk());
-  }, [dispatch])
+  }, [dispatch]);
 
   const {
     error,
     isIngredientsFailed,
-    isIngredientsReceived,
-    isIngredientsRequested
   } = useSelector((store) => store.api);
 
   const closeErrorModal = useCallback((value) => {
@@ -33,21 +34,15 @@ function App() {
     return (
       <div className={styles.app}>
         <AppHeader />
-        {isIngredientsRequested && <p className={styles.loadText}>Идет загрузка данных с сервера...</p>}
-        {isIngredientsFailed && <p className={styles.errorText}>{error}</p>}
-        {isIngredientsReceived &&
-          <>
-            <main className={styles.main}>
-              <DndProvider backend={HTML5Backend}>
-                <section className={styles.ingredients}>
-                  <h2 className={styles.title}>Соберите бургер</h2>
-                    <BurgerIngredients />
-                </section>
-                  <BurgerConstructor />
-              </DndProvider>
-            </main>
-          </>
-        }
+        <Routes location={background || location}>
+          <Route path='/' element={<HomePage />} />
+          <Route path='/ingredients/:id' element={<IngredientPage />}/>
+        </Routes>
+        {background && (
+          <Routes>
+            <Route path='/ingredients/:id' element={<IngredientPage />}/>
+          </Routes>
+        )}
         {(error && !isIngredientsFailed) && 
         <Modal title='Что-то пошло не так :(' handleCleanModalData={closeErrorModal} extraClass='pt-10 pr-10 pb-15 pl-10'>
           <p className={styles.modalErrorText}>{error}</p>

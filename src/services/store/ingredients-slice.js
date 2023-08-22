@@ -1,5 +1,5 @@
 import Api from '../../utils/api';
-import { createAsyncThunk, createSlice } from '@reduxjs/toolkit'
+import { createAsyncThunk, createSlice } from '@reduxjs/toolkit';
 const initialIngredientsData = {data: null};
 
 const getIngredientsDataThunk = createAsyncThunk(
