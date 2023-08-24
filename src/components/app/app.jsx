@@ -8,6 +8,7 @@ import Modal from '../modal/modal';
 import { getIngredientsDataThunk } from '../../services/store/ingredients-slice';
 import { clearApiError } from '../../services/store/api-state-slice';
 import IngredientPage from '../../pages/ingredient-page';
+import LoginPage from '../../pages/login-page';
 
 function App() {
 
@@ -36,7 +37,8 @@ function App() {
         <AppHeader />
         <Routes location={background || location}>
           <Route path='/' element={<HomePage />} />
-          <Route path='/ingredients/:id' element={<IngredientPage />}/>
+          <Route path='/ingredients/:id' element={<IngredientPage />} />
+          <Route path='/login' element={<LoginPage />} />
         </Routes>
         {background && (
           <Routes>
