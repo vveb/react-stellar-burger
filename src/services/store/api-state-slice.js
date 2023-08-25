@@ -1,6 +1,7 @@
 import { createSlice } from "@reduxjs/toolkit";
 import { getIngredientsDataThunk } from "./ingredients-slice";
 import { getOrderNumberThunk } from "./ui-slice";
+import { loginUserThunk, registerNewUserThunk } from "./user-slice";
 
 const initialApiState = {
   isIngredientsRequested: false,
@@ -9,6 +10,12 @@ const initialApiState = {
   isOrderPending: false,
   isOrderPlaced: false,
   isOrderFailed: false,
+  isRegistrationPending: false,
+  isRegistrationSucceed: false,
+  isRegistrationFailed: false,
+  isLoginPending: false,
+  isLoginSucceed: false,
+  isLoginFailed: false,
   error: null,
 };
 
@@ -37,6 +44,24 @@ const apiStateSlice = createSlice({
     })
     .addCase(getOrderNumberThunk.rejected, (state, action) => {
       return {...state, isOrderPending: false, isOrderPlaced: false, isOrderFailed: true, error: action.payload};
+    })
+    .addCase(registerNewUserThunk.pending, (state) => {
+      return {...state, isRegistrationPending: true, isRegistrationSucceed: false, isRegistrationFailed: false, error: null};
+    })
+    .addCase(registerNewUserThunk.fulfilled, (state) => {
+      return {...state, isRegistrationPending: false, isRegistrationSucceed: true, isRegistrationFailed: false, error: null};
+    })
+    .addCase(registerNewUserThunk.rejected, (state, action) => {
+      return {...state, isRegistrationPending: false, isRegistrationSucceed: false, isRegistrationFailed: true, error: action.payload};
+    })
+    .addCase(loginUserThunk.pending, (state) => {
+      return {...state, isLoginPending: true, isLoginSucceed: false, isLoginFailed: false, error: null};
+    })
+    .addCase(loginUserThunk.fulfilled, (state) => {
+      return {...state, isLoginPending: false, isLoginSucceed: true, isLoginFailed: false, error: null};
+    })
+    .addCase(loginUserThunk.rejected, (state, action) => {
+      return {...state, isLoginPending: false, isLoginSucceed: false, isLoginFailed: true, error: action.payload};
     })
 });
 

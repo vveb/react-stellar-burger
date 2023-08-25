@@ -3,6 +3,7 @@ import apiReducer from './api-state-slice';
 import ingredientsReducer from './ingredients-slice';
 import currentBurgerReducer from "./current-burger-slice";
 import uiReducer from './ui-slice';
+import userReducer from './user-slice';
 
 const store = configureStore({
   reducer: {
@@ -10,6 +11,7 @@ const store = configureStore({
     ingredients: ingredientsReducer,
     currentBurger: currentBurgerReducer,
     ui: uiReducer,
+    user: userReducer,
   },
   devTools: process.env.NODE_ENV !== 'production',
 });

@@ -18,7 +18,7 @@ const getOrderNumberThunk = createAsyncThunk(
       throw new Error({statusCode: 500, message: 'Неизвестная ошибка'});
     } catch(err) {
       const errorText = err.statusCode ? err.message : 'Проблема с подключением, проверьте свою сеть';
-      rejectWithValue(`Ошибка при оформлении заказа: ${errorText}`);
+      return rejectWithValue(`Ошибка при оформлении заказа: ${errorText}`);
     };
   }
 );
