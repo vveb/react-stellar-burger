@@ -65,11 +65,21 @@ const loginUser = (data) => {
   return goFetch({ endpoint: endpointURLs.login, data, method: 'POST' });
 };
 
+const updatePassword = (data) => {
+  return goFetch({ endpoint: endpointURLs.updatePassword, data, method: 'POST' });
+}
+
+const resetPassword = (data) => {
+  return goFetch({ endpoint: endpointURLs.resetPassword, data, method: 'POST' });
+}
+
 const Api = {
   getIngredientsData,
   addNewOrder,
   registerNewUser,
   loginUser,
+  updatePassword,
+  resetPassword,
 }
 
 export default Api;

@@ -11,6 +11,8 @@ const endpointURLs = {
   register: '/auth/register',
   refresh: '/auth/token',
   login: '/auth/login',
+  updatePassword: '/password-reset',
+  resetPassword: '/password-reset/reset',
 }
 
 const ingredientTypeName = {

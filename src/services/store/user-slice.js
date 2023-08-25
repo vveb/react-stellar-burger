@@ -40,6 +40,39 @@ const loginUserThunk = createAsyncThunk(
       return rejectWithValue(`Ошибка при входе в систему: ${errorText}`);
     };
   }
+);
+
+const updatePasswordThunk = createAsyncThunk(
+  'user/update-password',
+  async (data, { rejectWithValue }) => {
+    try {
+      const { message, success } = await Api.updatePassword(data) ?? {};
+      if (success) {
+        return {message};
+      }
+      throw new Error({statusCode: 500, message: 'Неизвестная ошибка'});
+    } catch(err) {
+      const errorText = err.statusCode ? err.message : 'Проблема с подключением, проверьте свою сеть';
+      return rejectWithValue(`Ошибка при проверке e-mail: ${errorText}`);
+    };
+  }
+);
+
+const resetPasswordThunk = createAsyncThunk(
+  'user/reset-password',
+  async (data, { rejectWithValue }) => {
+    try {
+      const { message, success } = await Api.resetPassword(data) ?? {};
+      if (success) {
+        console.log(message)
+        return {message};
+      }
+      throw new Error({statusCode: 500, message: 'Неизвестная ошибка'});
+    } catch(err) {
+      const errorText = err.statusCode ? err.message : 'Проблема с подключением, проверьте свою сеть';
+      return rejectWithValue(`Ошибка при изменении пароля: ${errorText}`);
+    };
+  }
 )
 
 const userSlice = createSlice({
@@ -57,8 +90,17 @@ const userSlice = createSlice({
       const { name, email } = action.payload;
       return { name, email };
     })
+    .addCase(updatePasswordThunk.fulfilled, (_, action) => {
+      const { password, token } = action.payload;
+      return { password, token };
+    })
 });
 
-export { registerNewUserThunk, loginUserThunk };
+export {
+  registerNewUserThunk,
+  loginUserThunk,
+  updatePasswordThunk,
+  resetPasswordThunk,
+  };
 
 export default userSlice.reducer;

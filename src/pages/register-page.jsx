@@ -8,6 +8,7 @@ import { registerNewUserThunk } from '../services/store/user-slice';
 const RegisterPage = () => {
 
   const dispatch = useDispatch();
+  const navigate = useNavigate();
 
   const {values, errorTexts, isErrors, handleChange} = useForm({
     email: '',
@@ -16,8 +17,6 @@ const RegisterPage = () => {
   });
 
   const isRegistrationPending = useSelector((store) => store.api.isRegistrationPending);
-
-  const navigate = useNavigate();
 
   const onSubmit = (evt) => {
     evt.preventDefault();

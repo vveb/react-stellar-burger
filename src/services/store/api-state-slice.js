@@ -1,7 +1,7 @@
 import { createSlice } from "@reduxjs/toolkit";
 import { getIngredientsDataThunk } from "./ingredients-slice";
 import { getOrderNumberThunk } from "./ui-slice";
-import { loginUserThunk, registerNewUserThunk } from "./user-slice";
+import { loginUserThunk, registerNewUserThunk, updatePasswordThunk } from "./user-slice";
 
 const initialApiState = {
   isIngredientsRequested: false,
@@ -16,6 +16,9 @@ const initialApiState = {
   isLoginPending: false,
   isLoginSucceed: false,
   isLoginFailed: false,
+  isUpdatePasswordPending: false,
+  isUpdatePasswordSucceed: false,
+  isUpdatePasswordFailed: false,
   error: null,
 };
 
@@ -62,6 +65,15 @@ const apiStateSlice = createSlice({
     })
     .addCase(loginUserThunk.rejected, (state, action) => {
       return {...state, isLoginPending: false, isLoginSucceed: false, isLoginFailed: true, error: action.payload};
+    })
+    .addCase(updatePasswordThunk.pending, (state) => {
+      return {...state, isUpdatePasswordPending: true, isUpdatePasswordSucceed: false, isUpdatePasswordFailed: false, error: null};
+    })
+    .addCase(updatePasswordThunk.fulfilled, (state) => {
+      return {...state, isUpdatePasswordPending: false, isUpdatePasswordSucceed: true, isUpdatePasswordFailed: false, error: null};
+    })
+    .addCase(updatePasswordThunk.rejected, (state, action) => {
+      return {...state, isUpdatePasswordPending: false, isUpdatePasswordSucceed: false, isUpdatePasswordFailed: true, error: action.payload};
     })
 });
 
