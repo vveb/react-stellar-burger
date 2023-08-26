@@ -14,6 +14,8 @@ const AppHeader = () => {
   //или (деталей ингредиента и при этом в модальном окне, то есть background установлен)
   const isConstructorActive = isConstructor || (isIngredientDetails && background);
 
+  const isProfileActive = useMatch('/profile');
+
   return (
     <header className={styles.header}>
       <nav className={styles.nav}>
@@ -28,7 +30,10 @@ const AppHeader = () => {
         <NavLink to={{ pathname: '/' }} className={styles.logoLink} href='#'>
           <Logo />
         </NavLink>
-        <a className={styles.lk} href='#'><ProfileIcon type='secondary' /><span className={styles.text}>Личный кабинет</span></a>
+        <NavLink to={{ pathname: '/profile' }} className={isProfileActive ? styles.lk : styles.lk_inactive}>
+          <ProfileIcon type={isProfileActive ? 'primary' : 'secondary'} />
+          <span className={styles.text}>Личный кабинет</span>
+        </NavLink>
       </nav>
     </header>
   )

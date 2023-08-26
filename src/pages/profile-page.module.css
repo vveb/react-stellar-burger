@@ -1,0 +1,62 @@
+.main {
+  display: flex;
+  column-gap: 60px;
+  composes: mt-30 from global;
+  width: 100%;
+  max-width: 1280px;
+  padding: 0 20px;
+  box-sizing: border-box;
+}
+
+.menuBox {
+  display: flex;
+  flex-direction: column;
+  max-width: 320px;
+}
+
+.menuLinks {
+  display: flex;
+  flex-direction: column;
+  list-style: none;
+  padding-left: 0;
+  row-gap: 34px;
+  /* line-height: 64px; */
+}
+
+.menuItem {
+  composes: text text_type_main-medium from global;
+  text-decoration: none;
+  color: #F2F2F3;
+}
+
+.menuItem_inactive {
+  composes: menuItem;
+  color: #8585AD;
+}
+
+.infoText {
+  composes: text text_type_main-default text_color_inactive from global;
+  opacity: .4;
+  margin-top: 80px;
+}
+
+.form {
+  display: flex;
+  flex-direction: column;
+  row-gap: 24px;
+}
+
+.controlsBox {
+  display: flex;
+  justify-content: flex-end;
+  align-items: flex-start;
+  column-gap: 20px;
+}
+
+.resetButton {
+  padding: 16px 8px;
+}
+
+.submitButton {
+  padding: 16px 40px;
+}
