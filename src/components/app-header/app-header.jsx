@@ -14,7 +14,7 @@ const AppHeader = () => {
   //или (деталей ингредиента и при этом в модальном окне, то есть background установлен)
   const isConstructorActive = isConstructor || (isIngredientDetails && background);
 
-  const isProfileActive = useMatch('/profile');
+  const isProfileActive = useMatch('/profile/*');
 
   return (
     <header className={styles.header}>

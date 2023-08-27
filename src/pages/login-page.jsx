@@ -10,7 +10,6 @@ const LoginPage = () => {
   const dispatch = useDispatch();
   const navigate = useNavigate();
   const location = useLocation();
-  console.log(location)
 
   const { values, handleChange } = useForm({email: '', password: ''});
 

@@ -15,6 +15,7 @@ import ResetPasswordPage from '../../pages/reset-password-page';
 import ProfilePage from '../../pages/profile-page';
 import Api from '../../utils/api';
 import { setUser } from '../../services/store/user-slice';
+import ProfileForm from '../profile-form/profile-form';
 
 function App() {
 
@@ -66,8 +67,8 @@ function App() {
           <Route path='/forgot-password' element={<ForgotPasswordPage />} />
           <Route path='/reset-password' element={<ResetPasswordPage />} />
           <Route path='/profile' element={<ProfilePage />}>
-            {/* <Route index element={<ProfileForm />} /> */}
-            {/* <Route path='/profile/orders' element={<ProfileOrders />} /> */}
+            <Route index element={<ProfileForm />} />
+            <Route path='/profile/orders' element={<p>Заглушка для истории заказов</p>} />
           </Route>
         </Routes>
         {background && (
