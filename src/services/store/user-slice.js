@@ -44,7 +44,8 @@ const loginUserThunk = createAsyncThunk(
 
 const logoutUserThunk = createAsyncThunk(
   'user/logout',
-  async (data, { rejectWithValue }) => {
+  async (_, { rejectWithValue }) => {
+    const data =  { token: localStorage.getItem('refreshToken') };
     try {
       const { message, success } = await Api.logoutUser(data) ?? {};
       if (success) {
@@ -60,11 +61,11 @@ const logoutUserThunk = createAsyncThunk(
   }
 );
 
-const updatePasswordThunk = createAsyncThunk(
+const forgotPasswordThunk = createAsyncThunk(
   'user/update-password',
   async (data, { rejectWithValue }) => {
     try {
-      const { message, success } = await Api.updatePassword(data) ?? {};
+      const { message, success } = await Api.forgotPassword(data) ?? {};
       if (success) {
         return {message};
       }
@@ -108,24 +109,24 @@ const updateProfileInfoThunk = createAsyncThunk(
   }
 );
 
-const getProfileInfoThunk = createAsyncThunk(
-  'user/get-profile-info',
-  async (_, { rejectWithValue }) => {
-    if (!localStorage.getItem('accessToken')) {
-      return initialUserState;
-    }
-    try {
-      const { user: { name, email }, success } = await Api.getProfileInfo() ?? {};
-      if (success) {
-        return {name, email};
-      }
-      throw new Error({statusCode: 500, message: 'Неизвестная ошибка'});
-    } catch(err) {
-      const errorText = err.statusCode ? err.message : 'Проблема с подключением, проверьте свою сеть';
-      return rejectWithValue(`Ошибка при получении данных пользователя: ${errorText}`);
-    };
-  }
-);
+// const getProfileInfoThunk = createAsyncThunk(
+//   'user/get-profile-info',
+//   async (_, { rejectWithValue }) => {
+//     if (!localStorage.getItem('accessToken')) {
+//       return initialUserState;
+//     }
+//     try {
+//       const { user: { name, email }, success } = await Api.getProfileInfo() ?? {};
+//       if (success) {
+//         return {name, email};
+//       }
+//       throw new Error({statusCode: 500, message: 'Неизвестная ошибка'});
+//     } catch(err) {
+//       const errorText = err.statusCode ? err.message : 'Проблема с подключением, проверьте свою сеть';
+//       return rejectWithValue(`Ошибка при получении данных пользователя: ${errorText}`);
+//     };
+//   }
+// );
 
 const userSlice = createSlice({
   name: 'user',
@@ -153,11 +154,11 @@ const userSlice = createSlice({
 export {
   registerNewUserThunk,
   loginUserThunk,
-  updatePasswordThunk,
+  forgotPasswordThunk,
   resetPasswordThunk,
   logoutUserThunk,
   updateProfileInfoThunk,
-  getProfileInfoThunk,
+  // getProfileInfoThunk,
   };
 
 export const { setUser } = userSlice.actions;

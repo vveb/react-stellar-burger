@@ -11,13 +11,18 @@ import Others from '../others/others';
 import { addBun, addOther } from '../../services/store/current-burger-slice';
 import { getOrderNumberThunk, clearOrderId } from '../../services/store/ui-slice';
 import { nanoid } from 'nanoid';
+import { isLoggedInSelector } from '../../services/store/selectors';
+import { useLocation, useNavigate } from 'react-router-dom';
 
 
 const BurgerConstructor = () => {
   const dispatch = useDispatch();
+  const navigate = useNavigate();
+  const location = useLocation();
   const isOrderPending = useSelector((store) => store.api.isOrderPending);
   const { bun, others } = useSelector((store) => store.currentBurger);
   const { orderId } = useSelector((store) => store.ui);
+  const isLoggedIn = useSelector(isLoggedInSelector);
 
   // Это дополнительный стейт для управления закрытием модального окна элементами, не принадлежащими компоненту Modal
   const [isCloseRequested, setIsCloseRequested] = useState(false);
@@ -49,8 +54,12 @@ const BurgerConstructor = () => {
   };
 
   const placeAnOrder = () => {
-    if (bun || others.length > 0) {
-      assignOrderNumber(bun, others);
+    if(!isLoggedIn) {
+      navigate('/login', { state: { from: location } });
+    } else {
+      if (bun || others.length > 0) {
+        assignOrderNumber(bun, others);
+      }
     }
   };
 

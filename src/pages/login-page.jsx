@@ -1,6 +1,6 @@
 import { Button, EmailInput, PasswordInput } from '@ya.praktikum/react-developer-burger-ui-components';
 import styles from './authorization-pages.module.css';
-import { Link, useNavigate } from 'react-router-dom';
+import { Link, useLocation, useNavigate } from 'react-router-dom';
 import useForm from '../services/hooks/use-form';
 import { useDispatch, useSelector } from 'react-redux';
 import { loginUserThunk } from '../services/store/user-slice';
@@ -9,6 +9,8 @@ const LoginPage = () => {
 
   const dispatch = useDispatch();
   const navigate = useNavigate();
+  const location = useLocation();
+  console.log(location)
 
   const { values, handleChange } = useForm({email: '', password: ''});
 
@@ -17,7 +19,7 @@ const LoginPage = () => {
   const onSubmit = (evt) => {
     evt.preventDefault();
     dispatch(loginUserThunk(values));
-    navigate('/');
+    navigate(location.state?.from ?? '/');
   };
 
   return (

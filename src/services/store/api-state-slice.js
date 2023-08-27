@@ -1,7 +1,7 @@
 import { createSlice } from "@reduxjs/toolkit";
 import { getIngredientsDataThunk } from "./ingredients-slice";
 import { getOrderNumberThunk } from "./ui-slice";
-import { loginUserThunk, registerNewUserThunk, resetPasswordThunk, updatePasswordThunk } from "./user-slice";
+import { loginUserThunk, registerNewUserThunk, resetPasswordThunk, forgotPasswordThunk, updateProfileInfoThunk } from "./user-slice";
 
 const initialApiState = {
   isIngredientsRequested: false,
@@ -16,12 +16,18 @@ const initialApiState = {
   isLoginPending: false,
   isLoginSucceed: false,
   isLoginFailed: false,
-  isUpdatePasswordPending: false,
-  isUpdatePasswordSucceed: false,
-  isUpdatePasswordFailed: false,
+  isForgotPasswordPending: false,
+  isForgotPasswordSucceed: false,
+  isForgotPasswordFailed: false,
   isResetPasswordPending: false,
   isResetPasswordSucceed: false,
   isResetPasswordFailed: false,
+  // isGetProfileInfoPending: false,
+  // isGetProfileInfoSucceed: false,
+  // isGetProfileInfoFailed: false,
+  isUpdateProfileInfoPending: false,
+  isUpdateProfileInfoSucceed: false,
+  isUpdateProfileInfoFailed: false,
   error: null,
 };
 
@@ -69,14 +75,14 @@ const apiStateSlice = createSlice({
     .addCase(loginUserThunk.rejected, (state, action) => {
       return {...state, isLoginPending: false, isLoginSucceed: false, isLoginFailed: true, error: action.payload};
     })
-    .addCase(updatePasswordThunk.pending, (state) => {
-      return {...state, isUpdatePasswordPending: true, isUpdatePasswordSucceed: false, isUpdatePasswordFailed: false, error: null};
+    .addCase(forgotPasswordThunk.pending, (state) => {
+      return {...state, isForgotPasswordPending: true, isForgotPasswordSucceed: false, isForgotPasswordFailed: false, error: null};
     })
-    .addCase(updatePasswordThunk.fulfilled, (state) => {
-      return {...state, isUpdatePasswordPending: false, isUpdatePasswordSucceed: true, isUpdatePasswordFailed: false, error: null};
+    .addCase(forgotPasswordThunk.fulfilled, (state) => {
+      return {...state, isForgotPasswordPending: false, isForgotPasswordSucceed: true, isForgotPasswordFailed: false, error: null};
     })
-    .addCase(updatePasswordThunk.rejected, (state, action) => {
-      return {...state, isUpdatePasswordPending: false, isUpdatePasswordSucceed: false, isUpdatePasswordFailed: true, error: action.payload};
+    .addCase(forgotPasswordThunk.rejected, (state, action) => {
+      return {...state, isForgotPasswordPending: false, isForgotPasswordSucceed: false, isForgotPasswordFailed: true, error: action.payload};
     })
     .addCase(resetPasswordThunk.pending, (state) => {
       return {...state, isResetPasswordPending: true, isResetPasswordSucceed: false, isResetPasswordFailed: false, error: null};
@@ -87,6 +93,25 @@ const apiStateSlice = createSlice({
     .addCase(resetPasswordThunk.rejected, (state, action) => {
       return {...state, isResetPasswordPending: false, isResetPasswordSucceed: false, isResetPasswordFailed: true, error: action.payload};
     })
+    // .addCase(getProfileInfoThunk.pending, (state) => {
+    //   return {...state, isGetProfileInfoPending: true, isGetProfileInfoSucceed: false, isGetProfileInfoFailed: false, error: null};
+    // })
+    // .addCase(getProfileInfoThunk.fulfilled, (state) => {
+    //   return {...state, isGetProfileInfoPending: false, isGetProfileInfoSucceed: true, isGetProfileInfoFailed: false, error: null};
+    // })
+    // .addCase(getProfileInfoThunk.rejected, (state, action) => {
+    //   return {...state, isGetProfileInfoPending: false, isGetProfileInfoSucceed: false, isGetProfileInfoFailed: true, error: action.payload};
+    // })
+    .addCase(updateProfileInfoThunk.pending, (state) => {
+      return {...state, isUpdateProfileInfoPending: true, isUpdateProfileInfoSucceed: false, isUpdateProfileInfoFailed: false, error: null};
+    })
+    .addCase(updateProfileInfoThunk.fulfilled, (state) => {
+      return {...state, isUpdateProfileInfoPending: false, isUpdateProfileInfoSucceed: true, isUpdateProfileInfoFailed: false, error: null};
+    })
+    .addCase(updateProfileInfoThunk.rejected, (state, action) => {
+      return {...state, isUpdateProfileInfoPending: false, isUpdateProfileInfoSucceed: false, isUpdateProfileInfoFailed: true, error: action.payload};
+    })
+
     //TODO: Добавить для getProfileInfo и updateProfileInfo
 });
 

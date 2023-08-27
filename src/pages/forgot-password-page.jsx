@@ -3,7 +3,7 @@ import { Button, EmailInput } from '@ya.praktikum/react-developer-burger-ui-comp
 import styles from './authorization-pages.module.css';
 import { Link, useNavigate } from 'react-router-dom';
 import { useDispatch, useSelector } from 'react-redux';
-import { updatePasswordThunk } from '../services/store/user-slice';
+import { forgotPasswordThunk } from '../services/store/user-slice';
 import useForm from '../services/hooks/use-form';
 
 const ForgotPasswordPage = () => {
@@ -13,11 +13,11 @@ const ForgotPasswordPage = () => {
 
   const {values, handleChange} = useForm({ email: '' });
 
-  const isUpdatePasswordPending = useSelector((store) => store.api.isUpdatePasswordPending)
+  const isForgotPasswordPending = useSelector((store) => store.api.isForgotPasswordPending)
 
   const onSubmit = (evt) => {
     evt.preventDefault();
-    dispatch(updatePasswordThunk(values));
+    dispatch(forgotPasswordThunk(values));
     navigate('/reset-password');
   };
 
@@ -37,7 +37,7 @@ const ForgotPasswordPage = () => {
           size='large'
           htmlType='submit'
           extraClass={styles.submitButton}>
-            {isUpdatePasswordPending ? 'Минутку...' : 'Восстановить'}
+            {isForgotPasswordPending ? 'Минутку...' : 'Восстановить'}
         </Button>
       </form>
       <p className={styles.helpText}>Вспомнили пароль? <Link className={styles.link} to='/login'>Войти</Link></p>

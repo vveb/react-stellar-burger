@@ -54,7 +54,7 @@ const getIngredientsData = () => {
 }
 
 const addNewOrder = (ingredientsIdList) => {
-  return goFetch({ endpoint: endpointURLs.orders, data: ingredientsIdList, method: 'POST' })
+  return fetchWithRefresh({ endpoint: endpointURLs.orders, data: ingredientsIdList, method: 'POST' })
 }
 //data обычно называют dto - data transfer object (объект передачи данных)
 const registerNewUser = (data) => {
@@ -66,11 +66,11 @@ const loginUser = (data) => {
 };
 
 const logoutUser = (data) => {
-  return goFetch({ endpoint: endpointURLs.logout, data, method: 'POST' })
+  return fetchWithRefresh({ endpoint: endpointURLs.logout, data, method: 'POST' })
 }
 
-const updatePassword = (data) => {
-  return goFetch({ endpoint: endpointURLs.updatePassword, data, method: 'POST' });
+const forgotPassword = (data) => {
+  return goFetch({ endpoint: endpointURLs.forgotPassword, data, method: 'POST' });
 }
 
 const resetPassword = (data) => {
@@ -91,7 +91,7 @@ const Api = {
   registerNewUser,
   loginUser,
   logoutUser,
-  updatePassword,
+  forgotPassword,
   resetPassword,
   updateProfileInfo,
   getProfileInfo,

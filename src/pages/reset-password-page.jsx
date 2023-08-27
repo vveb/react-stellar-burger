@@ -18,7 +18,7 @@ const ResetPasswordPage = () => {
   const onSubmit = (evt) => {
     evt.preventDefault();
     dispatch(resetPasswordThunk(values));
-    navigate('/');
+    navigate('/login');
   };
 
   return (

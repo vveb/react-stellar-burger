@@ -42,7 +42,7 @@ function App() {
           localStorage.removeItem('refreshToken');
         })
     }
-  }, []);
+  }, [dispatch]);
 
   const {
     error,
@@ -62,10 +62,13 @@ function App() {
           <Route path='/' element={<HomePage />} />
           <Route path='/ingredients/:id' element={<IngredientPage />} />
           <Route path='/login' element={<LoginPage />} />
-          <Route path='register' element={<RegisterPage />} />
+          <Route path='/register' element={<RegisterPage />} />
           <Route path='/forgot-password' element={<ForgotPasswordPage />} />
           <Route path='/reset-password' element={<ResetPasswordPage />} />
-          <Route path='/profile' element={<ProfilePage />} />
+          <Route path='/profile' element={<ProfilePage />}>
+            {/* <Route index element={<ProfileForm />} /> */}
+            {/* <Route path='/profile/orders' element={<ProfileOrders />} /> */}
+          </Route>
         </Routes>
         {background && (
           <Routes>

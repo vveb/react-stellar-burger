@@ -12,7 +12,7 @@ const endpointURLs = {
   refresh: '/auth/token',
   login: '/auth/login',
   logout: '/auth/logout',
-  updatePassword: '/password-reset',
+  forgotPassword: '/password-reset',
   resetPassword: '/password-reset/reset',
   profileInfo: '/auth/user',
 }
