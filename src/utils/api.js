@@ -65,6 +65,10 @@ const loginUser = (data) => {
   return goFetch({ endpoint: endpointURLs.login, data, method: 'POST' });
 };
 
+const logoutUser = (data) => {
+  return goFetch({ endpoint: endpointURLs.logout, data, method: 'POST' })
+}
+
 const updatePassword = (data) => {
   return goFetch({ endpoint: endpointURLs.updatePassword, data, method: 'POST' });
 }
@@ -73,13 +77,24 @@ const resetPassword = (data) => {
   return goFetch({ endpoint: endpointURLs.resetPassword, data, method: 'POST' });
 }
 
+const updateProfileInfo = (data) => {
+  return fetchWithRefresh({ endpoint: endpointURLs.profileInfo, data, method: 'PATCH' });
+}
+
+const getProfileInfo = () => {
+  return fetchWithRefresh({ endpoint: endpointURLs.profileInfo, method: 'GET' });
+}
+
 const Api = {
   getIngredientsData,
   addNewOrder,
   registerNewUser,
   loginUser,
+  logoutUser,
   updatePassword,
   resetPassword,
+  updateProfileInfo,
+  getProfileInfo,
 }
 
 export default Api;

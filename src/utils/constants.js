@@ -11,8 +11,10 @@ const endpointURLs = {
   register: '/auth/register',
   refresh: '/auth/token',
   login: '/auth/login',
+  logout: '/auth/logout',
   updatePassword: '/password-reset',
   resetPassword: '/password-reset/reset',
+  profileInfo: '/auth/user',
 }
 
 const ingredientTypeName = {

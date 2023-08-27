@@ -17,7 +17,13 @@ const useForm = (defaultValues = {}) => {
     }
   }
 
-  return { values, errorTexts, isErrors, handleChange };
+  const resetForm = () => {
+    setValues(defaultValues);
+    setErrorTexts({});
+    setIsErrors({});
+  }
+
+  return { values, errorTexts, isErrors, handleChange, resetForm };
 };
 
 export default useForm;

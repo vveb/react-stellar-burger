@@ -2,19 +2,27 @@ import { NavLink, useMatch } from 'react-router-dom';
 import styles from './profile-page.module.css';
 import { Button, EmailInput, Input, PasswordInput } from '@ya.praktikum/react-developer-burger-ui-components';
 import useForm from '../services/hooks/use-form';
-import { useState } from 'react';
+import { useCallback, useMemo, useState } from 'react';
+import { useDispatch, useSelector } from 'react-redux';
+import { updateProfileInfoThunk } from '../services/store/user-slice';
 
 const ProfilePage = () => {
+
+  const dispatch = useDispatch();
+
+  const { name, email } = useSelector((store) => store.user);
 
   const isProfileActive = useMatch('/profile');
   const isOrdersStoryActive = useMatch('/profile/orders/');
 
   const [nameDisabledField, setNameDisabledField] = useState(true);
   const [nameIconField, setNameIconField] = useState('EditIcon')
-  const onEditNameClick = () => {
+  
+  const onEditNameClick = useCallback(() => {
     setNameDisabledField(!nameDisabledField);
     setNameIconField(nameDisabledField ? 'CloseIcon' : 'EditIcon');
     const currentInput = document.getElementById('name');
+    console.dir(currentInput)
     if (nameDisabledField) {
       console.log('focus')
       currentInput.focus();
@@ -22,12 +30,24 @@ const ProfilePage = () => {
       console.log('blur')
       currentInput.blur();
     }
-  }
+  }, []);
 
-  const {values, errorTexts, isErrors, handleChange} = useForm({
-    email: '',
+  const {values, errorTexts, isErrors, handleChange, resetForm} = useForm({
+    email,
     password: '',
-    name: '',
+    name,
+  });
+
+  const isFormChanged = useMemo(() => 
+  (name !== values.name && values.name) ||
+  (email !== values.email && values.email) ||
+  values.password,
+  [name, values.name, email, values.email, values.password]
+  );
+
+  const onSubmit = useCallback((evt) => {
+    evt.preventDefault();
+    dispatch(updateProfileInfoThunk(values));
   });
 
 
@@ -48,7 +68,7 @@ const ProfilePage = () => {
           </ul>
           <p className={styles.infoText}>В этом разделе вы можете изменить&nbsp;свои персональные данные</p>
         </div>
-        <form className={styles.form}>
+        <form className={styles.form} onSubmit={onSubmit} onReset={resetForm}>
           <Input
             extraClass={styles.input}
             id='name'
@@ -79,12 +99,11 @@ const ProfilePage = () => {
             onChange={handleChange}
             value={values.password}
             icon='EditIcon'
-            disabled
           />
-          <div className={styles.controlsBox}>
+          {isFormChanged && <div className={styles.controlsBox}>
             <Button type='secondary' size='large' htmlType='reset' extraClass={styles.resetButton}>Отмена</Button>
             <Button type='primary' size='large' htmlType='submit' extraClass={styles.submitButton}>Сохранить</Button>
-          </div>
+          </div>}
         </form>
       </main>
     </>

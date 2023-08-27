@@ -13,6 +13,8 @@ import RegisterPage from '../../pages/register-page';
 import ForgotPasswordPage from '../../pages/forgot-password-page';
 import ResetPasswordPage from '../../pages/reset-password-page';
 import ProfilePage from '../../pages/profile-page';
+import Api from '../../utils/api';
+import { setUser } from '../../services/store/user-slice';
 
 function App() {
 
@@ -24,6 +26,23 @@ function App() {
   useEffect(() => {
     dispatch(getIngredientsDataThunk());
   }, [dispatch]);
+
+  useEffect(() => {
+    if (localStorage.getItem('accessToken')) {
+      Api.getProfileInfo()
+        .then((data) => {
+          const { user: { name, email }, success } = data;
+          if (success) {
+            dispatch(setUser({ name, email }));
+          }
+          throw new Error({statusCode: 500, message: 'Неизвестная ошибка'});
+        })
+        .catch(() => {
+          localStorage.removeItem('accessToken');
+          localStorage.removeItem('refreshToken');
+        })
+    }
+  }, []);
 
   const {
     error,
