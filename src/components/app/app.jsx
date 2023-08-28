@@ -17,6 +17,7 @@ import Api from '../../utils/api';
 import { setAuthChecked, setUser } from '../../services/store/user-slice';
 import ProfileForm from '../profile-form/profile-form';
 import { OnlyAuth, OnlyUnAuth } from '../protected-route/protected-route';
+import NotFound404 from '../../pages/not-found-404-page';
 
 function App() {
 
@@ -84,7 +85,7 @@ function App() {
             <Route index element={<ProfileForm />} />
             <Route path='/profile/orders' element={<p className='text text_type_main-medium'>Раздел в разработке</p>} />
           </Route>
-          {/* TODO: Добавить Page 404 */}
+          <Route path='*' element={<NotFound404 />} />
         </Routes>
         {background && (
           <Routes>
