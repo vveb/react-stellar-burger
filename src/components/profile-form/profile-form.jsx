@@ -1,6 +1,6 @@
 import { useDispatch, useSelector } from 'react-redux';
 import styles from './profile-form.module.css';
-import { useCallback, useMemo, useState } from 'react';
+import { useCallback, useEffect, useMemo, useState } from 'react';
 import useForm from '../../services/hooks/use-form';
 import { updateProfileInfoThunk } from '../../services/store/user-slice';
 import { Button, EmailInput, Input, PasswordInput } from '@ya.praktikum/react-developer-burger-ui-components';
@@ -8,32 +8,30 @@ import { Button, EmailInput, Input, PasswordInput } from '@ya.praktikum/react-de
 const ProfileForm = () => {
 
   const dispatch = useDispatch();
+  const storeUser = useSelector((store) => store.user);
+  const { name, email } = storeUser;
+  const { isGetProfileInfoPending, isUpdateProfileInfoPending, isLoginPending } = useSelector((store) => store.api);
 
-  const { name, email } = useSelector((store) => store.user);
-  const { isUpdateProfileInfoPending } = useSelector((store) => store.api);
-
+  //Обработка поведения input для имени (потому что готовый компонент Input не работает согласно макету)
   const [nameDisabledField, setNameDisabledField] = useState(true);
   const [nameIconField, setNameIconField] = useState('EditIcon');
   const handleEditNameClick = useCallback(() => {
     setNameDisabledField(!nameDisabledField);
     setNameIconField(nameDisabledField ? 'CloseIcon' : 'EditIcon');
     const currentInput = document.getElementById('name');
-    // console.dir(currentInput.closest('.input'))
-    // console.dir(currentInput)
-    //QUESTION: почему-то не срабатывает фокус =(
     if (nameDisabledField) {
-      // console.log('focus')
-      // currentInput.closest('.input').classList.add('input_status_active');
-      // currentInput.closest('.input').focus()
-      currentInput.focus();
-    } else {
-      // console.log('blur')
-      // currentInput.closest('.input').blur();
-      currentInput.blur();
+      setTimeout(() => {
+        currentInput.focus();
+      }, 0);
     }
   }, [nameDisabledField]);
 
-  const {values, errorTexts, isErrors, handleChange, resetForm} = useForm({
+  const handleNameInputBlur = useCallback(() => {
+    setNameIconField('EditIcon');
+    setNameDisabledField(true);
+  }, []);
+
+  const {values, errorTexts, isErrors, handleChange, resetForm, setValues} = useForm({
     email,
     password: '',
     name,
@@ -51,10 +49,19 @@ const ProfileForm = () => {
     dispatch(updateProfileInfoThunk(values));
   }, [dispatch, values]);
 
+  //Необходимо для рендеринга данных профиля при медленном соединении
+  useEffect(() => {
+    if (storeUser) {
+      setValues(storeUser)
+    }
+  }, [storeUser, setValues])
+
+  if (isGetProfileInfoPending || isLoginPending) {
+    return (<p className='text text_type_main-medium'>'Идет загрузка данных профиля...'</p>)
+  }
   return (
     <form className={styles.form} onSubmit={handleSubmit} onReset={resetForm}>
       <Input
-        // extraClass={styles.input}
         id='name'
         name='name'
         onChange={handleChange}
@@ -67,10 +74,10 @@ const ProfileForm = () => {
         error={isErrors.name}
         icon={nameIconField}
         onIconClick={handleEditNameClick}
+        onBlur={handleNameInputBlur}
         disabled = {nameDisabledField}
       />
       <EmailInput
-        // extraClass={styles.input}
         name='email'
         value={values.email}
         onChange={handleChange}
@@ -78,7 +85,6 @@ const ProfileForm = () => {
         isIcon={true}
       />
       <PasswordInput
-        // extraClass={styles.input}
         name='password'
         onChange={handleChange}
         value={values.password}

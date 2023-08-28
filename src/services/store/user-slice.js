@@ -109,25 +109,6 @@ const updateProfileInfoThunk = createAsyncThunk(
   }
 );
 
-// const getProfileInfoThunk = createAsyncThunk(
-//   'user/get-profile-info',
-//   async (_, { rejectWithValue }) => {
-//     if (!localStorage.getItem('accessToken')) {
-//       return initialUserState;
-//     }
-//     try {
-//       const { user: { name, email }, success } = await Api.getProfileInfo() ?? {};
-//       if (success) {
-//         return {name, email};
-//       }
-//       throw new Error({statusCode: 500, message: 'Неизвестная ошибка'});
-//     } catch(err) {
-//       const errorText = err.statusCode ? err.message : 'Проблема с подключением, проверьте свою сеть';
-//       return rejectWithValue(`Ошибка при получении данных пользователя: ${errorText}`);
-//     };
-//   }
-// );
-
 const userSlice = createSlice({
   name: 'user',
   initialState: initialUserState,
@@ -158,7 +139,6 @@ export {
   resetPasswordThunk,
   logoutUserThunk,
   updateProfileInfoThunk,
-  // getProfileInfoThunk,
   };
 
 export const { setUser } = userSlice.actions;

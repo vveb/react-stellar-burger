@@ -15,15 +15,15 @@ const useForm = (defaultValues = {}) => {
       setIsErrors((state) => ({...state, [name]: false}));
       setErrorTexts((state) => ({...state, [name]: ''}));
     }
-  }
+  };
 
   const resetForm = () => {
     setValues(defaultValues);
     setErrorTexts({});
     setIsErrors({});
-  }
+  };
 
-  return { values, errorTexts, isErrors, handleChange, resetForm };
+  return { values, errorTexts, isErrors, handleChange, resetForm, setValues };
 };
 
 export default useForm;

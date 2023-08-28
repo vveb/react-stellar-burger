@@ -11,7 +11,7 @@ const AppHeader = () => {
   const isConstructor = useMatch('/');
   const isIngredientDetails = useMatch('/ingredients/:id');
   //Ссылка на "Конструктор" активна, если мы на роуте главной страницы
-  //или (деталей ингредиента и при этом в модальном окне, то есть background установлен)
+  //ИЛИ деталей ингредиента И при мы этом в модальном окне, то есть background установлен
   const isConstructorActive = isConstructor || (isIngredientDetails && background);
 
   const isProfileActive = useMatch('/profile/*');

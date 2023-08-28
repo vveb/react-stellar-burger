@@ -22,9 +22,9 @@ const initialApiState = {
   isResetPasswordPending: false,
   isResetPasswordSucceed: false,
   isResetPasswordFailed: false,
-  // isGetProfileInfoPending: false,
-  // isGetProfileInfoSucceed: false,
-  // isGetProfileInfoFailed: false,
+  isGetProfileInfoPending: false,
+  isGetProfileInfoSucceed: false,
+  isGetProfileInfoFailed: false,
   isUpdateProfileInfoPending: false,
   isUpdateProfileInfoSucceed: false,
   isUpdateProfileInfoFailed: false,
@@ -37,6 +37,9 @@ const apiStateSlice = createSlice({
   reducers: {
     setApiError: (state, action) => ({...state, error: action.payload}),
     clearApiError: (state) => ({...state, error: null}),
+    setIsGetProfileInfoPending: (state) => ({ ...state, isGetProfileInfoPending: true, isGetProfileInfoSucceed: false, isGetProfileInfoFailed: false, error: null }),
+    setIsGetProfileInfoSucceed: (state) => ({ ...state, isGetProfileInfoPending: false, isGetProfileInfoSucceed: true, isGetProfileInfoFailed: false, error: null }),
+    setIsGetProfileInfoFailed: (state, action) => ({ ...state, isGetProfileInfoPending: false, isGetProfileInfoSucceed: false, isGetProfileInfoFailed: true, error: action.payload }),
   },
   extraReducers: (builder) => builder
     .addCase(getIngredientsDataThunk.pending, (state) => {
@@ -93,15 +96,6 @@ const apiStateSlice = createSlice({
     .addCase(resetPasswordThunk.rejected, (state, action) => {
       return {...state, isResetPasswordPending: false, isResetPasswordSucceed: false, isResetPasswordFailed: true, error: action.payload};
     })
-    // .addCase(getProfileInfoThunk.pending, (state) => {
-    //   return {...state, isGetProfileInfoPending: true, isGetProfileInfoSucceed: false, isGetProfileInfoFailed: false, error: null};
-    // })
-    // .addCase(getProfileInfoThunk.fulfilled, (state) => {
-    //   return {...state, isGetProfileInfoPending: false, isGetProfileInfoSucceed: true, isGetProfileInfoFailed: false, error: null};
-    // })
-    // .addCase(getProfileInfoThunk.rejected, (state, action) => {
-    //   return {...state, isGetProfileInfoPending: false, isGetProfileInfoSucceed: false, isGetProfileInfoFailed: true, error: action.payload};
-    // })
     .addCase(updateProfileInfoThunk.pending, (state) => {
       return {...state, isUpdateProfileInfoPending: true, isUpdateProfileInfoSucceed: false, isUpdateProfileInfoFailed: false, error: null};
     })
@@ -111,9 +105,14 @@ const apiStateSlice = createSlice({
     .addCase(updateProfileInfoThunk.rejected, (state, action) => {
       return {...state, isUpdateProfileInfoPending: false, isUpdateProfileInfoSucceed: false, isUpdateProfileInfoFailed: true, error: action.payload};
     })
-
-    //TODO: Добавить для getProfileInfo и updateProfileInfo
 });
 
-export const { setApiError, clearApiError } = apiStateSlice.actions;
+export const {
+  setApiError,
+  clearApiError,
+  setIsGetProfileInfoPending,
+  setIsGetProfileInfoSucceed,
+  setIsGetProfileInfoFailed,
+} = apiStateSlice.actions;
+
 export default apiStateSlice.reducer;

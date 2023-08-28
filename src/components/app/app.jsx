@@ -1,12 +1,12 @@
 import { useEffect, useCallback } from 'react';
-import { useDispatch, useSelector } from 'react-redux';
+import { batch, useDispatch, useSelector } from 'react-redux';
 import { Route, Routes, useLocation } from 'react-router-dom';
 import styles from "./app.module.css";
 import AppHeader from "../app-header/app-header";
 import HomePage from '../../pages/home-page';
 import Modal from '../modal/modal';
 import { getIngredientsDataThunk } from '../../services/store/ingredients-slice';
-import { clearApiError } from '../../services/store/api-state-slice';
+import { clearApiError, setIsGetProfileInfoFailed, setIsGetProfileInfoPending, setIsGetProfileInfoSucceed } from '../../services/store/api-state-slice';
 import IngredientPage from '../../pages/ingredient-page';
 import LoginPage from '../../pages/login-page';
 import RegisterPage from '../../pages/register-page';
@@ -20,7 +20,6 @@ import ProfileForm from '../profile-form/profile-form';
 function App() {
 
   const dispatch = useDispatch();
-
   const location = useLocation();
   const background = location.state && location.state.background;
 
@@ -30,18 +29,29 @@ function App() {
 
   useEffect(() => {
     if (localStorage.getItem('accessToken')) {
+      dispatch(setIsGetProfileInfoPending());
       Api.getProfileInfo()
         .then((data) => {
           const { user: { name, email }, success } = data;
           if (success) {
-            dispatch(setUser({ name, email }));
-          }
-          throw new Error({statusCode: 500, message: 'Неизвестная ошибка'});
+            //batch - выполняет все dispatch без множественного ре-рендеринга
+            //React v18 использует это по умолчанию
+            batch(() => {
+              dispatch(setUser({ name, email }));
+              dispatch(setIsGetProfileInfoSucceed());
+            });
+          } else {
+            throw new Error({statusCode: 500, message: 'Неизвестная ошибка'});
+          };
         })
-        .catch(() => {
+        .catch((err) => {
           localStorage.removeItem('accessToken');
           localStorage.removeItem('refreshToken');
-        })
+          batch(() => {
+            dispatch(setIsGetProfileInfoFailed(err));
+            dispatch(setUser({ name: '', email: '' }));
+          });
+        });
     }
   }, [dispatch]);
 
@@ -68,7 +78,7 @@ function App() {
           <Route path='/reset-password' element={<ResetPasswordPage />} />
           <Route path='/profile' element={<ProfilePage />}>
             <Route index element={<ProfileForm />} />
-            <Route path='/profile/orders' element={<p>Заглушка для истории заказов</p>} />
+            <Route path='/profile/orders' element={<p className='text text_type_main-medium'>Раздел в разработке</p>} />
           </Route>
         </Routes>
         {background && (
