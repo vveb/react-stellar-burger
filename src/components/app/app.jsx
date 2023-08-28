@@ -67,8 +67,8 @@ function App() {
   const closeErrorModal = useCallback((value) => {
     if (!value) {
       dispatch(clearApiError())
-    }
-  }, [dispatch])
+    };
+  }, [dispatch]);
 
     return (
       <div className={styles.app}>
@@ -84,6 +84,7 @@ function App() {
             <Route index element={<ProfileForm />} />
             <Route path='/profile/orders' element={<p className='text text_type_main-medium'>Раздел в разработке</p>} />
           </Route>
+          {/* TODO: Добавить Page 404 */}
         </Routes>
         {background && (
           <Routes>

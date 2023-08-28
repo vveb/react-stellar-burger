@@ -12,6 +12,12 @@ const ProfileForm = () => {
   const { name, email } = storeUser;
   const { isGetProfileInfoPending, isUpdateProfileInfoPending, isLoginPending } = useSelector((store) => store.api);
 
+  const {values, errorTexts, isErrors, handleChange, resetForm, setValues} = useForm({
+    email,
+    password: '',
+    name,
+  });
+
   //Обработка поведения input для имени (потому что готовый компонент Input не работает согласно макету)
   const [nameDisabledField, setNameDisabledField] = useState(true);
   const [nameIconField, setNameIconField] = useState('EditIcon');
@@ -31,12 +37,6 @@ const ProfileForm = () => {
     setNameDisabledField(true);
   }, []);
 
-  const {values, errorTexts, isErrors, handleChange, resetForm, setValues} = useForm({
-    email,
-    password: '',
-    name,
-  });
-
   const isFormChanged = useMemo(() => 
     (name !== values.name && values.name) ||
     (email !== values.email && values.email) ||
@@ -51,9 +51,8 @@ const ProfileForm = () => {
 
   //Необходимо для рендеринга данных профиля при медленном соединении
   useEffect(() => {
-    console.dir(storeUser)
     if (storeUser) {
-      setValues(storeUser)
+      setValues({ ...storeUser, password: '' })
     }
   }, [storeUser, setValues])
 

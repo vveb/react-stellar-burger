@@ -3,9 +3,10 @@ import { Button, Input, PasswordInput } from '@ya.praktikum/react-developer-burg
 import styles from './authorization-pages.module.css';
 import { Link, useNavigate } from 'react-router-dom';
 import useForm from '../services/hooks/use-form';
-import { useDispatch, useSelector } from 'react-redux';
+import { batch, useDispatch, useSelector } from 'react-redux';
 import { resetPasswordThunk } from '../services/store/user-slice';
 import { useEffect } from 'react';
+import { setIsPasswordResetRequested } from '../services/store/ui-slice';
 
 const ResetPasswordPage = () => {
 
@@ -14,20 +15,31 @@ const ResetPasswordPage = () => {
 
   const { values, handleChange } = useForm({password: '', token: ''});
 
-  const isResetPasswordPending = useSelector((store) => store.api.isLoginPending);
+  const { isResetPasswordPending, isResetPasswordSucceed, isResetPasswordFailed } = useSelector((store) => store.api);
+  const isResetPasswordRequested = useSelector((store) => store.ui.isResetPasswordRequested);
 
   const handleSubmit = (evt) => {
     evt.preventDefault();
-    dispatch(resetPasswordThunk(values));
-    navigate('/login');
+    batch(() => {
+      dispatch(resetPasswordThunk(values));
+      dispatch(setIsPasswordResetRequested());
+    });
   };
 
-  //Эффект управляет редиректом обратно на страницу "Забыл пароль", если не был успешно завершен запрос на сервер о его сбросе
+  //Эффект управляет редиректором на страницу логина только в случае успешного сброса пароля
+  useEffect(() => {
+    if (isResetPasswordSucceed && !isResetPasswordPending && !isResetPasswordFailed && !isResetPasswordRequested) {
+      navigate('/login');
+    };
+  }, [isResetPasswordPending, isResetPasswordSucceed, isResetPasswordFailed, isResetPasswordRequested, navigate]);
+
+  //Эффект управляет редиректом обратно на страницу "Забыл пароль",
+  //если не был успешно завершен запрос на сервер о его сбросе
   useEffect(() => {
     if (!localStorage.getItem('isForgotPasswordSent')) {
-      navigate('/forgot-password')
+      navigate('/forgot-password');
     }
-  }, [])
+  }, [navigate]);
   
 
   return (

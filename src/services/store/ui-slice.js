@@ -5,6 +5,7 @@ const initialUIState = {
   currentIngredient: null,
   isIngredientDragging: false,
   orderId: null,
+  isPasswordResetRequested: false,
 };
 
 const getOrderNumberThunk = createAsyncThunk(
@@ -42,6 +43,12 @@ const UIStateSlice = createSlice({
     clearOrderId: (state) => {
       state.orderId = null;
     },
+    setIsPasswordResetRequested: (state) => {
+      state.isPasswordResetRequested = true;
+    },
+    clearIsPasswordResetRequested: (state) => {
+      state.isPasswordResetRequested = false;
+    }
   },
   extraReducers: (builder) => builder
     .addCase(getOrderNumberThunk.fulfilled, (_, action) => {
@@ -55,6 +62,8 @@ export const {
   clearCurrentIngredient,
   setIsIngredientDragging,
   clearOrderId,
+  setIsPasswordResetRequested,
+  clearIsPasswordResetRequested,
 } = UIStateSlice.actions;
 
 export default UIStateSlice.reducer;
