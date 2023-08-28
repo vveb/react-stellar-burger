@@ -4,6 +4,8 @@ import { Link, useLocation, useNavigate } from 'react-router-dom';
 import useForm from '../services/hooks/use-form';
 import { useDispatch, useSelector } from 'react-redux';
 import { loginUserThunk } from '../services/store/user-slice';
+import { isLoggedInSelector } from '../services/store/selectors';
+import { useEffect } from 'react';
 
 const LoginPage = () => {
 
@@ -14,17 +16,23 @@ const LoginPage = () => {
   const { values, handleChange } = useForm({email: '', password: ''});
 
   const isLoginPending = useSelector((store) => store.api.isLoginPending);
+  const isLoggedIn = useSelector(isLoggedInSelector);
 
-  const onSubmit = (evt) => {
+  const handleSubmit = (evt) => {
     evt.preventDefault();
     dispatch(loginUserThunk(values));
-    navigate(location.state?.from ?? '/');
   };
+
+  useEffect(() => {
+    if (isLoggedIn) {
+      navigate(location.state?.from ?? '/');
+    };
+  }, [isLoggedIn, navigate, location.state?.from]);
 
   return (
     <main className={styles.main}>
       <h2 className={styles.title}>Вход</h2>
-      <form className={styles.form} name='login-form' onSubmit={onSubmit}>
+      <form className={styles.form} name='login-form' onSubmit={handleSubmit}>
         <EmailInput extraClass={styles.input} name='email' value={values.email} onChange={handleChange} required />
         <PasswordInput extraClass={styles.input} name='password' value={values.password} onChange={handleChange} required/>
         <Button type='primary' size='large' htmlType='submit' extraClass={styles.submitButton}>{isLoginPending ? 'Минутку...' : 'Войти'}</Button>
