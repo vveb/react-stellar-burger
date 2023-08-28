@@ -14,8 +14,9 @@ import ForgotPasswordPage from '../../pages/forgot-password-page';
 import ResetPasswordPage from '../../pages/reset-password-page';
 import ProfilePage from '../../pages/profile-page';
 import Api from '../../utils/api';
-import { setUser } from '../../services/store/user-slice';
+import { setAuthChecked, setUser } from '../../services/store/user-slice';
 import ProfileForm from '../profile-form/profile-form';
+import { OnlyAuth, OnlyUnAuth } from '../protected-route/protected-route';
 
 function App() {
 
@@ -51,7 +52,10 @@ function App() {
             dispatch(setIsGetProfileInfoFailed(err));
             dispatch(setUser({ name: '', email: '' }));
           });
-        });
+        })
+        .finally(() => dispatch(setAuthChecked(true)));
+    } else {
+      dispatch(setAuthChecked(true));
     }
   }, [dispatch]);
 
@@ -72,11 +76,11 @@ function App() {
         <Routes location={background || location}>
           <Route path='/' element={<HomePage />} />
           <Route path='/ingredients/:id' element={<IngredientPage />} />
-          <Route path='/login' element={<LoginPage />} />
-          <Route path='/register' element={<RegisterPage />} />
-          <Route path='/forgot-password' element={<ForgotPasswordPage />} />
-          <Route path='/reset-password' element={<ResetPasswordPage />} />
-          <Route path='/profile' element={<ProfilePage />}>
+          <Route path='/login' element={<OnlyUnAuth component={<LoginPage />} />} />
+          <Route path='/register' element={<OnlyUnAuth component={<RegisterPage />} />} />
+          <Route path='/forgot-password' element={<OnlyUnAuth component={<ForgotPasswordPage />} />} />
+          <Route path='/reset-password' element={<OnlyUnAuth component={<ResetPasswordPage />} />} />
+          <Route path='/profile' element={<OnlyAuth component={<ProfilePage />} />}>
             <Route index element={<ProfileForm />} />
             <Route path='/profile/orders' element={<p className='text text_type_main-medium'>Раздел в разработке</p>} />
           </Route>

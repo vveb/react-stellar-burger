@@ -51,6 +51,7 @@ const ProfileForm = () => {
 
   //Необходимо для рендеринга данных профиля при медленном соединении
   useEffect(() => {
+    console.dir(storeUser)
     if (storeUser) {
       setValues(storeUser)
     }

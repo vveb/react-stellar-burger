@@ -5,6 +5,7 @@ import { Link, useNavigate } from 'react-router-dom';
 import useForm from '../services/hooks/use-form';
 import { useDispatch, useSelector } from 'react-redux';
 import { resetPasswordThunk } from '../services/store/user-slice';
+import { useEffect } from 'react';
 
 const ResetPasswordPage = () => {
 
@@ -15,16 +16,24 @@ const ResetPasswordPage = () => {
 
   const isResetPasswordPending = useSelector((store) => store.api.isLoginPending);
 
-  const onSubmit = (evt) => {
+  const handleSubmit = (evt) => {
     evt.preventDefault();
     dispatch(resetPasswordThunk(values));
     navigate('/login');
   };
 
+  //Эффект управляет редиректом обратно на страницу "Забыл пароль", если не был успешно завершен запрос на сервер о его сбросе
+  useEffect(() => {
+    if (!localStorage.getItem('isForgotPasswordSent')) {
+      navigate('/forgot-password')
+    }
+  }, [])
+  
+
   return (
     <main className={styles.main}>
       <h2 className={styles.title}>Восстановление пароля</h2>
-      <form className={styles.form} name='reset-password-form' onSubmit={onSubmit}>
+      <form className={styles.form} name='reset-password-form' onSubmit={handleSubmit}>
         <PasswordInput extraClass={styles.input} name='password' value={values.password} onChange={handleChange} placeholder='Введите новый пароль' required/>
         <Input
           extraClass={styles.input}

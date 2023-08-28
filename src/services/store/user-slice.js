@@ -4,6 +4,7 @@ import Api from "../../utils/api";
 const initialUserState = {
   name: '',
   email: '',
+  isAuthChecked: false,
 };
 
 const registerNewUserThunk = createAsyncThunk(
@@ -65,12 +66,15 @@ const forgotPasswordThunk = createAsyncThunk(
   'user/update-password',
   async (data, { rejectWithValue }) => {
     try {
+      localStorage.setItem('isForgotPasswordSent', false);
       const { message, success } = await Api.forgotPassword(data) ?? {};
       if (success) {
+        localStorage.setItem('isForgotPasswordSent', true);
         return {message};
       }
       throw new Error({statusCode: 500, message: 'Неизвестная ошибка'});
     } catch(err) {
+      localStorage.setItem('isForgotPasswordSent', false);
       const errorText = err.statusCode ? err.message : 'Проблема с подключением, проверьте свою сеть';
       return rejectWithValue(`Ошибка при проверке e-mail: ${errorText}`);
     };
@@ -83,6 +87,7 @@ const resetPasswordThunk = createAsyncThunk(
     try {
       const { message, success } = await Api.resetPassword(data) ?? {};
       if (success) {
+        localStorage.removeItem('isForgotPasswordSent');
         return { message };
       }
       throw new Error({statusCode: 500, message: 'Неизвестная ошибка'});
@@ -113,19 +118,20 @@ const userSlice = createSlice({
   name: 'user',
   initialState: initialUserState,
   reducers: {
-    setUser: (_, action) => action.payload,
+    setAuthChecked: (state, action) => ({ ...state, isAuthChecked: action.payload }),
+    setUser: (state, action) => ({ ...state, ...action.payload }),
   },
   extraReducers: (builder) => builder
-    .addCase(registerNewUserThunk.fulfilled, (_, action) => { 
+    .addCase(registerNewUserThunk.fulfilled, (state, action) => { 
       const { name, email } = action.payload;
-      return { name, email };
+      return { ...state, name, email, isAuthChecked: true };
     })
-    .addCase(loginUserThunk.fulfilled, (_, action) => {
+    .addCase(loginUserThunk.fulfilled, (state, action) => {
       const { name, email } = action.payload;
-      return { name, email };
+      return { ...state, name, email, isAuthChecked: true };
     })
-    .addCase(logoutUserThunk.fulfilled, () => {
-      return initialUserState;
+    .addCase(logoutUserThunk.fulfilled, (state) => {
+      return {...state, name: '', email: ''};
     })
     .addCase(updateProfileInfoThunk.fulfilled, (_, action) => {
       return action.payload;
@@ -141,6 +147,6 @@ export {
   updateProfileInfoThunk,
   };
 
-export const { setUser } = userSlice.actions;
+export const { setUser, setAuthChecked } = userSlice.actions;
 
 export default userSlice.reducer;

@@ -1,4 +1,3 @@
-import React from 'react';
 import { Button, EmailInput } from '@ya.praktikum/react-developer-burger-ui-components';
 import styles from './authorization-pages.module.css';
 import { Link, useNavigate } from 'react-router-dom';
@@ -15,7 +14,7 @@ const ForgotPasswordPage = () => {
 
   const isForgotPasswordPending = useSelector((store) => store.api.isForgotPasswordPending)
 
-  const onSubmit = (evt) => {
+  const handleSubmit = (evt) => {
     evt.preventDefault();
     dispatch(forgotPasswordThunk(values));
     navigate('/reset-password');
@@ -24,7 +23,7 @@ const ForgotPasswordPage = () => {
   return(
     <main className={styles.main}>
       <h2 className={styles.title}>Восстановление пароля</h2>
-      <form className={styles.form} name='login-form' onSubmit={onSubmit}>
+      <form className={styles.form} name='login-form' onSubmit={handleSubmit}>
         <EmailInput
           extraClass={styles.input}
           name='email'
