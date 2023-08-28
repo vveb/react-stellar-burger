@@ -1,7 +1,9 @@
 import { NavLink, Outlet, useMatch, useNavigate } from 'react-router-dom';
 import styles from './profile-page.module.css';
-import { useDispatch } from 'react-redux';
+import { useDispatch, useSelector } from 'react-redux';
 import { logoutUserThunk } from '../services/store/user-slice';
+import { useEffect } from 'react';
+import { isLoggedInSelector } from '../services/store/selectors';
 
 const ProfilePage = () => {
 
@@ -11,10 +13,18 @@ const ProfilePage = () => {
   const isProfileActive = useMatch('/profile');
   const isOrdersStoryActive = useMatch('/profile/orders/');
 
+  const isLoggedIn = useSelector(isLoggedInSelector);
+  const isLogoutPending = useSelector((store) => store.api.isLogoutPending)
+
   const handleLogout = () => {
     dispatch(logoutUserThunk());
-    navigate('/');
-  }
+  };
+
+  useEffect(() => {
+    if (!isLoggedIn) {
+      navigate('/login');
+    }
+  }, [isLoggedIn]);
 
   return (
     <>
@@ -28,12 +38,14 @@ const ProfilePage = () => {
               <NavLink to='/profile/orders' className={isOrdersStoryActive ? styles.menuItem : styles.menuItem_inactive}>История заказов</NavLink>
             </li>
             <li>
-              <button className={styles.logoutButton} onClick={handleLogout}>Выход</button>
+              <button className={styles.logoutButton} onClick={handleLogout}>{isLogoutPending ? 'Выходим...' : 'Выход'}</button>
             </li>
           </ul>
+          {isLogoutPending && <p className={styles.logoutText}>До свидания!</p>}
           <p className={styles.infoText}>В этом разделе вы можете изменить&nbsp;свои персональные данные</p>
         </div>
-        <Outlet />
+        {isLogoutPending && <p className={styles.logoutMainText}>Приходите снова :)</p>}
+        {!isLogoutPending && <Outlet />}
       </main>
     </>
   )

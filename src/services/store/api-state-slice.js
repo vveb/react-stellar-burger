@@ -1,7 +1,14 @@
 import { createSlice } from "@reduxjs/toolkit";
 import { getIngredientsDataThunk } from "./ingredients-slice";
 import { getOrderNumberThunk } from "./ui-slice";
-import { loginUserThunk, registerNewUserThunk, resetPasswordThunk, forgotPasswordThunk, updateProfileInfoThunk } from "./user-slice";
+import {
+  loginUserThunk,
+  registerNewUserThunk,
+  resetPasswordThunk,
+  forgotPasswordThunk,
+  updateProfileInfoThunk,
+  logoutUserThunk
+} from "./user-slice";
 
 const initialApiState = {
   isIngredientsRequested: false,
@@ -16,6 +23,9 @@ const initialApiState = {
   isLoginPending: false,
   isLoginSucceed: false,
   isLoginFailed: false,
+  isLogoutPending: false,
+  isLogoutSucceed: false,
+  isLogoutFailed: false,
   isForgotPasswordPending: false,
   isForgotPasswordSucceed: false,
   isForgotPasswordFailed: false,
@@ -77,6 +87,15 @@ const apiStateSlice = createSlice({
     })
     .addCase(loginUserThunk.rejected, (state, action) => {
       return {...state, isLoginPending: false, isLoginSucceed: false, isLoginFailed: true, error: action.payload};
+    })
+    .addCase(logoutUserThunk.pending, (state) => {
+      return {...state, isLogoutPending: true, isLogoutSucceed: false, isLogoutFailed: false, error: null};
+    })
+    .addCase(logoutUserThunk.fulfilled, (state) => {
+      return {...state, isLogoutPending: false, isLogoutSucceed: true, isLogoutFailed: false, error: null};
+    })
+    .addCase(logoutUserThunk.rejected, (state, action) => {
+      return {...state, isLogoutPending: false, isLogoutSucceed: false, isLogoutFailed: true, error: action.payload};
     })
     .addCase(forgotPasswordThunk.pending, (state) => {
       return {...state, isForgotPasswordPending: true, isForgotPasswordSucceed: false, isForgotPasswordFailed: false, error: null};
