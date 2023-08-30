@@ -29,9 +29,10 @@ const BurgerConstructor = () => {
   
   const handleDrop = (itemData) => {
     if (itemData.type === 'bun') {
-      dispatch(addBun({bun: {...itemData, uniqueId: nanoid(8)}}));
+      dispatch(addBun(itemData));
     } else {
-      dispatch(addOther({other: {...itemData, uniqueId: nanoid(8)}}));
+      // dispatch(addOther({other: {...itemData, uniqueId: nanoid(8)}}));
+      dispatch(addOther(itemData));
     };
   };
 

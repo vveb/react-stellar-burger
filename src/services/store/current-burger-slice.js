@@ -1,6 +1,7 @@
 import { createSlice } from "@reduxjs/toolkit";
 import swapItems from "../../utils/swap-items";
 import { getOrderNumberThunk } from "./ui-slice";
+import { nanoid } from "nanoid";
 
 const initialCurrentBurgerState = {
   bun: null,
@@ -11,13 +12,26 @@ const currentBurgerSlice = createSlice({
   name: 'currentBurger',
   initialState: initialCurrentBurgerState,
   reducers: {
-    addBun: (state, action) => {
-      state.bun = action.payload.bun;
+    addBun: {
+      reducer: (state, action) => {
+        state.bun = action.payload;
+        // ({...state, bun: action.payload}),
+      },
+      prepare: (itemData) => {
+        const uniqueId = nanoid(8);
+        return { payload: { ...itemData, uniqueId } };
+      }
     },
-    // ({...state, bun: action.payload}),
-    addOther: (state, action) => {
-      state.others.push(action.payload.other)
-    } /*({...state, others: [...state.others, action.payload]})*/,
+    addOther: {
+      reducer: (state, action) => {
+        state.others.push(action.payload);
+        /*({...state, others: [...state.others, action.payload]})*/
+      },
+      prepare: (itemData) => {
+        const uniqueId = nanoid(8);
+        return { payload: { ...itemData, uniqueId } };
+      },
+    },
     removeIngredient: (state, action) => {
       state.others = state.others.filter((ingredient) => ingredient.uniqueId !== action.payload.itemData.uniqueId);
       // ...state,
