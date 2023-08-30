@@ -1,18 +1,18 @@
-import { Button, EmailInput } from '@ya.praktikum/react-developer-burger-ui-components';
-import styles from './authorization-pages.module.css';
 import { Link, useNavigate } from 'react-router-dom';
 import { useDispatch, useSelector } from 'react-redux';
+import styles from './authorization-pages.module.css';
+import { Button, EmailInput } from '@ya.praktikum/react-developer-burger-ui-components';
 import { forgotPasswordThunk } from '../../services/store/user-slice';
 import useForm from '../../services/hooks/use-form';
 
 const ForgotPasswordPage = () => {
 
-  const dispatch = useDispatch();  
+  const dispatch = useDispatch();
   const navigate = useNavigate();
 
   const {values, handleChange} = useForm({ email: '' });
 
-  const isForgotPasswordPending = useSelector((store) => store.api.isForgotPasswordPending)
+  const isForgotPasswordPending = useSelector((store) => store.api.isForgotPasswordPending);
 
   const handleSubmit = (evt) => {
     evt.preventDefault();

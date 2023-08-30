@@ -34,15 +34,15 @@ const IngredientCard = ({ itemData }) => {
   const handleClick = () => {
     dispatch(setCurrentIngredient({itemData}));
     navigate(`/ingredients/${itemData._id}`, { state: { background: location } });
-  }
+  };
 
   const count = useMemo(() => {
     if (itemData.type === 'bun') {
       if (!bun) {return 0}
       return itemData._id === bun._id ? 1 : 0;
-    }
+    };
     return others.filter((item) => itemData._id === item._id).length;
-  }, [bun, others, itemData._id, itemData.type])
+  }, [bun, others, itemData._id, itemData.type]);
   
   return (
     <li className={`${styles.listItem} ${(isIngredientDraggingNow && !isDrag) && styles.darker}`} onClick={handleClick} ref={dragRef}>
@@ -59,7 +59,7 @@ const IngredientCard = ({ itemData }) => {
 
 IngredientCard.propTypes = {
   itemData: ingredientPropType.isRequired,
-}
+};
 
 /* Благодаря этому (мемоизации) мы избегаем перерендера карточки при перерендере родителя
 без изменения пропсов конкретной карточки */

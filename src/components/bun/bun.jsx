@@ -12,8 +12,8 @@ const Bun = ({ ingredient, type, extraClass = '' }) => {
       thumbnail={ingredient.image}
       extraClass={extraClass}
     />
-  )
-}
+  );
+};
 
 Bun.propTypes = {
   ingredient: ingredientPropType.isRequired,

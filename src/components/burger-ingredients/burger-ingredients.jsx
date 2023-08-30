@@ -1,4 +1,4 @@
-import { useRef, useCallback, useEffect } from 'react';
+import { useRef, useCallback } from 'react';
 import { useSelector, useDispatch } from 'react-redux';
 import { useNavigate } from 'react-router-dom';
 import styles from './burger-ingredients.module.css';
@@ -20,7 +20,7 @@ const BurgerIngredients = () => {
   const handleCloseModal = () => {
     navigate('/', {state: null});
     dispatch(clearCurrentIngredient());
-  }
+  };
 
   //Обработка переключения табов при скролле
   const baseRef = useRef(null);
@@ -90,7 +90,7 @@ const BurgerIngredients = () => {
         </Modal>)
       }
     </>
-  )
-}
+  );
+};
 
 export default BurgerIngredients;

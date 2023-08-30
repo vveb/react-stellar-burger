@@ -1,11 +1,10 @@
-
-import { Button, Input, PasswordInput } from '@ya.praktikum/react-developer-burger-ui-components';
-import styles from './authorization-pages.module.css';
-import { Link, useNavigate } from 'react-router-dom';
-import useForm from '../../services/hooks/use-form';
-import { batch, useDispatch, useSelector } from 'react-redux';
-import { resetPasswordThunk } from '../../services/store/user-slice';
 import { useEffect } from 'react';
+import { batch, useDispatch, useSelector } from 'react-redux';
+import { Link, useNavigate } from 'react-router-dom';
+import styles from './authorization-pages.module.css';
+import { Button, Input, PasswordInput } from '@ya.praktikum/react-developer-burger-ui-components';
+import useForm from '../../services/hooks/use-form';
+import { resetPasswordThunk } from '../../services/store/user-slice';
 import { setIsPasswordResetRequested } from '../../services/store/ui-slice';
 
 const ResetPasswordPage = () => {
@@ -65,7 +64,7 @@ const ResetPasswordPage = () => {
       </form>
       <p className={styles.helpText}>Вспомнили пароль? <Link className={styles.link} to='/login'>Войти</Link></p>
     </main>
-  )
+  );
 };
 
 export default ResetPasswordPage;

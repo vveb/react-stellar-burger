@@ -1,8 +1,8 @@
-import { Link, useNavigate } from 'react-router-dom';
-import { Button, EmailInput, Input, PasswordInput } from '@ya.praktikum/react-developer-burger-ui-components';
-import styles from './authorization-pages.module.css';
-import useForm from '../../services/hooks/use-form';
 import { useDispatch, useSelector } from 'react-redux';
+import { Link, useNavigate } from 'react-router-dom';
+import styles from './authorization-pages.module.css';
+import { Button, EmailInput, Input, PasswordInput } from '@ya.praktikum/react-developer-burger-ui-components';
+import useForm from '../../services/hooks/use-form';
 import { registerNewUserThunk } from '../../services/store/user-slice';
 
 const RegisterPage = () => {

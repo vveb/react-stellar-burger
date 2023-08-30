@@ -1,8 +1,8 @@
+import { useEffect } from 'react';
+import { useDispatch, useSelector } from 'react-redux';
 import { NavLink, Outlet, useMatch, useNavigate } from 'react-router-dom';
 import styles from './profile-page.module.css';
-import { useDispatch, useSelector } from 'react-redux';
 import { logoutUserThunk } from '../../services/store/user-slice';
-import { useEffect } from 'react';
 import { isLoggedInSelector } from '../../services/store/selectors';
 
 const ProfilePage = () => {
@@ -14,7 +14,7 @@ const ProfilePage = () => {
   const isOrdersStoryActive = useMatch('/profile/orders/');
 
   const isLoggedIn = useSelector(isLoggedInSelector);
-  const isLogoutPending = useSelector((store) => store.api.isLogoutPending)
+  const isLogoutPending = useSelector((store) => store.api.isLogoutPending);
 
   const handleLogout = () => {
     dispatch(logoutUserThunk());
@@ -48,7 +48,7 @@ const ProfilePage = () => {
         {!isLogoutPending && <Outlet />}
       </main>
     </>
-  )
-}
+  );
+};
 
 export default ProfilePage;

@@ -1,8 +1,8 @@
 import React, { useEffect, useState } from 'react';
-import { ConstructorElement, DragIcon } from "@ya.praktikum/react-developer-burger-ui-components";
 import { useDispatch } from "react-redux";
 import { useDrag, useDrop } from 'react-dnd';
-import styles from './other-ingredient.module.css'
+import styles from './other-ingredient.module.css';
+import { ConstructorElement, DragIcon } from "@ya.praktikum/react-developer-burger-ui-components";
 import { ingredientPropType, numberPropType } from '../../utils/prop-types';
 import { changeOrder, removeIngredient } from '../../services/store/current-burger-slice';
 
@@ -47,12 +47,12 @@ const OtherIngredient = ({ itemData, index }) => {
           />
         </div>
       </li>
-  )
-}
+  );
+};
 
 OtherIngredient.propType = {
   itemData: ingredientPropType.isRequired,
   index: numberPropType.isRequired,
-}
+};
 
 export default React.memo(OtherIngredient);

@@ -1,7 +1,7 @@
 import React from 'react';
 import styles from './ingredient-details.module.css';
 import NutritionValue from '../nutrition-value/nutrition-value';
-import { ingredientPropType } from '../../utils/prop-types'
+import { ingredientPropType } from '../../utils/prop-types';
 
 const IngredientDetails = ({ ingredientData }) => {
   const { calories, proteins, fat, carbohydrates } = ingredientData;
@@ -16,11 +16,11 @@ const IngredientDetails = ({ ingredientData }) => {
         <NutritionValue title='Углеводы, г' amount={carbohydrates} />
       </div>
     </>
-  )
-}
+  );
+};
 
 IngredientDetails.propTypes = {
   ingredientData: ingredientPropType.isRequired,
-}
+};
 
 export default React.memo(IngredientDetails);

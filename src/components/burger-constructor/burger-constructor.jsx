@@ -10,7 +10,6 @@ import TotalPrice from '../total-price/total-price';
 import Others from '../others/others';
 import { addBun, addOther } from '../../services/store/current-burger-slice';
 import { getOrderNumberThunk, clearOrderId } from '../../services/store/ui-slice';
-import { nanoid } from 'nanoid';
 import { isLoggedInSelector } from '../../services/store/selectors';
 import { useLocation, useNavigate } from 'react-router-dom';
 

@@ -1,6 +1,6 @@
+import { useCallback, useEffect, useMemo, useState } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import styles from './profile-form.module.css';
-import { useCallback, useEffect, useMemo, useState } from 'react';
 import useForm from '../../services/hooks/use-form';
 import { updateProfileInfoThunk } from '../../services/store/user-slice';
 import { Button, EmailInput, Input, PasswordInput } from '@ya.praktikum/react-developer-burger-ui-components';
@@ -53,12 +53,12 @@ const ProfileForm = () => {
   useEffect(() => {
     if (storeUser) {
       setValues({ ...storeUser, password: '' })
-    }
-  }, [storeUser, setValues])
+    };
+  }, [storeUser, setValues]);
 
   if (isGetProfileInfoPending || isLoginPending) {
-    return (<p className='text text_type_main-medium'>'Идет загрузка данных профиля...'</p>)
-  }
+    return (<p className='text text_type_main-medium'>'Идет загрузка данных профиля...'</p>);
+  };
   return (
     <form className={styles.form} onSubmit={handleSubmit} onReset={resetForm}>
       <Input
@@ -97,7 +97,7 @@ const ProfileForm = () => {
         </Button>
       </div>}
     </form>
-  )
-}
+  );
+};
 
 export default ProfileForm;

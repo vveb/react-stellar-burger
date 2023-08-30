@@ -12,17 +12,17 @@ const CardsList = ({ type }) => {
     return data
       .filter((item) => item.type === type)
       .map((item) => (<IngredientCard itemData = {item} key={item._id} />));
-  }
+  };
 
   return (
       <ul className={styles.list}>
         {generateList(type)}
       </ul>
-  )
+  );
 };
 
 CardsList.propTypes = {
   type: stringPropType.isRequired,
-}
+};
 
 export default React.memo(CardsList);

@@ -11,14 +11,14 @@ const TotalPrice = () => {
     return others.reduce((acc, item) => {
       return acc + item.price
     }, bunPrice);
-  }, [bun, others])
+  }, [bun, others]);
 
   return (
     <div className={styles.totalPrice}>
       <p className={styles.price}>{totalSum}</p>
       <CurrencyIcon type='primary' />
     </div>
-  )
-}
+  );
+};
 
 export default TotalPrice;

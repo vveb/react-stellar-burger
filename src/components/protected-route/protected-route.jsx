@@ -15,18 +15,18 @@ const Protected = ({ onlyUnAuth = false, component }) => {
     // Выводим прелоадер в ПР
     // Здесь возвращается просто null для экономии времени
     return null;
-  }
+  };
 
   if (onlyUnAuth && isUserLoggedIn) {
     // Пользователь авторизован, но роут предназначен для неавторизованного пользователя
     // Делаем редирект на главную страницу или на тот адрес, что записан в location.state.from
     const { from } = location.state || { from: { pathname: "/" } };
     return <Navigate to={from} />;
-  }
+  };
 
   if (!onlyUnAuth && !isUserLoggedIn) {
     return <Navigate to="/login" state={{ from: location }} />;
-  }
+  };
 
   // !onlyUnAuth && isUserLoggedIn Пользователь авторизован и роут для авторизованного пользователя
 

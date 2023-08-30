@@ -1,11 +1,11 @@
-import { Button, EmailInput, PasswordInput } from '@ya.praktikum/react-developer-burger-ui-components';
-import styles from './authorization-pages.module.css';
-import { Link, useLocation, useNavigate } from 'react-router-dom';
-import useForm from '../../services/hooks/use-form';
+import { useEffect } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
+import { Link, useLocation, useNavigate } from 'react-router-dom';
+import styles from './authorization-pages.module.css';
+import { Button, EmailInput, PasswordInput } from '@ya.praktikum/react-developer-burger-ui-components';
+import useForm from '../../services/hooks/use-form';
 import { loginUserThunk } from '../../services/store/user-slice';
 import { isLoggedInSelector } from '../../services/store/selectors';
-import { useEffect } from 'react';
 
 const LoginPage = () => {
 
@@ -40,7 +40,7 @@ const LoginPage = () => {
       <p className={styles.helpText}>Вы — новый пользователь? <Link className={styles.link} to='/register'>Зарегистрироваться</Link></p>
       <p className={styles.helpText}>Забыли пароль? <Link className={styles.link} to='/forgot-password'>Восстановить пароль</Link></p>
     </main>
-  )
+  );
 };
 
 export default LoginPage;
