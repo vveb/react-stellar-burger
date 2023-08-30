@@ -2,8 +2,8 @@ import { useEffect } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { useLocation, useParams } from "react-router-dom";
 import styles from './ingredient-page.module.css';
-import IngredientDetails from "../components/ingredient-details/ingredient-details";
-import { clearCurrentIngredient, setCurrentIngredient } from "../services/store/ui-slice";
+import IngredientDetails from "../../components/ingredient-details/ingredient-details";
+import { clearCurrentIngredient, setCurrentIngredient } from "../../services/store/ui-slice";
 
 const IngredientPage = () => {
   
@@ -27,7 +27,7 @@ const IngredientPage = () => {
     return () => {
       dispatch(clearCurrentIngredient());
     };
-  }, []);
+  }, [dispatch]);
   
   if (!ingredient || background) {
     return null;

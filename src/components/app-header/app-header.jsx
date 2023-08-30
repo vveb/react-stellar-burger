@@ -1,3 +1,4 @@
+import React from 'react';
 import { NavLink, useLocation, useMatch } from 'react-router-dom';
 import styles from './app-header.module.css';
 import { Logo, BurgerIcon, ListIcon, ProfileIcon } from '@ya.praktikum/react-developer-burger-ui-components';
@@ -36,7 +37,7 @@ const AppHeader = () => {
         </NavLink>
       </nav>
     </header>
-  )
-}
+  );
+};
 
-export default AppHeader
+export default React.memo(AppHeader);

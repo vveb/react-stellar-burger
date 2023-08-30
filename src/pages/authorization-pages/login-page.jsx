@@ -1,10 +1,10 @@
 import { Button, EmailInput, PasswordInput } from '@ya.praktikum/react-developer-burger-ui-components';
 import styles from './authorization-pages.module.css';
 import { Link, useLocation, useNavigate } from 'react-router-dom';
-import useForm from '../services/hooks/use-form';
+import useForm from '../../services/hooks/use-form';
 import { useDispatch, useSelector } from 'react-redux';
-import { loginUserThunk } from '../services/store/user-slice';
-import { isLoggedInSelector } from '../services/store/selectors';
+import { loginUserThunk } from '../../services/store/user-slice';
+import { isLoggedInSelector } from '../../services/store/selectors';
 import { useEffect } from 'react';
 
 const LoginPage = () => {

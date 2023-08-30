@@ -2,8 +2,8 @@ import { Button, EmailInput } from '@ya.praktikum/react-developer-burger-ui-comp
 import styles from './authorization-pages.module.css';
 import { Link, useNavigate } from 'react-router-dom';
 import { useDispatch, useSelector } from 'react-redux';
-import { forgotPasswordThunk } from '../services/store/user-slice';
-import useForm from '../services/hooks/use-form';
+import { forgotPasswordThunk } from '../../services/store/user-slice';
+import useForm from '../../services/hooks/use-form';
 
 const ForgotPasswordPage = () => {
 

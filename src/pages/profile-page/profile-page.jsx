@@ -1,9 +1,9 @@
 import { NavLink, Outlet, useMatch, useNavigate } from 'react-router-dom';
 import styles from './profile-page.module.css';
 import { useDispatch, useSelector } from 'react-redux';
-import { logoutUserThunk } from '../services/store/user-slice';
+import { logoutUserThunk } from '../../services/store/user-slice';
 import { useEffect } from 'react';
-import { isLoggedInSelector } from '../services/store/selectors';
+import { isLoggedInSelector } from '../../services/store/selectors';
 
 const ProfilePage = () => {
 

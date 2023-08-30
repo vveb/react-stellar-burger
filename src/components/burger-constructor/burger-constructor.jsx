@@ -21,7 +21,7 @@ const BurgerConstructor = () => {
   const location = useLocation();
   const isOrderPending = useSelector((store) => store.api.isOrderPending);
   const { bun, others } = useSelector((store) => store.currentBurger);
-  const { orderId } = useSelector((store) => store.ui);
+  const orderId = useSelector((store) => store.ui.orderId);
   const isLoggedIn = useSelector(isLoggedInSelector);
 
   // Это дополнительный стейт для управления закрытием модального окна элементами, не принадлежащими компоненту Modal
@@ -32,8 +32,8 @@ const BurgerConstructor = () => {
       dispatch(addBun({bun: {...itemData, uniqueId: nanoid(8)}}));
     } else {
       dispatch(addOther({other: {...itemData, uniqueId: nanoid(8)}}));
-    }
-  }
+    };
+  };
 
   const [{ isHover }, dropRef] = useDrop({
     accept: 'ingredientCard',
@@ -49,7 +49,7 @@ const BurgerConstructor = () => {
     const allIngredientsId = {ingredients: others.map(item => item._id)};
     if (bun) {
       allIngredientsId.ingredients = [bun._id, ...allIngredientsId.ingredients, bun._id];
-    }
+    };
     dispatch(getOrderNumberThunk({allIngredientsId}));
   };
 
@@ -59,8 +59,8 @@ const BurgerConstructor = () => {
     } else {
       if (bun || others.length > 0) {
         assignOrderNumber(bun, others);
-      }
-    }
+      };
+    };
   };
 
   const resetOrderModal = useCallback(() => {

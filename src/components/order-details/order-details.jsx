@@ -12,12 +12,12 @@ const OrderDetails = ({ orderId, handleCloseRequest }) => {
       <p className={styles.orderStatus}>Ваш заказ начали готовить</p>
       <p className={styles.captionOrderStatus}>Дождитесь готовности на орбитальной станции</p>
     </>
-  )
-}
+  );
+};
 
 OrderDetails.propTypes = {
   orderId: numberPropType.isRequired,
   handleCloseRequest: functionPropType.isRequired,
-}
+};
 
 export default React.memo(OrderDetails);

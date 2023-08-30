@@ -3,21 +3,21 @@ import { batch, useDispatch, useSelector } from 'react-redux';
 import { Route, Routes, useLocation } from 'react-router-dom';
 import styles from "./app.module.css";
 import AppHeader from "../app-header/app-header";
-import HomePage from '../../pages/home-page';
+import HomePage from '../../pages/home-page/home-page';
 import Modal from '../modal/modal';
 import { getIngredientsDataThunk } from '../../services/store/ingredients-slice';
 import { clearApiError, setIsGetProfileInfoFailed, setIsGetProfileInfoPending, setIsGetProfileInfoSucceed } from '../../services/store/api-state-slice';
-import IngredientPage from '../../pages/ingredient-page';
-import LoginPage from '../../pages/login-page';
-import RegisterPage from '../../pages/register-page';
-import ForgotPasswordPage from '../../pages/forgot-password-page';
-import ResetPasswordPage from '../../pages/reset-password-page';
-import ProfilePage from '../../pages/profile-page';
+import IngredientPage from '../../pages/ingredient-page/ingredient-page';
+import LoginPage from '../../pages/authorization-pages/login-page';
+import RegisterPage from '../../pages/authorization-pages/register-page';
+import ForgotPasswordPage from '../../pages/authorization-pages/forgot-password-page';
+import ResetPasswordPage from '../../pages/authorization-pages/reset-password-page';
+import ProfilePage from '../../pages/profile-page/profile-page';
 import Api from '../../utils/api';
 import { setAuthChecked, setUser } from '../../services/store/user-slice';
 import ProfileForm from '../profile-form/profile-form';
 import { OnlyAuth, OnlyUnAuth } from '../protected-route/protected-route';
-import NotFound404 from '../../pages/not-found-404-page';
+import NotFound404 from '../../pages/not-found-404-page/not-found-404-page';
 
 function App() {
 
