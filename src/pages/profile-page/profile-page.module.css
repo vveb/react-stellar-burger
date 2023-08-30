@@ -1,0 +1,68 @@
+.main {
+  display: flex;
+  column-gap: 60px;
+  composes: mt-30 from global;
+  width: 100%;
+  max-width: 1280px;
+  padding: 0 20px;
+  box-sizing: border-box;
+}
+
+.menuBox {
+  display: flex;
+  flex-direction: column;
+  max-width: 320px;
+}
+
+.menuLinks {
+  display: flex;
+  flex-direction: column;
+  list-style: none;
+  padding-left: 0;
+  row-gap: 34px;
+}
+
+.menuItem {
+  composes: text text_type_main-medium from global;
+  text-decoration: none;
+  color: #F2F2F3;
+  cursor: pointer;
+  transition: color .3s;
+}
+
+.menuItem:hover {
+  color: #8585AD;
+}
+
+.menuItem_inactive {
+  composes: menuItem;
+  color: #8585AD;
+}
+
+.menuItem_inactive:hover {
+  color: #F2F2F3;
+}
+
+.logoutButton {
+  composes: menuItem_inactive;
+  background: none;
+  border: 0;
+}
+
+.infoText {
+  composes: text text_type_main-default text_color_inactive from global;
+  opacity: .4;
+  margin-top: 80px;
+}
+
+.logoutMainText {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  composes: text text_type_main-large from global;
+  width: 100%;
+}
+
+.logoutText {
+  composes: text text_type_main-medium from global;
+}

@@ -1,7 +1,7 @@
 import React from 'react';
 import { useSelector } from 'react-redux';
-import { arrayOfIngredientsPropType } from '../../utils/prop-types';
 import styles from './others.module.css';
+import { arrayOfIngredientsPropType } from '../../utils/prop-types';
 import OtherIngredient from '../other-ingredient/other-ingredient';
 
 const Others = ({ ingredientsList }) => {
@@ -13,11 +13,11 @@ const Others = ({ ingredientsList }) => {
         {(!bun && others.length < 1) && <h2 className={styles.title}>Добавьте ингредиенты</h2>}
         {ingredientsList.map((item, index) => <OtherIngredient itemData={item} key={item.uniqueId} index={index} />)}
       </ul>
-  )
-}
+  );
+};
 
 Others.propTypes = {
   ingredientsList: arrayOfIngredientsPropType.isRequired, 
-}
+};
 
 export default React.memo(Others);

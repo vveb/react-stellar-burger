@@ -6,8 +6,8 @@ import { functionPropType } from '../../utils/prop-types';
 const SubmitOrderButton = ({ handleCloseRequest }) => {
 
   const handleClose = () => {
-    handleCloseRequest(true)
-  }
+    handleCloseRequest(true);
+  };
 
   return (
     <div onClick={handleClose} role='button' className={styles.submit}>
@@ -16,11 +16,11 @@ const SubmitOrderButton = ({ handleCloseRequest }) => {
       <div className={`${styles.polygonMiddle} ${styles.scaleRotationSmooth}`}></div>
       <div className={`${styles.polygonFront} ${styles.scaleRotationReverse}`}></div>
     </div>
-  )
-}
+  );
+};
 
 SubmitOrderButton.propTypes = {
   handleCloseRequest: functionPropType.isRequired,
-}
+};
 
 export default React.memo(SubmitOrderButton);

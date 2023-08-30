@@ -1,0 +1,20 @@
+.form {
+  display: flex;
+  flex-direction: column;
+  row-gap: 24px;
+}
+
+.controlsBox {
+  display: flex;
+  justify-content: flex-end;
+  align-items: flex-start;
+  column-gap: 20px;
+}
+
+.resetButton {
+  padding: 16px 8px;
+}
+
+.submitButton {
+  padding: 16px 40px;
+}

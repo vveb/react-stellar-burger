@@ -8,26 +8,32 @@ import Modal from '../modal/modal';
 import OrderDetails from '../order-details/order-details';
 import TotalPrice from '../total-price/total-price';
 import Others from '../others/others';
-import { addBun, addOther, getOrderNumberThunk } from '../../services/store/current-burger-slice';
-import { nanoid } from 'nanoid';
-import { clearOrderId } from '../../services/store/current-burger-slice';
+import { addBun, addOther } from '../../services/store/current-burger-slice';
+import { getOrderNumberThunk, clearOrderId } from '../../services/store/ui-slice';
+import { isLoggedInSelector } from '../../services/store/selectors';
+import { useLocation, useNavigate } from 'react-router-dom';
 
 
 const BurgerConstructor = () => {
   const dispatch = useDispatch();
+  const navigate = useNavigate();
+  const location = useLocation();
   const isOrderPending = useSelector((store) => store.api.isOrderPending);
-  const { bun, others, orderId } = useSelector((store) => store.currentBurger);
+  const { bun, others } = useSelector((store) => store.currentBurger);
+  const orderId = useSelector((store) => store.ui.orderId);
+  const isLoggedIn = useSelector(isLoggedInSelector);
 
   // Это дополнительный стейт для управления закрытием модального окна элементами, не принадлежащими компоненту Modal
   const [isCloseRequested, setIsCloseRequested] = useState(false);
   
   const handleDrop = (itemData) => {
     if (itemData.type === 'bun') {
-      dispatch(addBun({bun: {...itemData, uniqueId: nanoid(8)}}));
+      dispatch(addBun(itemData));
     } else {
-      dispatch(addOther({other: {...itemData, uniqueId: nanoid(8)}}));
-    }
-  }
+      // dispatch(addOther({other: {...itemData, uniqueId: nanoid(8)}}));
+      dispatch(addOther(itemData));
+    };
+  };
 
   const [{ isHover }, dropRef] = useDrop({
     accept: 'ingredientCard',
@@ -43,14 +49,18 @@ const BurgerConstructor = () => {
     const allIngredientsId = {ingredients: others.map(item => item._id)};
     if (bun) {
       allIngredientsId.ingredients = [bun._id, ...allIngredientsId.ingredients, bun._id];
-    }
+    };
     dispatch(getOrderNumberThunk({allIngredientsId}));
   };
 
   const placeAnOrder = () => {
-    if (bun || others.length > 0) {
-      assignOrderNumber(bun, others);
-    }
+    if(!isLoggedIn) {
+      navigate('/login', { state: { from: location } });
+    } else {
+      if (bun || others.length > 0) {
+        assignOrderNumber(bun, others);
+      };
+    };
   };
 
   const resetOrderModal = useCallback(() => {

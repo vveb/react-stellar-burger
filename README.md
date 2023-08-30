@@ -56,20 +56,26 @@ _Главная страница_
 * Генерация номера заказа происходит путем отправки запроса с массивом из id ингредиентов на сервер.
 * Заказ доступен от _одного_ любого ингредиента (булочки приобретаются парой, две разные булочки заказать нельзя).
 * Итоговая стоимость подсчитывается _динамически_ в зависимости от набора ингредиентов, добавленных в конструктор.
+* Приложение использует роутинг, реализованный с помощью __React Router__.
+* Приложение содержит защищенные __HOC-компонентом__ роуты для авторизованных и неавторизованных пользователей.
+* Реализован функционал __личного кабинета__ с регистрацией/логинингом, восстановлением пароля, профилем пользователя.
+* Авторизация и соответствующие запросы к серверу построены на принципах использования __уникальных токенов__ (accessToken, refreshToken).
+* Для запросов, использующих accessToken, реализована универсальная fetch-функция, производящая его обновление в случае окончания времени его жизни.
+* Для работы с формами используется _кастомный хук_ __useForm__.
 * Сборка проекта, минимизация и транспиляция кода на JS происходит с помощью инструмента __Webpack__ и сопутствующих плагинов.
 
 ---
 
 ## 📈 Планы по развитию проекта
-* Реализовать функционал __личного кабинета__ с регистрацией/логинингом, восстановлением пароля, профилем пользователя, историей заказов
+* Реализовать функционал __личного кабинета__ с историей заказов
 * Реализовать функционал __ленты заказов__
-* Настроить __роутинг__ в приложении
+_Описанные выше пункты будут реализованы с использованием WebSockets_
 ---
 
 ## ⚙️ Cтек технологий
-HTML, CSS, React, React DevTools, React-DnD, Redux, Redux DevTools, React-Redux, Redux-Thunk, JavaScript, JSX, WebPack, Babel, GitHub
+HTML, CSS, React, React DevTools, React-DnD, React-Router, Redux, Redux DevTools, React-Redux, Redux-Thunk, JavaScript, JSX, WebPack, Babel, GitHub
 
-![HTML5](https://img.shields.io/badge/html5-%23E34F26.svg?style=for-the-badge&logo=html5&logoColor=white)  ![CSS3](https://img.shields.io/badge/css3-%231572B6.svg?style=for-the-badge&logo=css3&logoColor=white)  ![React](https://img.shields.io/badge/react-%2320232a.svg?style=for-the-badge&logo=react&logoColor=%2361DAFB)  ![Redux](https://img.shields.io/badge/redux-%23593d88.svg?style=for-the-badge&logo=redux&logoColor=white)  ![JavaScript](https://img.shields.io/badge/javascript-%23323330.svg?style=for-the-badge&logo=javascript&logoColor=%23F7DF1E)  ![Webpack](https://img.shields.io/badge/webpack-%238DD6F9.svg?style=for-the-badge&logo=webpack&logoColor=black)  ![Babel](https://img.shields.io/badge/Babel-F9DC3e?style=for-the-badge&logo=babel&logoColor=black)  ![GitHub](https://img.shields.io/badge/github-%23121011.svg?style=for-the-badge&logo=github&logoColor=white)
+![HTML5](https://img.shields.io/badge/html5-%23E34F26.svg?style=for-the-badge&logo=html5&logoColor=white)  ![CSS3](https://img.shields.io/badge/css3-%231572B6.svg?style=for-the-badge&logo=css3&logoColor=white)  ![React](https://img.shields.io/badge/react-%2320232a.svg?style=for-the-badge&logo=react&logoColor=%2361DAFB)  ![React Router](https://img.shields.io/badge/React_Router-CA4245?style=for-the-badge&logo=react-router&logoColor=white)  ![Redux](https://img.shields.io/badge/redux-%23593d88.svg?style=for-the-badge&logo=redux&logoColor=white)  ![JavaScript](https://img.shields.io/badge/javascript-%23323330.svg?style=for-the-badge&logo=javascript&logoColor=%23F7DF1E)  ![Webpack](https://img.shields.io/badge/webpack-%238DD6F9.svg?style=for-the-badge&logo=webpack&logoColor=black)  ![Babel](https://img.shields.io/badge/Babel-F9DC3e?style=for-the-badge&logo=babel&logoColor=black)  ![GitHub](https://img.shields.io/badge/github-%23121011.svg?style=for-the-badge&logo=github&logoColor=white)
 
 ---
 

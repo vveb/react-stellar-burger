@@ -1,46 +1,42 @@
-import { createAsyncThunk, createSlice } from "@reduxjs/toolkit";
-import Api from "../../utils/api";
+import { createSlice } from "@reduxjs/toolkit";
 import swapItems from "../../utils/swap-items";
+import { getOrderNumberThunk } from "./ui-slice";
+import { nanoid } from "nanoid";
 
 const initialCurrentBurgerState = {
   bun: null,
   others: [],
-  orderId: null, // TODO: Перенести это в UI
 };
-
-const getOrderNumberThunk = createAsyncThunk(
-  'currentBurger/orderNumber',
-  async (data, { rejectWithValue }) => {
-    try {
-      const { order: { number }, success } = await Api.addNewOrder(data.allIngredientsId) ?? {};
-      if (!!number && success) {
-        return number;
-      }
-      throw new Error({statusCode: 500, message: 'Неизвестная ошибка'});
-    } catch(err) {
-      const errorText = err.statusCode ? err.message : 'Проблема с подключением, проверьте свою сеть';
-      rejectWithValue(`Ошибка при оформлении заказа: ${errorText}`);
-    };
-  }
-);
 
 const currentBurgerSlice = createSlice({
   name: 'currentBurger',
   initialState: initialCurrentBurgerState,
   reducers: {
-    addBun: (state, action) => {
-      state.bun = action.payload.bun;
+    addBun: {
+      reducer: (state, action) => {
+        state.bun = action.payload;
+        // ({...state, bun: action.payload}),
+      },
+      prepare: (itemData) => {
+        const uniqueId = nanoid(8);
+        return { payload: { ...itemData, uniqueId } };
+      }
     },
-    // ({...state, bun: action.payload}),
-    addOther: (state, action) => {
-      state.others.push(action.payload.other)
-    } /*({...state, others: [...state.others, action.payload]})*/,
+    addOther: {
+      reducer: (state, action) => {
+        state.others.push(action.payload);
+        /*({...state, others: [...state.others, action.payload]})*/
+      },
+      prepare: (itemData) => {
+        const uniqueId = nanoid(8);
+        return { payload: { ...itemData, uniqueId } };
+      },
+    },
     removeIngredient: (state, action) => {
-      state.others = state.others.filter((ingredient) => ingredient.uniqueId != action.payload.itemData.uniqueId);
+      state.others = state.others.filter((ingredient) => ingredient.uniqueId !== action.payload.itemData.uniqueId);
       // ...state,
       // others: state.others.filter((ingredient) => ingredient.uniqueId != action.payload.itemData.uniqueId),
     },
-    // resetBurger: (state) => ({...state.orderId, ...initialCurrentBurgerState}),
     changeOrder: (state, action) => {
       const { other, index } = action.payload;
       const oldIndex = state.others.findIndex((item) => item.uniqueId === other.uniqueId);
@@ -48,24 +44,19 @@ const currentBurgerSlice = createSlice({
       state.others = newOthers;
       // return {...state, others: newOthers};
     },
-    clearOrderId: (state) => {
-      state.orderId = null;
-    },
   },
+  //Очистка заказа
   extraReducers: (builder) => builder
-    .addCase(getOrderNumberThunk.fulfilled, (_, action) => {
-      return {...initialCurrentBurgerState, orderId: action.payload};
-    })
+    .addCase(getOrderNumberThunk.fulfilled, () => {
+      return initialCurrentBurgerState;
+    }),
 });
 
-export {getOrderNumberThunk};
 export const {
   addBun,
   addOther,
   removeIngredient,
-  resetBurger,
   changeOrder,
-  clearOrderId,
 } = currentBurgerSlice.actions;
 
 export default currentBurgerSlice.reducer;

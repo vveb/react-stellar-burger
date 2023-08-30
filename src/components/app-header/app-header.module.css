@@ -53,8 +53,12 @@
 }
 
 .lk {
-  composes: link_inactive;
+  composes: link;
   margin-left: 288px;
+}
+
+.lk_inactive {
+  composes: lk link_inactive;
 }
 
 .menuButtons {

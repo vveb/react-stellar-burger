@@ -4,7 +4,7 @@ import { useRef, useCallback, useEffect } from 'react';
 import styles from './modal.module.css';
 import ModalOverlay from '../modal-overlay/modal-overlay';
 import { CloseIcon } from '@ya.praktikum/react-developer-burger-ui-components';
-import { stringPropType, reactElementPropType, functionPropType, booleanPropType } from '../../utils/prop-types'
+import { stringPropType, reactElementPropType, functionPropType, booleanPropType } from '../../utils/prop-types';
 
 const Modal = ({ title, children, extraClass, handleCleanModalData, closeRequest }) => {
   const modalRoot = document.getElementById('modals');
@@ -35,19 +35,19 @@ const Modal = ({ title, children, extraClass, handleCleanModalData, closeRequest
     if (closeRequest) {
       closeModal();
     }
-  }, [closeRequest, closeModal])
+  }, [closeRequest, closeModal]);
 
   useEffect(() => {
     const handleEscClose = (evt) => {
       if (evt.key === 'Escape') {
         closeModal();
-      }
-    }
+      };
+    };
     document.addEventListener('keydown', handleEscClose);
     return () => {
       document.removeEventListener('keydown', handleEscClose);
-    }
-  }, [closeModal])
+    };
+  }, [closeModal]);
 
   return ReactDOM.createPortal((
     <>
@@ -67,7 +67,7 @@ Modal.defaultProps = {
   title: '',
   closeRequest: false,
   extraClass: '',
-}
+};
 
 Modal.propTypes = {
   title: stringPropType,
@@ -75,6 +75,6 @@ Modal.propTypes = {
   extraClass: stringPropType,
   handleCleanModalData: functionPropType.isRequired,
   closeRequest: booleanPropType,
-}
+};
 
 export default React.memo(Modal);
