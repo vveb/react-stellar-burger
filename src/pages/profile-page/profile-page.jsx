@@ -27,27 +27,28 @@ const ProfilePage = () => {
   }, [isLoggedIn, navigate]);
 
   return (
-    <>
-      <main className={styles.main}>
-        <div className={styles.menuBox}>
-          <ul className={styles.menuLinks}>
-            <li>
-              <NavLink to='/profile' className={isProfileActive ? styles.menuItem : styles.menuItem_inactive}>Профиль</NavLink>
-            </li>
-            <li>
-              <NavLink to='/profile/orders' className={isOrdersStoryActive ? styles.menuItem : styles.menuItem_inactive}>История заказов</NavLink>
-            </li>
-            <li>
-              <button className={styles.logoutButton} onClick={handleLogout}>{isLogoutPending ? 'Выходим...' : 'Выход'}</button>
-            </li>
-          </ul>
-          {isLogoutPending && <p className={styles.logoutText}>До свидания!</p>}
-          <p className={styles.infoText}>В этом разделе вы можете изменить&nbsp;свои персональные данные</p>
-        </div>
-        {isLogoutPending && <p className={styles.logoutMainText}>Приходите снова :)</p>}
-        {!isLogoutPending && <Outlet />}
-      </main>
-    </>
+    <main className={styles.main}>
+      <div className={styles.menuBox}>
+        <ul className={styles.menuLinks}>
+          <li>
+            <NavLink to='/profile' className={isProfileActive ? styles.menuItem : styles.menuItem_inactive}>Профиль</NavLink>
+          </li>
+          <li>
+            <NavLink to='/profile/orders' className={isOrdersStoryActive ? styles.menuItem : styles.menuItem_inactive}>История заказов</NavLink>
+          </li>
+          <li>
+            <button className={styles.logoutButton} onClick={handleLogout}>{isLogoutPending ? 'Выходим...' : 'Выход'}</button>
+          </li>
+        </ul>
+        {isLogoutPending && <p className={styles.logoutText}>До свидания!</p>}
+        {isProfileActive &&
+        <p className={styles.infoText}>В этом разделе вы можете изменить&nbsp;свои персональные данные</p>}
+        {isOrdersStoryActive &&
+        <p className={styles.infoText}>В этом разделе вы можете просмотреть&nbsp;свою историю заказов</p>}
+      </div>
+      {isLogoutPending && <p className={styles.logoutMainText}>Приходите снова :)</p>}
+      {!isLogoutPending && <Outlet />}
+    </main>
   );
 };
 

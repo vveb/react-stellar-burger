@@ -1,0 +1,51 @@
+.imagesBox {
+  display: flex;
+  list-style: none;
+  padding-left: 0;
+}
+
+.imageBack {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  width: 64px;
+  height: 64px;
+  background-image: linear-gradient(45deg, #801AB2, #4C4CFF);
+  border-radius: 50%;
+  margin-left: -16px;
+  box-sizing: border-box;
+}
+
+.imageBack:first-of-type {
+  margin-left: 0;
+}
+
+.image {
+  display: block;
+  box-sizing: border-box;
+  width: 60px;
+  height: 60px;
+  object-fit: cover;
+  background-color: #131316;
+  box-sizing: border-box;
+  border-radius: 50%;
+}
+
+.countOverlay {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  width: 64px;
+  height: 64px;
+  border-radius: 50%;
+  margin-left: -64px;
+  background-color: rgba(0, 0, 0, .3);
+  z-index: 2;
+}
+
+.count {
+  margin: 0;
+  composes: text text_type_main-default from global;
+  z-index: 3;
+  opacity: 1;
+}
