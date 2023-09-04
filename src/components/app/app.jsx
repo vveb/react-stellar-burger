@@ -19,6 +19,7 @@ import ProfileForm from '../profile-form/profile-form';
 import { OnlyAuth, OnlyUnAuth } from '../protected-route/protected-route';
 import NotFound404 from '../../pages/not-found-404-page/not-found-404-page';
 import FeedList from '../feed-list/feed-list';
+import FeedPage from '../../pages/feed-page/feed-page';
 
 function App() {
 
@@ -78,13 +79,14 @@ function App() {
         <Routes location={background || location}>
           <Route path='/' element={<HomePage />} />
           <Route path='/ingredients/:id' element={<IngredientPage />} />
+          <Route path='/feed' element={<FeedPage />} />
           <Route path='/login' element={<OnlyUnAuth component={<LoginPage />} />} />
           <Route path='/register' element={<OnlyUnAuth component={<RegisterPage />} />} />
           <Route path='/forgot-password' element={<OnlyUnAuth component={<ForgotPasswordPage />} />} />
           <Route path='/reset-password' element={<OnlyUnAuth component={<ResetPasswordPage />} />} />
           <Route path='/profile' element={<OnlyAuth component={<ProfilePage />} />}>
             <Route index element={<ProfileForm />} />
-            <Route path='/profile/orders' element={<FeedList widthSize={'880px'}/>} />
+            <Route path='/profile/orders' element={<FeedList widthSize='860px' gapSize='24px'/>} />
           </Route>
           <Route path='*' element={<NotFound404 />} />
         </Routes>

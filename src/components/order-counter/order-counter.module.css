@@ -1,0 +1,9 @@
+.title {
+  composes: text text_type_main-medium from global;
+}
+
+.amount {
+  composes: text text_type_digits-large from global;
+  font-variant-numeric: ordinal;
+  text-shadow: 0px 4px 32px rgba(51, 51, 255, 0.50), 0px 0px 8px rgba(51, 51, 255, 0.25), 0px 0px 16px rgba(51, 51, 255, 0.25);
+}

@@ -61,13 +61,16 @@ export const data = {
         "643d69a5c3f7b9001cfa0942",
         "643d69a5c3f7b9001cfa0945",
         "643d69a5c3f7b9001cfa0945",
+        "643d69a5c3f7b9001cfa0945",
         "643d69a5c3f7b9001cfa093c"
       ],
-      "status": "done",
+      "status": "pending",
       "name": "Space антарианский краторный spicy бургер",
       "createdAt": "2023-08-30T16:02:23.030Z",
       "updatedAt": "2023-08-30T16:02:23.235Z",
       "number": 18352
     },
-  ]
+  ],
+  "total": 28752,
+  "totalToday": 138,
 }

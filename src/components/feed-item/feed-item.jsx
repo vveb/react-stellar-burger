@@ -25,7 +25,7 @@ const FeedItem = ({ orderData, isPrivate }) => {
         return ingredient.type === 'bun' ? acc : acc + ingredient.price;
       }, bunPrice);
     };
-  }, [ingredients]);
+  }, [ingredients, allIngredients]);
 
   return (
     <li className={styles.listItem}>
