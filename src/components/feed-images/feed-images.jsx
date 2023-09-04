@@ -2,6 +2,7 @@ import { useSelector } from 'react-redux';
 import styles from './feed-images.module.css';
 import { useMemo } from 'react';
 import { nanoid } from 'nanoid';
+import { arrayOfStringsPropType } from '../../utils/prop-types';
 
 const FeedImages = ({ ingredients }) => {
 
@@ -39,5 +40,9 @@ const FeedImages = ({ ingredients }) => {
     </ul>
   );
 };
+
+FeedImages.propTypes = {
+  ingredients: arrayOfStringsPropType.isRequired,
+}
 
 export default FeedImages;

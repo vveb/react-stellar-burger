@@ -1,3 +1,4 @@
+import { stringPropType } from '../../utils/prop-types';
 import styles from './order-counter.module.css';
 
 const OrderCounter = ({ type, titleText, amount }) => {
@@ -9,5 +10,11 @@ const OrderCounter = ({ type, titleText, amount }) => {
     </div>
   );
 };
+
+OrderCounter.propTypes = {
+  type: stringPropType.isRequired,
+  titleText: stringPropType.isRequired,
+  amount: stringPropType.isRequired,
+}
 
 export default OrderCounter;

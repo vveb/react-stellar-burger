@@ -2,8 +2,9 @@ import { useMatch } from 'react-router';
 import styles from './feed-list.module.css';
 import FeedItem from '../feed-item/feed-item';
 import {data} from '../../utils/feed-data.js'
+import { stringPropType } from '../../utils/prop-types';
 
-const FeedList = ({ widthSize, gapSize }) => {
+const FeedList = ({ widthSize = '860px', gapSize = '16px' }) => {
 
   const isPrivate = !!useMatch('/profile/orders');
 
@@ -13,5 +14,10 @@ const FeedList = ({ widthSize, gapSize }) => {
     </ul>
   );
 };
+
+FeedList.propTypes = {
+  widthSize: stringPropType,
+  gapSize: stringPropType,
+}
 
 export default FeedList;

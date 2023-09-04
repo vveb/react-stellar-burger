@@ -10,7 +10,8 @@ const FeedPage = () => {
     return null;
   }
 
-  const amountTotal = data.total.toString().replace(/\B(?=(\d{3})+(?!\d))/g, " ")
+  const amountTotal = data.total.toString().replace(/\B(?=(\d{3})+(?!\d))/g, " ");
+  const amountTotalToday = data.totalToday.toString().replace(/\B(?=(\d{3})+(?!\d))/g, " ");
 
   const readyNumbers = [111111,222222,33333,444444,555555,666666,777777,888888,999999, null, null, 123456, 5555]
   
@@ -36,7 +37,7 @@ const FeedPage = () => {
             orderNumbers={inProgressNumbers}
           />
           <OrderCounter type='all' titleText='Выполнено за все время' amount={amountTotal} />
-          <OrderCounter type='today' titleText='Выполнено за сегодня' amount={data.totalToday} />
+          <OrderCounter type='today' titleText='Выполнено за сегодня' amount={amountTotalToday} />
         </div>
       </div>
     </main>

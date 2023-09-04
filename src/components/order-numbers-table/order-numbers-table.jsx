@@ -1,3 +1,4 @@
+import { arrayOfNumbersPropType, stringPropType } from '../../utils/prop-types';
 import styles from './order-numbers-table.module.css';
 
 const OrderNumbersTable = ({ titleText, numbersClass, orderNumbers, type }) => {
@@ -11,5 +12,12 @@ const OrderNumbersTable = ({ titleText, numbersClass, orderNumbers, type }) => {
     </div>
   );
 };
+
+OrderNumbersTable.propTypes = {
+  titleText: stringPropType.isRequired,
+  numbersClass: stringPropType.isRequired,
+  orderNumbers: arrayOfNumbersPropType.isRequired,
+  type: stringPropType.isRequired,
+}
 
 export default OrderNumbersTable;

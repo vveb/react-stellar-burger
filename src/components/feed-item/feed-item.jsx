@@ -4,6 +4,7 @@ import { CurrencyIcon, FormattedDate } from '@ya.praktikum/react-developer-burge
 import { orderStatus } from '../../utils/constants';
 import FeedImages from '../feed-images/feed-images';
 import styles from './feed-item.module.css';
+import { booleanPropType, orderPropType } from '../../utils/prop-types';
 
 const FeedItem = ({ orderData, isPrivate }) => {
 
@@ -44,6 +45,11 @@ const FeedItem = ({ orderData, isPrivate }) => {
       </div>
     </li>
   )
+};
+
+FeedItem.propTypes = {
+  orderData: orderPropType.isRequired,
+  isPrivate: booleanPropType.isRequired,
 };
 
 export default FeedItem;
