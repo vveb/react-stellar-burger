@@ -28,7 +28,9 @@ const orderStatus = {
   created: 'Создан',
   pending: 'Готовится',
   canceled: 'Отменен',
-}
+};
+
+const WS_CONNECT_THRESHOLD = 2000;
 
 export {
   productTypes,
@@ -36,4 +38,5 @@ export {
   endpointURLs,
   ingredientTypeName,
   orderStatus,
-}
+  WS_CONNECT_THRESHOLD,
+};

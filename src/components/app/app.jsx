@@ -18,8 +18,8 @@ import { setAuthChecked, setUser } from '../../services/store/user-slice';
 import ProfileForm from '../profile-form/profile-form';
 import { OnlyAuth, OnlyUnAuth } from '../protected-route/protected-route';
 import NotFound404 from '../../pages/not-found-404-page/not-found-404-page';
-import FeedList from '../feed-list/feed-list';
 import FeedPage from '../../pages/feed-page/feed-page';
+import FeedView from '../feed-view/feed-view';
 
 function App() {
 
@@ -86,13 +86,13 @@ function App() {
           <Route path='/reset-password' element={<OnlyUnAuth component={<ResetPasswordPage />} />} />
           <Route path='/profile' element={<OnlyAuth component={<ProfilePage />} />}>
             <Route index element={<ProfileForm />} />
-            <Route path='/profile/orders' element={<FeedList widthSize='860px' gapSize='24px'/>} />
+            <Route path='/profile/orders' element={<FeedView />} />
           </Route>
           <Route path='*' element={<NotFound404 />} />
         </Routes>
         {background && (
           <Routes>
-            <Route path='/ingredients/:id' element={<IngredientPage />}/>
+            <Route path='/ingredients/:id' element={<IngredientPage />} />
           </Routes>
         )}
         {(error && !isIngredientsFailed) && 

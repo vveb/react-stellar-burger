@@ -1,16 +1,24 @@
-import { useMatch } from 'react-router';
 import styles from './feed-list.module.css';
 import FeedItem from '../feed-item/feed-item';
-import {data} from '../../utils/feed-data.js'
-import { stringPropType } from '../../utils/prop-types';
+import { booleanPropType, stringPropType } from '../../utils/prop-types';
+import { useSelector } from 'react-redux';
 
-const FeedList = ({ widthSize = '860px', gapSize = '16px' }) => {
+const FeedList = ({ widthSize = '860px', gapSize = '16px', isPrivate = false, ordersData }) => {
 
-  const isPrivate = !!useMatch('/profile/orders');
+  if (!ordersData) {
+    return null;
+  };
+
+  let orders;
+  if (isPrivate) {
+    orders = [...ordersData].reverse();
+  } else {
+    orders = [...ordersData];
+  };
 
   return (
     <ul style={{maxWidth: widthSize, rowGap: gapSize}} className={styles.list}>
-      {data.orders.map((item) => (<FeedItem orderData={item} isPrivate={isPrivate} key={item.number}/>))}
+      {orders.map((item) => (<FeedItem orderData={item} isPrivate={isPrivate} key={item.number}/>))}
     </ul>
   );
 };
@@ -18,6 +26,7 @@ const FeedList = ({ widthSize = '860px', gapSize = '16px' }) => {
 FeedList.propTypes = {
   widthSize: stringPropType,
   gapSize: stringPropType,
-}
+  isPrivate: booleanPropType,
+};
 
 export default FeedList;
