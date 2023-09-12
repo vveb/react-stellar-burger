@@ -1,47 +1,44 @@
-import { useMemo } from 'react';
-import { useSelector } from 'react-redux';
-import { CurrencyIcon, FormattedDate } from '@ya.praktikum/react-developer-burger-ui-components';
-import { orderStatus } from '../../utils/constants';
+import React from 'react';
+import { useDispatch, useSelector } from 'react-redux';
+import { FormattedDate } from '@ya.praktikum/react-developer-burger-ui-components';
+import { orderStatus, orderStatusColor } from '../../utils/constants';
 import FeedImages from '../feed-images/feed-images';
 import styles from './feed-item.module.css';
 import { booleanPropType, orderPropType } from '../../utils/prop-types';
+import FeedTotal from '../feed-total/feed-total';
+import { setCurrentOrderInfo } from '../../services/store/ui-slice';
+import { useMemo } from 'react';
+import { allIngredientsSelector } from '../../services/store/selectors';
+import { useLocation, useNavigate } from 'react-router-dom';
 
 const FeedItem = ({ orderData, isPrivate }) => {
 
+  const dispatch = useDispatch();
+  const navigate = useNavigate();
+  const location = useLocation();
+
   const { createdAt, ingredients, number, status, name } = orderData;
-  const allIngredients = useSelector((store) => store.ingredients.data)?.reduce((acc, item) => {
-    acc[item._id] = item;
-    return acc;
-  }, {});
+  const allIngredients = useSelector(allIngredientsSelector);
+  const validatedIngredients = useMemo(() =>
+  ingredients?.filter((item) => !!item && allIngredients[item] !== undefined), [ingredients, allIngredients]);
 
-  const totalSum = useMemo(() => {
-    if (allIngredients) {
-      // bunId и bunPrice борятся с двойным подсчетом цены булок для разных логик конструктора
-      // Как бы ни был реализован конструктор (добавляет в массив ингредиентов только одну или две булки),
-      // ее цена будет посчитана всегда как за две булки (одна сверху, вторая снизу)
-      const bunId = ingredients.find((item) => allIngredients[item].type === 'bun');
-      const bunPrice = bunId ? allIngredients[bunId].price * 2 : 0;
-      return ingredients.reduce((acc, item) => {
-        const ingredient = allIngredients[item];
-        return ingredient.type === 'bun' ? acc : acc + ingredient.price;
-      }, bunPrice);
-    };
-  }, [ingredients, allIngredients]);
-
+  const handleOrderClick = () => {
+    dispatch(setCurrentOrderInfo(orderData));
+    const path = isPrivate ?`/profile/orders/${orderData.number}` : `/feed/${orderData.number}`
+    navigate(path, { state: { background: location } })
+  };
+  
   return (
-    <li className={styles.listItem}>
+    <li className={styles.listItem} role='button' onClick={handleOrderClick}>
       <div className={styles.techInfo}>
         <p className={styles.id}>{`#${number}`}</p>
         <FormattedDate className={styles.date} date={new Date(createdAt)} />
       </div>
       <p className={styles.name}>{name}</p>
-      {isPrivate && <p className={styles.status}>{orderStatus[status]}</p>}
+      {isPrivate && <p className={styles.status} style={{color: orderStatusColor[status]}}>{orderStatus[status]}</p>}
       <div className={styles.totalInfo}>
-        <FeedImages ingredients={ingredients} />
-        <div className={styles.totalPrice}>
-          <p className={styles.amount}>{totalSum}</p>
-          <CurrencyIcon type='primary' />
-        </div>
+        <FeedImages ingredients={validatedIngredients} />
+        <FeedTotal ingredients={validatedIngredients} />
       </div>
     </li>
   )
@@ -52,4 +49,4 @@ FeedItem.propTypes = {
   isPrivate: booleanPropType.isRequired,
 };
 
-export default FeedItem;
+export default React.memo(FeedItem);

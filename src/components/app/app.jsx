@@ -20,6 +20,7 @@ import { OnlyAuth, OnlyUnAuth } from '../protected-route/protected-route';
 import NotFound404 from '../../pages/not-found-404-page/not-found-404-page';
 import FeedPage from '../../pages/feed-page/feed-page';
 import FeedView from '../feed-view/feed-view';
+import OrderPage from '../../pages/order-page/order-page';
 
 function App() {
 
@@ -80,6 +81,7 @@ function App() {
           <Route path='/' element={<HomePage />} />
           <Route path='/ingredients/:id' element={<IngredientPage />} />
           <Route path='/feed' element={<FeedPage />} />
+          <Route path='/feed/:number' element={<OrderPage />} />
           <Route path='/login' element={<OnlyUnAuth component={<LoginPage />} />} />
           <Route path='/register' element={<OnlyUnAuth component={<RegisterPage />} />} />
           <Route path='/forgot-password' element={<OnlyUnAuth component={<ForgotPasswordPage />} />} />
@@ -88,11 +90,14 @@ function App() {
             <Route index element={<ProfileForm />} />
             <Route path='/profile/orders' element={<FeedView />} />
           </Route>
+          <Route path='/profile/orders/:number' element={<OrderPage />} />
           <Route path='*' element={<NotFound404 />} />
         </Routes>
         {background && (
           <Routes>
             <Route path='/ingredients/:id' element={<IngredientPage />} />
+            <Route path='/feed/:number' element={<OrderPage />} />
+            <Route path='/profile/orders/:number' element={<OrderPage />} />
           </Routes>
         )}
         {(error && !isIngredientsFailed) && 

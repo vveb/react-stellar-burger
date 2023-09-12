@@ -6,6 +6,7 @@ const initialUIState = {
   isIngredientDragging: false,
   orderId: null,
   isPasswordResetRequested: false,
+  currentOrderInfo: null,
 };
 
 const getOrderNumberThunk = createAsyncThunk(
@@ -23,6 +24,23 @@ const getOrderNumberThunk = createAsyncThunk(
     };
   }
 );
+
+const getOrderInfoThunk = createAsyncThunk(
+  'currentOrder/info',
+  async ({ number }, { rejectWithValue }) => {
+    try {
+      const { success, orders } = await Api.getOrderInfo(number) ?? {};
+      if (success && !!orders) {
+        const [order] = orders;
+        return order;
+      }
+      throw new Error({statusCode: 500, message: 'Неизвестная ошибка'});
+    } catch(err) {
+      const errorText = err.statusCode ? err.message : 'Проблема с подключением, проверьте свою сеть';
+      return rejectWithValue(`Ошибка при при получении информации о заказе: ${errorText}`);
+    }
+  }
+)
 
 const UIStateSlice = createSlice({
   name: 'ui',
@@ -48,15 +66,24 @@ const UIStateSlice = createSlice({
     },
     clearIsPasswordResetRequested: (state) => {
       state.isPasswordResetRequested = false;
+    },
+    setCurrentOrderInfo: (state, action) => {
+      state.currentOrderInfo = action.payload;
+    },
+    clearCurrentOrderInfo: (state) => {
+      state.currentOrderInfo = null;
     }
   },
   extraReducers: (builder) => builder
-    .addCase(getOrderNumberThunk.fulfilled, (_, action) => {
-      return {...initialUIState, orderId: action.payload};
-    }),
+    .addCase(getOrderNumberThunk.fulfilled, (state, action) => {
+      return { ...state, orderId: action.payload };
+    })
+    .addCase(getOrderInfoThunk.fulfilled, (state, action) => {
+      return { ...state, currentOrderInfo: action.payload };
+    })
 });
 
-export {getOrderNumberThunk};
+export {getOrderNumberThunk, getOrderInfoThunk};
 export const {
   setCurrentIngredient,
   clearCurrentIngredient,
@@ -64,6 +91,8 @@ export const {
   clearOrderId,
   setIsPasswordResetRequested,
   clearIsPasswordResetRequested,
+  setCurrentOrderInfo,
+  clearCurrentOrderInfo,
 } = UIStateSlice.actions;
 
 export default UIStateSlice.reducer;

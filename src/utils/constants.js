@@ -30,6 +30,13 @@ const orderStatus = {
   canceled: 'Отменен',
 };
 
+const orderStatusColor = {
+  done: '#0cc',
+  created: '#f2f2f3',
+  pending: '#7b68ee',
+  canceled: '#f03',
+}
+
 const WS_CONNECT_THRESHOLD = 2000;
 
 export {
@@ -38,5 +45,6 @@ export {
   endpointURLs,
   ingredientTypeName,
   orderStatus,
+  orderStatusColor,
   WS_CONNECT_THRESHOLD,
 };

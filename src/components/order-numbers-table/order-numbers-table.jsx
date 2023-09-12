@@ -1,3 +1,4 @@
+import React from 'react';
 import { arrayOfNumbersPropType, stringPropType } from '../../utils/prop-types';
 import styles from './order-numbers-table.module.css';
 
@@ -20,4 +21,4 @@ OrderNumbersTable.propTypes = {
   type: stringPropType.isRequired,
 }
 
-export default OrderNumbersTable;
+export default React.memo(OrderNumbersTable);

@@ -27,7 +27,6 @@
   height: 60px;
   object-fit: cover;
   background-color: #131316;
-  box-sizing: border-box;
   border-radius: 50%;
 }
 

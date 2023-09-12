@@ -1,7 +1,7 @@
+import React from 'react';
 import styles from './feed-list.module.css';
 import FeedItem from '../feed-item/feed-item';
 import { booleanPropType, stringPropType } from '../../utils/prop-types';
-import { useSelector } from 'react-redux';
 
 const FeedList = ({ widthSize = '860px', gapSize = '16px', isPrivate = false, ordersData }) => {
 
@@ -29,4 +29,4 @@ FeedList.propTypes = {
   isPrivate: booleanPropType,
 };
 
-export default FeedList;
+export default React.memo(FeedList);

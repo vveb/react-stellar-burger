@@ -1,0 +1,100 @@
+.number {
+  composes: text text_type_digits-default pt-5 from global;
+}
+
+.name {
+  composes: pt-10 from global;
+  composes: text text_type_main-medium from global;
+  width: 100%;
+  text-align: justify;
+}
+
+.status {
+  composes: text text_type_main-small pt-2 from global;
+  width: 100%;
+}
+
+.contents {
+  width: 100%;
+  composes: text text_type_main-medium from global;
+  padding-top: 70px;
+}
+
+.list {
+  display: flex;
+  flex-direction: column;
+  row-gap: 16px;
+  list-style: none;
+  padding-left: 0;
+  width: 100%;
+  max-height: 312px;
+  overflow-y: scroll;
+  composes: custom-scroll from global;
+  box-sizing: border-box;
+}
+
+.list::-webkit-scrollbar {
+  width: 8px;
+}
+
+.list::-webkit-scrollbar-thumb {
+  border: 0;
+  border-radius: 0;
+}
+
+.listItem {
+  display: flex;
+  align-items: center;
+  column-gap: 16px;
+  justify-content: space-between;
+  padding-right: 24px;
+}
+
+.imageBack {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  width: 64px;
+  height: 64px;
+  background-image: linear-gradient(45deg, #801AB2, #4C4CFF);
+  border-radius: 50%;
+  box-sizing: border-box;
+}
+
+.image {
+  display: block;
+  box-sizing: border-box;
+  width: 60px;
+  height: 60px;
+  border-radius: 50%;
+  object-fit: cover;
+  background-color: #131316;
+}
+
+.ingredientName {
+  width: 320px;
+  composes: text text_type_main-default from global;
+}
+
+.priceBox {
+  display: flex;
+  justify-content: flex-end;
+  column-gap: 8px;
+  align-items: center;
+  width: 192px;
+}
+
+.amount {
+  composes: text text_type_digits-default from global;
+}
+
+.techInfo {
+  display: flex;
+  justify-content: space-between;
+  width: 100%;
+  padding-top: 36px;
+}
+
+.date {
+  composes: text text_type_main-default text_color_inactive from global;
+}

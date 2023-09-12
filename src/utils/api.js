@@ -85,6 +85,10 @@ const getProfileInfo = () => {
   return fetchWithRefresh({ endpoint: endpointURLs.profileInfo, method: 'GET' });
 };
 
+const getOrderInfo = (orderNumber) => {
+  return goFetch({ endpoint: `${endpointURLs.orders}/${orderNumber}`, method: 'GET' });
+}
+
 const Api = {
   getIngredientsData,
   addNewOrder,
@@ -95,6 +99,7 @@ const Api = {
   resetPassword,
   updateProfileInfo,
   getProfileInfo,
+  getOrderInfo,
 };
 
 export default Api;
