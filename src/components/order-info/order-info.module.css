@@ -1,9 +1,9 @@
 .number {
   composes: text text_type_digits-default pt-5 from global;
+  composes: pb-10 from global;
 }
 
 .name {
-  composes: pt-10 from global;
   composes: text text_type_main-medium from global;
   width: 100%;
   text-align: justify;

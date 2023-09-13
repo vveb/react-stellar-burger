@@ -4,6 +4,7 @@ import { useLocation, useParams } from 'react-router-dom';
 import { useEffect } from 'react';
 import { clearCurrentOrderInfo, getOrderInfoThunk } from '../../services/store/ui-slice';
 import OrderInfo from '../../components/order-info/order-info';
+import Preloader from '../../components/preloader/preloader';
 
 const OrderPage = () => {
 
@@ -22,7 +23,7 @@ const OrderPage = () => {
   }, [dispatch, number]);
 
   if (!currentOrderInfo || background) {
-    return null;
+    return (<Preloader />);
   };
 
   return (

@@ -9,6 +9,7 @@ import OrderInfo from '../../components/order-info/order-info';
 import Modal from '../../components/modal/modal';
 import { useNavigate } from 'react-router-dom';
 import { clearCurrentOrderInfo } from '../../services/store/ui-slice';
+import Preloader from '../../components/preloader/preloader';
 
 const FeedPage = () => {
 
@@ -24,7 +25,7 @@ const FeedPage = () => {
   const { total, totalToday, orders } = useSelector((store) => store.feed.publicFeedData) ?? {};
 
   if (!total || !totalToday || !orders) {
-    return null;
+    return (<Preloader />);
   };
 
   const amountTotal = total.toString().replace(/\B(?=(\d{3})+(?!\d))/g, " ");

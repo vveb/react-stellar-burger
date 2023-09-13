@@ -5,9 +5,9 @@ import { booleanPropType, stringPropType } from '../../utils/prop-types';
 
 const FeedList = ({ widthSize = '860px', gapSize = '16px', isPrivate = false, ordersData }) => {
 
-  if (!ordersData) {
-    return null;
-  };
+  // if (!ordersData) {
+  //   return null;
+  // };
 
   let orders;
   if (isPrivate) {
