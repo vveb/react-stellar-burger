@@ -20,7 +20,7 @@ const FeedItem = ({ orderData, isPrivate }) => {
   const { createdAt, ingredients, number, status, name } = orderData;
   const allIngredients = useSelector(allIngredientsSelector);
   const validatedIngredients = useMemo(() =>
-  ingredients?.filter((item) => !!item && allIngredients[item] !== undefined), [ingredients, allIngredients]);
+  ingredients?.filter((item) => !!item && !!allIngredients && allIngredients[item] !== undefined), [ingredients, allIngredients]);
 
   const handleOrderClick = () => {
     dispatch(setCurrentOrderInfo(orderData));

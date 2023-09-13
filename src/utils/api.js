@@ -86,7 +86,7 @@ const getProfileInfo = () => {
 };
 
 const getOrderInfo = (orderNumber) => {
-  return goFetch({ endpoint: `${endpointURLs.orders}/${orderNumber}`, method: 'GET' });
+  return fetchWithRefresh({ endpoint: `${endpointURLs.orders}/${orderNumber}`, method: 'GET' });
 }
 
 const Api = {

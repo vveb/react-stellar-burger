@@ -14,7 +14,7 @@ const OrderInfo = ({ orderData, isModal=false }) => {
 
   const allIngredients = useSelector(allIngredientsSelector);
   const validatedIngredients = useMemo(() =>
-  ingredients?.filter((item) => !!item && allIngredients[item] !== undefined), [ingredients, allIngredients]);
+  ingredients?.filter((item) => !!item && !!allIngredients && allIngredients[item] !== undefined), [ingredients, allIngredients]);
 
   const uniqueIngredients = useMemo(() => {
     if(!validatedIngredients) {
@@ -33,7 +33,7 @@ const OrderInfo = ({ orderData, isModal=false }) => {
     }, {});
   }, [validatedIngredients]);
 
-  if (!allIngredients || !validatedIngredients) {
+  if (!allIngredients || !validatedIngredients || !orderData) {
     return null;
   };
 
