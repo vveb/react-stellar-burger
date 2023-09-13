@@ -31,8 +31,8 @@ const FeedPage = () => {
   const amountTotal = total.toString().replace(/\B(?=(\d{3})+(?!\d))/g, " ");
   const amountTotalToday = totalToday.toString().replace(/\B(?=(\d{3})+(?!\d))/g, " ");
   
-  const readyNumbers = orders.map((item) => item.status === 'done' ? item.number : null).slice(0, 15);
-  const inProgressNumbers = orders.map((item) => item.status === 'pending' ? item.number : null).slice(0, 15);
+  const readyNumbers = orders.map((item) => item.status === 'done' ? item.number : null).slice(0, 30);
+  const inProgressNumbers = orders.map((item) => item.status === 'pending' ? item.number : null).slice(0, 30);
 
   const handleCloseModal = () => {
     navigate('/feed', {state: null});
@@ -45,7 +45,7 @@ const FeedPage = () => {
         <h2 className={styles.title}>Лента заказов</h2>
         <div className={styles.twoColumns}>
           <FeedList widthSize='600px' gapSize='16px' ordersData={orders}/>
-          {<div className={styles.ordersTable}>
+          <div className={styles.ordersTable}>
             <OrderNumbersTable
               type='ready'
               titleText='Готовы'
@@ -60,7 +60,7 @@ const FeedPage = () => {
             />
             <OrderCounter type='all' titleText='Выполнено за все время' amount={amountTotal} />
             <OrderCounter type='today' titleText='Выполнено за сегодня' amount={amountTotalToday} />
-          </div>}
+          </div>
         </div>
       </main>
       {currentOrderInfo &&

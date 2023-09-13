@@ -19,7 +19,7 @@
   max-width: 580px;
   display: grid;
   grid-template-columns: repeat(2, 1fr);
-  grid-template-rows: 206px 150px 150px;
+  grid-template-rows: 370px 150px 150px;
   gap: 60px 36px;
   grid-template-areas:
   "ready progress"

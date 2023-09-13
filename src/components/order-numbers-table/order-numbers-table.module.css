@@ -5,10 +5,8 @@
 
 .numbers {
   width: 100%;
-  /* max-width: 270px;
-  overflow: hidden; */
   display: grid;
-  grid-template-rows: repeat(5, 1fr);
+  grid-template-rows: repeat(10, 1fr);
   grid-template-columns: repeat(3, minmax(88px, 1fr));
   gap: 8px 8px;
   grid-auto-flow: column;
