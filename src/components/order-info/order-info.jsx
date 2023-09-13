@@ -1,4 +1,3 @@
-import React from 'react';
 import { useMemo } from 'react';
 import { allIngredientsSelector } from '../../services/store/selectors';
 import styles from './order-info.module.css';
@@ -7,6 +6,7 @@ import { nanoid } from 'nanoid';
 import { CurrencyIcon, FormattedDate } from '@ya.praktikum/react-developer-burger-ui-components';
 import FeedTotal from '../feed-total/feed-total';
 import { orderStatus, orderStatusColor } from '../../utils/constants';
+import { booleanPropType, orderPropType } from '../../utils/prop-types';
 
 const OrderInfo = ({ orderData, isModal=false }) => {
 
@@ -67,4 +67,9 @@ const OrderInfo = ({ orderData, isModal=false }) => {
   );
 };
 
-export default React.memo(OrderInfo);
+OrderInfo.propTypes = {
+  orderData: orderPropType.isRequired,
+  isModal: booleanPropType,
+}
+
+export default OrderInfo;

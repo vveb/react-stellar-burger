@@ -1,3 +1,4 @@
+import React from 'react';
 import { stringPropType } from '../../utils/prop-types';
 import styles from './order-counter.module.css';
 
@@ -17,4 +18,4 @@ OrderCounter.propTypes = {
   amount: stringPropType.isRequired,
 }
 
-export default OrderCounter;
+export default React.memo(OrderCounter);

@@ -4,6 +4,7 @@ import styles from './feed-total.module.css';
 import { useSelector } from 'react-redux';
 import { allIngredientsSelector } from '../../services/store/selectors';
 import { CurrencyIcon } from '@ya.praktikum/react-developer-burger-ui-components';
+import { arrayOfStringsPropType } from '../../utils/prop-types';
 
 const FeedTotal = ({ ingredients }) => {
 
@@ -30,5 +31,9 @@ const FeedTotal = ({ ingredients }) => {
     </div>
   );
 };
+
+FeedTotal.propTypes = {
+  ingredients: arrayOfStringsPropType.isRequired,
+}
 
 export default React.memo(FeedTotal);

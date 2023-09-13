@@ -70,6 +70,7 @@ Modal.propTypes = {
   extraClass: stringPropType,
   handleCleanModalData: functionPropType.isRequired,
   closeRequest: booleanPropType,
+  titleClass: stringPropType,
 };
 
 export default React.memo(Modal);
