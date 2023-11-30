@@ -1,6 +1,6 @@
 import { createSlice } from "@reduxjs/toolkit";
 import { getIngredientsDataThunk } from "./ingredients-slice";
-import { getOrderNumberThunk } from "./ui-slice";
+import { getOrderInfoThunk, getOrderNumberThunk } from "./ui-slice";
 import {
   loginUserThunk,
   registerNewUserThunk,
@@ -17,6 +17,9 @@ const initialApiState = {
   isOrderPending: false,
   isOrderPlaced: false,
   isOrderFailed: false,
+  isOrderInfoPending: false,
+  isOrderInfoSucceed: false,
+  isOrderInfoFailed: false,
   isRegistrationPending: false,
   isRegistrationSucceed: false,
   isRegistrationFailed: false,
@@ -38,6 +41,12 @@ const initialApiState = {
   isUpdateProfileInfoPending: false,
   isUpdateProfileInfoSucceed: false,
   isUpdateProfileInfoFailed: false,
+  isPublicFeedOpen: false,
+  isPrivateFeedOpen: false,
+  publicFeedRequestedAt: 0, //Можно использовать в качестве индикатора pending открытия
+  publicFeedDiscardedAt: 0, //Можно использовать в качестве индикатора pending закрытия
+  privateFeedRequestedAt: 0,
+  privateFeedDiscardedAt: 0,
   error: null,
 };
 
@@ -50,6 +59,14 @@ const apiStateSlice = createSlice({
     setIsGetProfileInfoPending: (state) => ({ ...state, isGetProfileInfoPending: true, isGetProfileInfoSucceed: false, isGetProfileInfoFailed: false, error: null }),
     setIsGetProfileInfoSucceed: (state) => ({ ...state, isGetProfileInfoPending: false, isGetProfileInfoSucceed: true, isGetProfileInfoFailed: false, error: null }),
     setIsGetProfileInfoFailed: (state, action) => ({ ...state, isGetProfileInfoPending: false, isGetProfileInfoSucceed: false, isGetProfileInfoFailed: true, error: action.payload }),
+    requestPublicFeed: (state, action) => ({...state, publicFeedRequestedAt: action.payload}),
+    discardPublicFeed: (state, action) => ({...state, publicFeedDiscardedAt: action.payload}),
+    requestPrivateFeed: (state, action) => ({...state, privateFeedRequestedAt: action.payload}),
+    discardPrivateFeed: (state, action) => ({...state, privateFeedDiscardedAt: action.payload}),
+    openPublicFeed: (state) => ({...state, isPublicFeedOpen: true, feedRequestedAt: 0}),
+    closePublicFeed: (state) => ({...state, isPublicFeedOpen: false, feedDiscardedAt: 0}),
+    openPrivateFeed: (state) => ({...state, isPrivateFeedOpen: true, feedRequestedAt: 0}),
+    closePrivateFeed: (state) => ({...state, isPrivateFeedOpen: false, feedDiscardedAt: 0}),
   },
   extraReducers: (builder) => builder
     .addCase(getIngredientsDataThunk.pending, (state) => {
@@ -68,7 +85,16 @@ const apiStateSlice = createSlice({
       return {...state, isOrderPending: false, isOrderPlaced: true, isOrderFailed: false, error: null};
     })
     .addCase(getOrderNumberThunk.rejected, (state, action) => {
-      return {...state, isOrderPending: false, isOrderPlaced: false, isOrderFailed: true, error: action.payload};
+      return {...state, isOrderPending: false, isOrderInfoPlaced: false, isOrderInfoFailed: true, error: action.payload};
+    })
+    .addCase(getOrderInfoThunk.pending, (state) => {
+      return {...state, isOrderInfoPending: true, isOrderInfoSucceed: false, isOrderInfoFailed: false, error: null};
+    })
+    .addCase(getOrderInfoThunk.fulfilled, (state) => {
+      return {...state, isOrderInfoPending: false, isOrderInfoSucceed: true, isOrderInfoFailed: false, error: null};
+    })
+    .addCase(getOrderInfoThunk.rejected, (state, action) => {
+      return {...state, isOrderInfoPending: false, isOrderInfoSucceed: false, isOrderInfoFailed: true, error: action.payload};
     })
     .addCase(registerNewUserThunk.pending, (state) => {
       return {...state, isRegistrationPending: true, isRegistrationSucceed: false, isRegistrationFailed: false, error: null};
@@ -132,6 +158,14 @@ export const {
   setIsGetProfileInfoPending,
   setIsGetProfileInfoSucceed,
   setIsGetProfileInfoFailed,
+  requestPublicFeed,
+  discardPublicFeed,
+  requestPrivateFeed,
+  discardPrivateFeed,
+  openPublicFeed,
+  closePublicFeed,
+  openPrivateFeed,
+  closePrivateFeed,
 } = apiStateSlice.actions;
 
 export default apiStateSlice.reducer;

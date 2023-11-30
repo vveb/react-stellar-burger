@@ -1,0 +1,13 @@
+.title {
+  composes: text text_type_main-medium from global;
+  composes: pb-6 from global;
+}
+
+.numbers {
+  width: 100%;
+  display: grid;
+  grid-template-rows: repeat(10, 1fr);
+  grid-template-columns: repeat(3, minmax(88px, 1fr));
+  gap: 8px 8px;
+  grid-auto-flow: column;
+}

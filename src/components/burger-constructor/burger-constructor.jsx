@@ -30,7 +30,6 @@ const BurgerConstructor = () => {
     if (itemData.type === 'bun') {
       dispatch(addBun(itemData));
     } else {
-      // dispatch(addOther({other: {...itemData, uniqueId: nanoid(8)}}));
       dispatch(addOther(itemData));
     };
   };

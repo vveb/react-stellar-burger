@@ -14,8 +14,8 @@ const AppHeader = () => {
   //Ссылка на "Конструктор" активна, если мы на роуте главной страницы
   //ИЛИ деталей ингредиента И при мы этом в модальном окне, то есть background установлен
   const isConstructorActive = isConstructor || (isIngredientDetails && background);
-
   const isProfileActive = useMatch('/profile/*');
+  const isFeedActive = useMatch('/feed/*');
 
   return (
     <header className={styles.header}>
@@ -26,7 +26,10 @@ const AppHeader = () => {
             <BurgerIcon type={isConstructorActive ? 'primary' : 'secondary'} />
             <span className={styles.text}>Конструктор</span>
           </NavLink>
-          <a className={styles.link_inactive} href='#'><ListIcon type='secondary' /><span className={styles.text}>Лента заказов</span></a>
+          <NavLink to='/feed' className={isFeedActive ? styles.link : styles.link_inactive}>
+            <ListIcon type={isFeedActive ? 'primary' : 'secondary'} />
+            <span className={styles.text}>Лента заказов</span>
+          </NavLink>
         </div>
         <NavLink to={{ pathname: '/' }} className={styles.logoLink} href='#'>
           <Logo />

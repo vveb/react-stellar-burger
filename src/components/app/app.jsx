@@ -18,6 +18,9 @@ import { setAuthChecked, setUser } from '../../services/store/user-slice';
 import ProfileForm from '../profile-form/profile-form';
 import { OnlyAuth, OnlyUnAuth } from '../protected-route/protected-route';
 import NotFound404 from '../../pages/not-found-404-page/not-found-404-page';
+import FeedPage from '../../pages/feed-page/feed-page';
+import FeedView from '../feed-view/feed-view';
+import OrderPage from '../../pages/order-page/order-page';
 
 function App() {
 
@@ -77,19 +80,24 @@ function App() {
         <Routes location={background || location}>
           <Route path='/' element={<HomePage />} />
           <Route path='/ingredients/:id' element={<IngredientPage />} />
+          <Route path='/feed' element={<FeedPage />} />
+          <Route path='/feed/:number' element={<OrderPage />} />
           <Route path='/login' element={<OnlyUnAuth component={<LoginPage />} />} />
           <Route path='/register' element={<OnlyUnAuth component={<RegisterPage />} />} />
           <Route path='/forgot-password' element={<OnlyUnAuth component={<ForgotPasswordPage />} />} />
           <Route path='/reset-password' element={<OnlyUnAuth component={<ResetPasswordPage />} />} />
           <Route path='/profile' element={<OnlyAuth component={<ProfilePage />} />}>
             <Route index element={<ProfileForm />} />
-            <Route path='/profile/orders' element={<p className='text text_type_main-medium'>Раздел в разработке</p>} />
+            <Route path='/profile/orders' element={<FeedView />} />
           </Route>
+          <Route path='/profile/orders/:number' element={<OrderPage />} />
           <Route path='*' element={<NotFound404 />} />
         </Routes>
         {background && (
           <Routes>
-            <Route path='/ingredients/:id' element={<IngredientPage />}/>
+            <Route path='/ingredients/:id' element={<IngredientPage />} />
+            <Route path='/feed/:number' element={<OrderPage />} />
+            <Route path='/profile/orders/:number' element={<OrderPage />} />
           </Routes>
         )}
         {(error && !isIngredientsFailed) && 
