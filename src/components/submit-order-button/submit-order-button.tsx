@@ -4,7 +4,7 @@ import { CheckMarkIcon } from '@ya.praktikum/react-developer-burger-ui-component
 import { functionPropType } from '../../utils/prop-types';
 
 type SubmitOrderButtonProps = {
-  handleCloseRequest: (value: boolean) => never;
+  handleCloseRequest: (value: boolean) => void;
 };
 
 const SubmitOrderButton = ({ handleCloseRequest }: SubmitOrderButtonProps) => {

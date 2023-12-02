@@ -1,5 +1,5 @@
 import { AddNewOrderRequest, AddNewOrderResponse, ErrorResponse, FetchOptions, FetchParameters, ForgotPasswordRequest, ForgotPasswordResponse, GetIngredientsResponse, GetProfileInfoRequest, GetProfileInfoResponse, Ingredient, LoginUserRequest, LoginUserResponse, LogoutRequest, LogoutResponse, Order, RefreshTokenResponse, RegisterNewUserRequest, RegisterNewUserResponse, ResetPasswordRequest, ResetPasswordResponse, UpdateProfileInfoRequest, UpdateProfileInfoResponse } from '../services/types/index.js';
-import { baseUrl, endpointURLs } from './constants.js';
+import { baseUrl, endpointURLs } from './constants';
 
 const checkResponseOk = (res: Response) => {
   if (res.ok) {
@@ -56,7 +56,7 @@ const getIngredientsData = () => {
   return goFetch<never, GetIngredientsResponse>({ endpoint: endpointURLs.ingredients, method: 'GET' });
 };
 
-const addNewOrder = (ingredientsIdList: string[]) => {
+const addNewOrder = (ingredientsIdList: {ingredients: string[]}) => {
   return fetchWithRefresh<AddNewOrderRequest, AddNewOrderResponse>({ endpoint: endpointURLs.orders, data: ingredientsIdList, method: 'POST' });
 };
 //data обычно называют dto - data transfer object (объект передачи данных)

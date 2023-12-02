@@ -9,7 +9,7 @@ type ModalProps = {
   title?: string;
   children: ReactNode;
   extraClass?: string;
-  handleCleanModalData: ((value: string | null) => never) | (() => void);
+  handleCleanModalData: ((value: string | null) => never) | ((value?: any) => void);
   closeRequest?: boolean;
   titleClass?: string;
 }
@@ -24,10 +24,6 @@ const Modal = ({
   }: ModalProps) => {
 
   const modalRoot = document.getElementById('modals');
-
-  if (!modalRoot) {
-    return null;
-  }
 
   const modalRef = useRef<HTMLDivElement>(null);
   const overlayRef = useRef<HTMLDivElement>(null);
@@ -76,6 +72,7 @@ const Modal = ({
     };
   }, [closeModal]);
 
+  if (!modalRoot) return null;
   return ReactDOM.createPortal((
     <>
       <ModalOverlay ref={overlayRef} handleClose={closeModal} />

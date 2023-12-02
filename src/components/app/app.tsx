@@ -78,7 +78,7 @@ function App() {
     return (
       <div className={styles.app}>
         <AppHeader />
-        <Routes location={background || location}>
+        <Routes location={String(background || location)}>
           <Route path='/' element={<HomePage />} />
           <Route path='/ingredients/:id' element={<IngredientPage />} />
           <Route path='/feed' element={<FeedPage />} />

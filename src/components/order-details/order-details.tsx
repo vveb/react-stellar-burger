@@ -1,10 +1,10 @@
-import React from 'react';
+import React, { Dispatch, SetStateAction } from 'react';
 import styles from './order-details.module.css';
 import SubmitOrderButton from '../submit-order-button/submit-order-button';
 
 type OrderDetailsProps = {
   orderId: number;
-  handleCloseRequest: () => never;
+  handleCloseRequest: Dispatch<SetStateAction<boolean>>;
 }
 
 const OrderDetails = ({ orderId, handleCloseRequest }: OrderDetailsProps) => {

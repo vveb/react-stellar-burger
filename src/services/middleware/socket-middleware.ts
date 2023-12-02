@@ -28,7 +28,13 @@ const socketMiddleware = ({ wsUrl, wsActions, isPrivate }: Props) => {
       const isFeedOpen = isPrivate ? getState().api.isPrivateFeedOpen : getState().api.isPublicFeedOpen;
       if ((Date.now() - feedRequestedAt > WS_CONNECT_THRESHOLD) && !isFeedOpen) {
         dispatch(wsOpen(Date.now()));
-        const feedUrl = `${wsUrl}${isPrivate ? localStorage.getItem('accessToken').slice(7) : ''}`
+        const accessToken = localStorage.getItem('accessToken');
+        let feedUrl: string;
+        if (accessToken) {
+          feedUrl = `${wsUrl}${isPrivate ? accessToken.slice(7) : ''}`
+        } else {
+          feedUrl = '';
+        }
         socket = new WebSocket(feedUrl);
       };
     };
