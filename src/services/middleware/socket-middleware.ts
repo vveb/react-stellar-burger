@@ -36,7 +36,7 @@ const socketMiddleware = ({ wsUrl, wsActions, isPrivate }: Props): Middleware<{}
         if (accessToken) {
           feedUrl = `${wsUrl}${isPrivate ? accessToken.slice(7) : ''}`
         } else {
-          feedUrl = '';
+          feedUrl = `${wsUrl}`;
         }
         socket = new WebSocket(feedUrl);
       };
