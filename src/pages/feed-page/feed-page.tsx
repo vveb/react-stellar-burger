@@ -32,8 +32,8 @@ const FeedPage = () => {
   const amountTotal: string = total.toString().replace(/\B(?=(\d{3})+(?!\d))/g, " ");
   const amountTotalToday: string = totalToday.toString().replace(/\B(?=(\d{3})+(?!\d))/g, " ");
   
-  const readyNumbers = orders.map((item: Order) => item.status === 'done' ? item.number : null).slice(0, 30);
-  const inProgressNumbers = orders.map((item: Order) => item.status === 'pending' ? item.number : null).slice(0, 30);
+  const readyNumbers = orders.map((item) => item.status === 'done' ? item.number : null).slice(0, 30);
+  const inProgressNumbers = orders.map((item) => item.status === 'pending' ? item.number : null).slice(0, 30);
 
   const handleCloseModal = () => {
     navigate('/feed', {state: null});

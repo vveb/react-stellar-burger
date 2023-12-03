@@ -10,8 +10,8 @@ const CardsList = ({ type }: {type: string}) => {
 
   const generateList = (type: string) => {
     return data
-      ?.filter((item: Ingredient) => item.type === type)
-      .map((item: Ingredient) => (<IngredientCard itemData = {item} key={item._id} />));
+      ?.filter((item) => item.type === type)
+      .map((item) => (<IngredientCard itemData = {item} key={item._id} />));
   };
 
   return (
