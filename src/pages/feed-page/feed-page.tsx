@@ -10,7 +10,6 @@ import { useNavigate } from 'react-router-dom';
 import { clearCurrentOrderInfo } from '../../services/store/ui-slice';
 import Preloader from '../../components/preloader/preloader';
 import { useDispatch, useSelector } from '../../services/store/store';
-import { Order } from '../../services/types';
 
 const FeedPage = () => {
 

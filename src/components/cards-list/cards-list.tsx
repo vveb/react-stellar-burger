@@ -1,7 +1,6 @@
 import React from 'react';
 import styles from './cards-list.module.css';
 import IngredientCard from '../ingredient-card/ingredient-card';
-import { Ingredient } from '../../services/types';
 import { useSelector } from '../../services/store/store';
 
 const CardsList = ({ type }: {type: string}) => {
