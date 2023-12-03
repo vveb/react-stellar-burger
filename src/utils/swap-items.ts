@@ -1,6 +1,6 @@
 import { Ingredient } from "../services/types";
 
-const swapItems = (arr: (Ingredient | number)[], from: number, to: number): (Ingredient | number)[] => {
+const swapItems = (arr: Ingredient[], from: number, to: number): Ingredient[] => {
   if (from === to) {
     return arr;
   };

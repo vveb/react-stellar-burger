@@ -47,7 +47,7 @@ type ApiState = {
   publicFeedDiscardedAt: number;
   privateFeedRequestedAt: number;
   privateFeedDiscardedAt: number;
-  error: string | null, //QUESTION: не знаю, правильный ли это тип
+  error?: string | null | unknown, //QUESTION: не знаю, правильный ли это тип
 }
 
 const initialApiState: ApiState = {
@@ -110,85 +110,189 @@ const apiStateSlice = createSlice({
   },
   extraReducers: (builder) => builder
     .addCase(getIngredientsDataThunk.pending, (state) => {
-      return {...state, isIngredientsRequested: true, isIngredientsReceived: false, isIngredientsFailed: false, error: null};
+      state.isIngredientsRequested = true;
+      state.isIngredientsReceived = false;
+      state.isIngredientsFailed = false;
+      state.error = null;
     })
     .addCase(getIngredientsDataThunk.fulfilled, (state) => {
-      return {...state, isIngredientsRequested: false, isIngredientsReceived: true, isIngredientsFailed: false, error: null};
+      state.isIngredientsRequested = false;
+      state.isIngredientsReceived = true;
+      state.isIngredientsFailed = false;
+      state.error = null;
     })
     .addCase(getIngredientsDataThunk.rejected, (state, action) => {
-      return {...state, isIngredientsRequested: false, isIngredientsReceived: false, isIngredientsFailed: true, error: action.payload};
+      state.isIngredientsRequested = false;
+      state.isIngredientsReceived = false;
+      state.isIngredientsFailed = true;
+      state.error = action.payload;
     })
     .addCase(getOrderNumberThunk.pending, (state) => {
-      return {...state, isOrderPending: true, isOrderPlaced: false, isOrderFailed: false, error: null};
+      state.isOrderPending = true;
+      state.isOrderPlaced = false;
+      state.isOrderFailed = false;
+      state.error = null;
     })
     .addCase(getOrderNumberThunk.fulfilled, (state) => {
-      return {...state, isOrderPending: false, isOrderPlaced: true, isOrderFailed: false, error: null};
+      state.isOrderPending = false;
+      state.isOrderPlaced = true;
+      state.isOrderFailed = false;
+      state.error = null;
+      // return {...state, isOrderPending: false, isOrderPlaced: true, isOrderFailed: false, error: null};
     })
     .addCase(getOrderNumberThunk.rejected, (state, action) => {
-      return {...state, isOrderPending: false, isOrderInfoPlaced: false, isOrderInfoFailed: true, error: action.payload};
+      state.isOrderPending = false;
+      state.isOrderPlaced = false;
+      state.isOrderFailed = true;
+      state.error = action.payload;
+      // return {...state, isOrderPending: false, isOrderInfoPlaced: false, isOrderInfoFailed: true, error: action.payload};
     })
     .addCase(getOrderInfoThunk.pending, (state) => {
-      return {...state, isOrderInfoPending: true, isOrderInfoSucceed: false, isOrderInfoFailed: false, error: null};
+      state.isOrderInfoPending = true;
+      state.isOrderInfoSucceed = false;
+      state.isOrderInfoFailed = false;
+      state.error = null;
+      // return {...state, isOrderInfoPending: true, isOrderInfoSucceed: false, isOrderInfoFailed: false, error: null};
     })
     .addCase(getOrderInfoThunk.fulfilled, (state) => {
-      return {...state, isOrderInfoPending: false, isOrderInfoSucceed: true, isOrderInfoFailed: false, error: null};
+      state.isOrderInfoPending = false;
+      state.isOrderInfoSucceed = true;
+      state.isOrderInfoFailed = false;
+      state.error = null;
+      // return {...state, isOrderInfoPending: false, isOrderInfoSucceed: true, isOrderInfoFailed: false, error: null};
     })
     .addCase(getOrderInfoThunk.rejected, (state, action) => {
-      return {...state, isOrderInfoPending: false, isOrderInfoSucceed: false, isOrderInfoFailed: true, error: action.payload};
+      state.isOrderInfoPending = false;
+      state.isOrderInfoSucceed = false;
+      state.isOrderInfoFailed = true;
+      state.error = action.payload;
+      // return {...state, isOrderInfoPending: false, isOrderInfoSucceed: false, isOrderInfoFailed: true, error: action.payload};
     })
     .addCase(registerNewUserThunk.pending, (state) => {
-      return {...state, isRegistrationPending: true, isRegistrationSucceed: false, isRegistrationFailed: false, error: null};
+      state.isRegistrationPending = true;
+      state.isRegistrationSucceed = false;
+      state.isRegistrationFailed = false;
+      state.error = null;
+      // return {...state, isRegistrationPending: true, isRegistrationSucceed: false, isRegistrationFailed: false, error: null};
     })
     .addCase(registerNewUserThunk.fulfilled, (state) => {
-      return {...state, isRegistrationPending: false, isRegistrationSucceed: true, isRegistrationFailed: false, error: null};
+      state.isRegistrationPending = false;
+      state.isRegistrationSucceed = true;
+      state.isRegistrationFailed = false;
+      state.error = null;
+      // return {...state, isRegistrationPending: false, isRegistrationSucceed: true, isRegistrationFailed: false, error: null};
     })
     .addCase(registerNewUserThunk.rejected, (state, action) => {
-      return {...state, isRegistrationPending: false, isRegistrationSucceed: false, isRegistrationFailed: true, error: action.payload};
+      state.isRegistrationPending = false;
+      state.isRegistrationSucceed = false;
+      state.isRegistrationFailed = true;
+      state.error = action.payload;
+      // return {...state, isRegistrationPending: false, isRegistrationSucceed: false, isRegistrationFailed: true, error: action.payload};
     })
     .addCase(loginUserThunk.pending, (state) => {
-      return {...state, isLoginPending: true, isLoginSucceed: false, isLoginFailed: false, error: null};
+      state.isLoginPending = true;
+      state.isLoginSucceed = false;
+      state.isLoginFailed = false;
+      state.error = null;
+      // return {...state, isLoginPending: true, isLoginSucceed: false, isLoginFailed: false, error: null};
     })
     .addCase(loginUserThunk.fulfilled, (state) => {
-      return {...state, isLoginPending: false, isLoginSucceed: true, isLoginFailed: false, error: null};
+      state.isLoginPending = false;
+      state.isLoginSucceed = true;
+      state.isLoginFailed = false;
+      state.error = null;
+      // return {...state, isLoginPending: false, isLoginSucceed: true, isLoginFailed: false, error: null};
     })
     .addCase(loginUserThunk.rejected, (state, action) => {
-      return {...state, isLoginPending: false, isLoginSucceed: false, isLoginFailed: true, error: action.payload};
+      state.isLoginPending = false;
+      state.isLoginSucceed = false;
+      state.isLoginFailed = true;
+      state.error = action.payload;
+      // return {...state, isLoginPending: false, isLoginSucceed: false, isLoginFailed: true, error: action.payload};
     })
     .addCase(logoutUserThunk.pending, (state) => {
-      return {...state, isLogoutPending: true, isLogoutSucceed: false, isLogoutFailed: false, error: null};
+      state.isLogoutPending = true;
+      state.isLogoutSucceed = false;
+      state.isLogoutFailed = false;
+      state.error = null;
+      // return {...state, isLogoutPending: true, isLogoutSucceed: false, isLogoutFailed: false, error: null};
     })
     .addCase(logoutUserThunk.fulfilled, (state) => {
-      return {...state, isLogoutPending: false, isLogoutSucceed: true, isLogoutFailed: false, error: null};
+      state.isLogoutPending = false;
+      state.isLogoutSucceed = true;
+      state.isLogoutFailed = false;
+      state.error = null;
+      // return {...state, isLogoutPending: false, isLogoutSucceed: true, isLogoutFailed: false, error: null};
     })
     .addCase(logoutUserThunk.rejected, (state, action) => {
-      return {...state, isLogoutPending: false, isLogoutSucceed: false, isLogoutFailed: true, error: action.payload};
+      state.isLogoutPending = false;
+      state.isLogoutSucceed = false;
+      state.isLogoutFailed = true;
+      state.error = action.payload;
+      // return {...state, isLogoutPending: false, isLogoutSucceed: false, isLogoutFailed: true, error: action.payload};
     })
     .addCase(forgotPasswordThunk.pending, (state) => {
-      return {...state, isForgotPasswordPending: true, isForgotPasswordSucceed: false, isForgotPasswordFailed: false, error: null};
+      state.isForgotPasswordPending = true;
+      state.isForgotPasswordSucceed = false;
+      state.isForgotPasswordFailed = false;
+      state.error = null;
+      // return {...state, isForgotPasswordPending: true, isForgotPasswordSucceed: false, isForgotPasswordFailed: false, error: null};
     })
     .addCase(forgotPasswordThunk.fulfilled, (state) => {
-      return {...state, isForgotPasswordPending: false, isForgotPasswordSucceed: true, isForgotPasswordFailed: false, error: null};
+      state.isForgotPasswordPending = true;
+      state.isForgotPasswordSucceed = false;
+      state.isForgotPasswordFailed = false;
+      state.error = null;
+      // return {...state, isForgotPasswordPending: false, isForgotPasswordSucceed: true, isForgotPasswordFailed: false, error: null};
     })
     .addCase(forgotPasswordThunk.rejected, (state, action) => {
-      return {...state, isForgotPasswordPending: false, isForgotPasswordSucceed: false, isForgotPasswordFailed: true, error: action.payload};
+      state.isForgotPasswordPending = false;
+      state.isForgotPasswordSucceed = false;
+      state.isForgotPasswordFailed = true;
+      state.error = action.payload;
+      // return {...state, isForgotPasswordPending: false, isForgotPasswordSucceed: false, isForgotPasswordFailed: true, error: action.payload};
     })
     .addCase(resetPasswordThunk.pending, (state) => {
-      return {...state, isResetPasswordPending: true, isResetPasswordSucceed: false, isResetPasswordFailed: false, error: null};
+      state.isResetPasswordPending = true;
+      state.isResetPasswordSucceed = false;
+      state.isResetPasswordFailed = false;
+      state.error = null;
+      // return {...state, isResetPasswordPending: true, isResetPasswordSucceed: false, isResetPasswordFailed: false, error: null};
     })
     .addCase(resetPasswordThunk.fulfilled, (state) => {
-      return {...state, isResetPasswordPending: false, isResetPasswordSucceed: true, isResetPasswordFailed: false, error: null};
+      state.isResetPasswordPending = false;
+      state.isResetPasswordSucceed = true;
+      state.isResetPasswordFailed = false;
+      state.error = null;
+      // return {...state, isResetPasswordPending: false, isResetPasswordSucceed: true, isResetPasswordFailed: false, error: null};
     })
     .addCase(resetPasswordThunk.rejected, (state, action) => {
-      return {...state, isResetPasswordPending: false, isResetPasswordSucceed: false, isResetPasswordFailed: true, error: action.payload};
+      state.isResetPasswordPending = false;
+      state.isResetPasswordSucceed = false;
+      state.isResetPasswordFailed = true;
+      state.error = action.payload;
+      // return {...state, isResetPasswordPending: false, isResetPasswordSucceed: false, isResetPasswordFailed: true, error: action.payload};
     })
     .addCase(updateProfileInfoThunk.pending, (state) => {
-      return {...state, isUpdateProfileInfoPending: true, isUpdateProfileInfoSucceed: false, isUpdateProfileInfoFailed: false, error: null};
+      state.isUpdateProfileInfoPending = true;
+      state.isUpdateProfileInfoSucceed = false;
+      state.isUpdateProfileInfoFailed = false;
+      state.error = null;
+      // return {...state, isUpdateProfileInfoPending: true, isUpdateProfileInfoSucceed: false, isUpdateProfileInfoFailed: false, error: null};
     })
     .addCase(updateProfileInfoThunk.fulfilled, (state) => {
-      return {...state, isUpdateProfileInfoPending: false, isUpdateProfileInfoSucceed: true, isUpdateProfileInfoFailed: false, error: null};
+      state.isUpdateProfileInfoPending = false;
+      state.isUpdateProfileInfoSucceed = true;
+      state.isUpdateProfileInfoFailed = false;
+      state.error = null;
+      // return {...state, isUpdateProfileInfoPending: false, isUpdateProfileInfoSucceed: true, isUpdateProfileInfoFailed: false, error: null};
     })
     .addCase(updateProfileInfoThunk.rejected, (state, action) => {
-      return {...state, isUpdateProfileInfoPending: false, isUpdateProfileInfoSucceed: false, isUpdateProfileInfoFailed: true, error: action.payload};
+      state.isUpdateProfileInfoPending = false;
+      state.isUpdateProfileInfoSucceed = false;
+      state.isUpdateProfileInfoFailed = true;
+      state.error = action.payload;
+      // return {...state, isUpdateProfileInfoPending: false, isUpdateProfileInfoSucceed: false, isUpdateProfileInfoFailed: true, error: action.payload};
     })
 });
 
@@ -207,7 +311,5 @@ export const {
   openPrivateFeed,
   closePrivateFeed,
 } = apiStateSlice.actions;
-
-// export type ApiStateActions = typeof apiStateSlice.actions;
 
 export default apiStateSlice.reducer;

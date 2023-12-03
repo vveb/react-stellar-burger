@@ -55,9 +55,9 @@ const ProfileForm = () => {
   //Необходимо для рендеринга данных профиля при медленном соединении
   useEffect(() => {
     if (storeUser) {
-      setValues({ ...storeUser, password: '' })
+      setValues({ name, email, password: '' })
     };
-  }, [storeUser, setValues]);
+  }, [storeUser, setValues, name, email]);
 
   if (isGetProfileInfoPending || isLoginPending) {
     return (<p className='text text_type_main-medium'>'Идет загрузка данных профиля...'</p>);

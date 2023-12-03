@@ -20,7 +20,7 @@ const initialUIState: UIState = {
 
 const getOrderNumberThunk = createAsyncThunk(
   'currentBurger/orderNumber',
-  async (data, { rejectWithValue }) => {
+  async (data: {allIngredientsId: {ingredients: string[]}}, { rejectWithValue }) => {
     try {
       const { order: { number }, success } = await Api.addNewOrder(data.allIngredientsId) ?? {};
       if (!!number && success) {
@@ -37,7 +37,7 @@ const getOrderNumberThunk = createAsyncThunk(
 
 const getOrderInfoThunk = createAsyncThunk(
   'currentOrder/info',
-  async ({ number }, { rejectWithValue }) => {
+  async ({ number }: { number: string | undefined } , { rejectWithValue }) => {
     try {
       const { success, orders } = await Api.getOrderInfo(number) ?? {};
       if (success && !!orders) {
@@ -87,10 +87,12 @@ const UIStateSlice = createSlice({
   },
   extraReducers: (builder) => builder
     .addCase(getOrderNumberThunk.fulfilled, (state, action) => {
-      return { ...state, orderId: action.payload };
+      state.orderId = action.payload;
+      // return { ...state, orderId: action.payload };
     })
     .addCase(getOrderInfoThunk.fulfilled, (state, action) => {
-      return { ...state, currentOrderInfo: action.payload };
+      state.currentOrderInfo = action.payload;
+      // return { ...state, currentOrderInfo: action.payload };
     })
 });
 

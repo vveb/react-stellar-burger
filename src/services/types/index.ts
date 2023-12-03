@@ -1,3 +1,6 @@
+import apiStateSlice, { closePrivateFeed, closePublicFeed, discardPrivateFeed, discardPublicFeed, openPrivateFeed, openPublicFeed, requestPrivateFeed, requestPublicFeed, setApiError } from "../store/api-state-slice";
+import { feedDataSlice, privateFeedStart, privateFeedStop, publicFeedStart, publicFeedStop, setPrivateFeedData, setPublicFeedData } from "../store/feed-slice";
+
 export type Ingredient = {
   _id: string;
   name: string;
@@ -79,7 +82,7 @@ export type GetIngredientsResponse = {
 
 export type GetOrderInfoResponse = {
   success: boolean;
-  data: Order[];
+  orders: Order[];
 };
 
 export type LoginUserRequest = {
@@ -111,9 +114,9 @@ export type ResetPasswordRequest = {
 
 export type ResetPasswordResponse = LogoutResponse;
 
-export type GetProfileInfoRequest = {
-  authorization: string;
-};
+// export type GetProfileInfoRequest = {
+//   authorization: string;
+// };
 
 export type GetProfileInfoResponse = {
   success: boolean;
@@ -138,3 +141,27 @@ export type AddNewOrderResponse = {
 };
 
 export type UpdateProfileInfoResponse = GetProfileInfoResponse;
+
+type FeedWSActionsPublic = {
+  wsConnect: typeof publicFeedStart;
+      wsDisconnect: typeof publicFeedStop;
+      onOpen: typeof openPublicFeed;
+      onClose: typeof closePublicFeed;
+      onError: typeof setApiError;
+      onMessage: typeof setPublicFeedData;
+      wsOpen: typeof requestPublicFeed;
+      wsClose: typeof discardPublicFeed;
+};
+
+type FeedWSActionsPrivate = {
+  wsConnect: typeof privateFeedStart;
+      wsDisconnect: typeof privateFeedStop;
+      onOpen: typeof openPrivateFeed;
+      onClose: typeof closePrivateFeed;
+      onError: typeof setApiError;
+      onMessage: typeof setPrivateFeedData;
+      wsOpen: typeof requestPrivateFeed;
+      wsClose: typeof discardPrivateFeed;
+};
+
+export type FeedWSActions = FeedWSActionsPublic | FeedWSActionsPrivate;

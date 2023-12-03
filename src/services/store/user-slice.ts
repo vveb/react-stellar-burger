@@ -1,6 +1,6 @@
 import { createAsyncThunk, createSlice } from "@reduxjs/toolkit";
 import Api from "../../utils/api";
-import { ErrorResponse } from "../types";
+import { DictionaryStrStr, ErrorResponse } from "../types";
 
 export type UserState = {
   name: string;
@@ -16,7 +16,7 @@ const initialUserState: UserState = {
 
 const registerNewUserThunk = createAsyncThunk(
   'user/register',
-  async (data, { rejectWithValue }) => {
+  async (data: DictionaryStrStr, { rejectWithValue }) => {
     try {
       const { user: { name, email }, success, accessToken, refreshToken } = await Api.registerNewUser(data) ?? {};
       if (success) {
@@ -35,7 +35,7 @@ const registerNewUserThunk = createAsyncThunk(
 
 const loginUserThunk = createAsyncThunk(
   'user/login',
-  async (data, { rejectWithValue }) => {
+  async (data: DictionaryStrStr, { rejectWithValue }) => {
     try {
       const { user: { name, email }, success, accessToken, refreshToken } = await Api.loginUser(data) ?? {};
       if (success) {
@@ -74,7 +74,7 @@ const logoutUserThunk = createAsyncThunk(
 
 const forgotPasswordThunk = createAsyncThunk(
   'user/update-password',
-  async (data, { rejectWithValue }) => {
+  async (data: DictionaryStrStr, { rejectWithValue }) => {
     try {
       localStorage.setItem('isForgotPasswordSent', 'false');
       const { message, success } = await Api.forgotPassword(data) ?? {};
@@ -94,7 +94,7 @@ const forgotPasswordThunk = createAsyncThunk(
 
 const resetPasswordThunk = createAsyncThunk(
   'user/reset-password',
-  async (data, { rejectWithValue }) => {
+  async (data: DictionaryStrStr, { rejectWithValue }) => {
     try {
       const { message, success } = await Api.resetPassword(data) ?? {};
       if (success) {
@@ -112,7 +112,7 @@ const resetPasswordThunk = createAsyncThunk(
 
 const updateProfileInfoThunk = createAsyncThunk(
   'user/update-profile-info',
-  async (data, { rejectWithValue }) => {
+  async (data: DictionaryStrStr, { rejectWithValue }) => {
     try {
       const { user: { name, email }, success } = await Api.updateProfileInfo(data) ?? {};
       if (success) {
@@ -137,17 +137,28 @@ const userSlice = createSlice({
   extraReducers: (builder) => builder
     .addCase(registerNewUserThunk.fulfilled, (state, action) => { 
       const { name, email } = action.payload;
-      return { ...state, name, email, isAuthChecked: true };
+      state.name = name;
+      state.email = email;
+      state.isAuthChecked = true;
+      // return { ...state, name, email, isAuthChecked: true };
     })
     .addCase(loginUserThunk.fulfilled, (state, action) => {
       const { name, email } = action.payload;
-      return { ...state, name, email, isAuthChecked: true };
+      state.name = name;
+      state.email = email;
+      state.isAuthChecked = true;
+      // return { ...state, name, email, isAuthChecked: true };
     })
     .addCase(logoutUserThunk.fulfilled, (state) => {
-      return {...state, name: '', email: ''};
+      state.name = '';
+      state.email = '';
+      // return {...state, name: '', email: ''};
     })
-    .addCase(updateProfileInfoThunk.fulfilled, (_, action) => {
-      return action.payload;
+    .addCase(updateProfileInfoThunk.fulfilled, (state, action) => {
+      const { name, email } = action.payload;
+      state.name = name;
+      state.email = email;
+      // return action.payload;
     })
 });
 

@@ -1,11 +1,10 @@
 import { Navigate, useLocation } from "react-router-dom";
 import { isLoggedInSelector } from "../../services/store/selectors";
-import { ReactNode } from "react";
 import { useSelector } from "../../services/store/store";
 
 type ProtectedProps = {
   onlyUnAuth?: boolean;
-  component: ReactNode;
+  component: JSX.Element;
 }
 
 const Protected = ({ onlyUnAuth = false, component }: ProtectedProps) => {
@@ -40,6 +39,6 @@ const Protected = ({ onlyUnAuth = false, component }: ProtectedProps) => {
 };
 
 export const OnlyAuth = Protected;
-export const OnlyUnAuth = ({ component }: {component: ReactNode}) => (
+export const OnlyUnAuth = ({ component }: {component: JSX.Element}) => (
   <Protected onlyUnAuth={true} component={component} />
 );

@@ -1,12 +1,15 @@
+import { Middleware } from "redux";
 import { WS_CONNECT_THRESHOLD } from "../../utils/constants";
+import { RootState } from "../store/store";
+import { FeedWSActions } from "../types";
 
 type Props = {
   wsUrl: string;
-  wsActions: any;
+  wsActions: FeedWSActions;
   isPrivate: boolean;
 }
 
-const socketMiddleware = ({ wsUrl, wsActions, isPrivate }: Props) => {
+const socketMiddleware = ({ wsUrl, wsActions, isPrivate }: Props): Middleware<{}, RootState> => {
   let socket: (WebSocket | null) = null;
   
   return (store) => (next) => (action) => {

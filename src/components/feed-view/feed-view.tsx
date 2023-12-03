@@ -9,7 +9,7 @@ const FeedView = () => {
 
   useEffect(() => {
     dispatch(privateFeedStart());
-    return () => dispatch(privateFeedStop());
+    return () =>  {dispatch(privateFeedStop()) };
   }, [dispatch]);
 
   const feedData = useSelector((store) => store.feed.privateFeedData);

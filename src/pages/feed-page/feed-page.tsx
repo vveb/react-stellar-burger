@@ -20,7 +20,7 @@ const FeedPage = () => {
 
   useEffect(() => {
     dispatch(publicFeedStart());
-    return () => dispatch(publicFeedStop());
+    return () => { dispatch(publicFeedStop()) };
   }, [dispatch]);
 
   const { total, totalToday, orders } = useSelector((store) => store.feed.publicFeedData) ?? {};

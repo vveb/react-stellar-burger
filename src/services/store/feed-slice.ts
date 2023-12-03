@@ -25,7 +25,7 @@ const initialFeedDataState: FeedDataState = {
   privateFeedData: null,
 };
 
-const feedDataSlice = createSlice({
+export const feedDataSlice = createSlice({
   name: 'feed',
   initialState: initialFeedDataState,
   reducers: {
@@ -41,7 +41,5 @@ export const {
   setPublicFeedData,
   setPrivateFeedData,
 } = feedDataSlice.actions;
-
-// export type FeedActions = typeof feedDataSlice.actions;
 
 export default feedDataSlice.reducer;

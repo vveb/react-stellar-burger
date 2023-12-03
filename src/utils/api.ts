@@ -1,4 +1,4 @@
-import { AddNewOrderRequest, AddNewOrderResponse, ErrorResponse, FetchOptions, FetchParameters, ForgotPasswordRequest, ForgotPasswordResponse, GetIngredientsResponse, GetProfileInfoRequest, GetProfileInfoResponse, Ingredient, LoginUserRequest, LoginUserResponse, LogoutRequest, LogoutResponse, Order, RefreshTokenResponse, RegisterNewUserRequest, RegisterNewUserResponse, ResetPasswordRequest, ResetPasswordResponse, UpdateProfileInfoRequest, UpdateProfileInfoResponse } from '../services/types/index.js';
+import { AddNewOrderRequest, AddNewOrderResponse, DictionaryStrStr, ErrorResponse, FetchOptions, FetchParameters, ForgotPasswordResponse, GetIngredientsResponse, GetOrderInfoResponse, GetProfileInfoResponse, LoginUserResponse, LogoutRequest, LogoutResponse, RefreshTokenResponse, RegisterNewUserResponse, ResetPasswordResponse, UpdateProfileInfoResponse } from '../services/types/index.js';
 import { baseUrl, endpointURLs } from './constants';
 
 const checkResponseOk = (res: Response) => {
@@ -60,36 +60,36 @@ const addNewOrder = (ingredientsIdList: {ingredients: string[]}) => {
   return fetchWithRefresh<AddNewOrderRequest, AddNewOrderResponse>({ endpoint: endpointURLs.orders, data: ingredientsIdList, method: 'POST' });
 };
 //data обычно называют dto - data transfer object (объект передачи данных)
-const registerNewUser = (data: RegisterNewUserRequest) => {
-  return goFetch<RegisterNewUserRequest, RegisterNewUserResponse>({ endpoint: endpointURLs.register, data, method: 'POST' });
+const registerNewUser = (data: DictionaryStrStr) => {
+  return goFetch<DictionaryStrStr, RegisterNewUserResponse>({ endpoint: endpointURLs.register, data, method: 'POST' });
 };
 
-const loginUser = (data: LoginUserRequest) => {
-  return goFetch<LoginUserRequest, LoginUserResponse>({ endpoint: endpointURLs.login, data, method: 'POST' });
+const loginUser = (data: DictionaryStrStr) => {
+  return goFetch<DictionaryStrStr, LoginUserResponse>({ endpoint: endpointURLs.login, data, method: 'POST' });
 };
 
 const logoutUser = (data: LogoutRequest) => {
   return fetchWithRefresh<LogoutRequest, LogoutResponse>({ endpoint: endpointURLs.logout, data, method: 'POST' });
 };
 
-const forgotPassword = (data: ForgotPasswordRequest) => {
-  return goFetch<ForgotPasswordRequest, ForgotPasswordResponse>({ endpoint: endpointURLs.forgotPassword, data, method: 'POST' });
+const forgotPassword = (data: DictionaryStrStr) => {
+  return goFetch<DictionaryStrStr, ForgotPasswordResponse>({ endpoint: endpointURLs.forgotPassword, data, method: 'POST' });
 };
 
-const resetPassword = (data: ResetPasswordRequest) => {
-  return goFetch<ResetPasswordRequest, ResetPasswordResponse>({ endpoint: endpointURLs.resetPassword, data, method: 'POST' });
+const resetPassword = (data: DictionaryStrStr) => {
+  return goFetch<DictionaryStrStr, ResetPasswordResponse>({ endpoint: endpointURLs.resetPassword, data, method: 'POST' });
 };
 
-const updateProfileInfo = (data: UpdateProfileInfoRequest) => {
-  return fetchWithRefresh<UpdateProfileInfoRequest, UpdateProfileInfoResponse>({ endpoint: endpointURLs.profileInfo, data, method: 'PATCH' });
+const updateProfileInfo = (data: DictionaryStrStr) => {
+  return fetchWithRefresh<DictionaryStrStr, UpdateProfileInfoResponse>({ endpoint: endpointURLs.profileInfo, data, method: 'PATCH' });
 };
 
 const getProfileInfo = () => {
-  return fetchWithRefresh<GetProfileInfoRequest, GetProfileInfoResponse>({ endpoint: endpointURLs.profileInfo, method: 'GET' });
+  return fetchWithRefresh<never, GetProfileInfoResponse>({ endpoint: endpointURLs.profileInfo, method: 'GET' });
 };
 
-const getOrderInfo = (orderNumber: number) => {
-  return fetchWithRefresh<never, {success: boolean, orders: Order[]}>({ endpoint: `${endpointURLs.orders}/${orderNumber}`, method: 'GET' });
+const getOrderInfo = (orderNumber: string | undefined) => {
+  return fetchWithRefresh<never, GetOrderInfoResponse>({ endpoint: `${endpointURLs.orders}/${orderNumber}`, method: 'GET' });
 }
 
 const Api = {

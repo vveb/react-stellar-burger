@@ -25,9 +25,17 @@ import { useDispatch, useSelector } from '../../services/store/store';
 
 function App() {
 
+  type Background = {
+    pathname: string;
+    search: string;
+    hash: string;
+    key: string;
+    state: null | Background;
+  };
+
   const dispatch = useDispatch();
   const location = useLocation();
-  const background: boolean = location.state && location.state.background;
+  const background: Background = location.state && location.state.background;
 
   useEffect(() => {
     dispatch(getIngredientsDataThunk());
@@ -78,7 +86,7 @@ function App() {
     return (
       <div className={styles.app}>
         <AppHeader />
-        <Routes location={String(background || location)}>
+        <Routes location={background || location}>
           <Route path='/' element={<HomePage />} />
           <Route path='/ingredients/:id' element={<IngredientPage />} />
           <Route path='/feed' element={<FeedPage />} />
