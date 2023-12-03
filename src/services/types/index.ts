@@ -57,13 +57,13 @@ export type ErrorResponse = {
   [key: string]: unknown;
 };
 
-export type RegisterNewUserRequest = {
-  email: string;
-  password: string;
-  name: string; 
-} | void;
+// export type RegisterNewUserRequest = {
+//   email: string;
+//   password: string;
+//   name: string; 
+// } | void;
 
-export type UserData = {
+type UserData = {
   email: string;
   name: string;
 }
@@ -85,10 +85,10 @@ export type GetOrderInfoResponse = {
   orders: Order[];
 };
 
-export type LoginUserRequest = {
-  email: string;
-  password: string;
-} | void;
+// export type LoginUserRequest = {
+//   email: string;
+//   password: string;
+// } | void;
 
 export type LoginUserResponse = RegisterNewUserResponse;
 
@@ -101,16 +101,16 @@ export type LogoutResponse = {
   message: string;
 };
 
-export type ForgotPasswordRequest = {
-  email: string;
-} | void;
+// export type ForgotPasswordRequest = {
+//   email: string;
+// } | void;
 
 export type ForgotPasswordResponse = LogoutResponse;
 
-export type ResetPasswordRequest = {
-  password: string;
-  token: string;
-} | void;
+// export type ResetPasswordRequest = {
+//   password: string;
+//   token: string;
+// } | void;
 
 export type ResetPasswordResponse = LogoutResponse;
 
@@ -123,10 +123,10 @@ export type GetProfileInfoResponse = {
   user: UserData;
 };
 
-export type UpdateProfileInfoRequest = {
-  authorization: string;
-  user: UserData;
-} | void;
+// export type UpdateProfileInfoRequest = {
+//   authorization: string;
+//   user: UserData;
+// } | void;
 
 export type AddNewOrderRequest = {
   ingredients: string[];
